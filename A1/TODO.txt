@@ -1,0 +1,6 @@
+TODO
+- get server running to set up img for submission
+- include semantic context tags
+- fix layout issue-- probably will just make the media queries to look for a fixed width instead of trying to make it fluid
+
+DONE
