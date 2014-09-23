@@ -1,7 +1,7 @@
-/* Main CSS file for A1 in CSC309 Fall 2014, by Sang-Ah Han (g2sangah) */
+/* Main CSS file for A1 in CSC309 Fall 2014, by Sang-Ah Han (g2sangah) & Binuri Walpitagamage (g3tdirty) */
 
 html {
-}
+`}
 
 body {
 	background: -webkit-linear-gradient(rgb(161, 202, 241), rgb(108, 160, 220)) fixed; /* For Safari 5.1 to 6.0 */
@@ -30,7 +30,9 @@ div {
 and (min-width: 1240px) {
 	body {
 	}
-	#leftwrapper {
+	#wrapper {
+		position: relative;
+		width: 100%; 
 	}
 	#header, 
 	#footer {
@@ -38,12 +40,17 @@ and (min-width: 1240px) {
 	}
 	
 	#navigation {
+		float: left;
+		width: 20%;
 	}
 
 	#body {
+		display: inline-block;
 	}
 
 	#side-panel {
+		float: right;
+		width: 20%;
 	}
 
 }
