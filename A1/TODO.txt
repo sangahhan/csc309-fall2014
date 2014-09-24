@@ -1,8 +1,10 @@
 TODO
 - try server "external hard drive" for code
-- include semantic context tags
+- test page on browsers: firefox, internet explorer, konquerer, opera, anything else on cdf
 - get img & deploy on a diff vm to test submission
 
 DONE
 - get server running
-- fix layout issue-- probably will just make the media queries to look for a fixed width instead of trying to make it fluid
+- fix layout issue-- compromised between full fluidity and fixed widths. prof said it was ok.
+- include semantic context tags
+- test page on browsers: safari, chrome
