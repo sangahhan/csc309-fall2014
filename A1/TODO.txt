@@ -1,6 +1,8 @@
 TODO
-- get server running to set up img for submission
+- try server "external hard drive" for code
 - include semantic context tags
-- fix layout issue-- probably will just make the media queries to look for a fixed width instead of trying to make it fluid
+- get img & deploy on a diff vm to test submission
 
 DONE
+- get server running
+- fix layout issue-- probably will just make the media queries to look for a fixed width instead of trying to make it fluid

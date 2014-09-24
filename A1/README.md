@@ -9,10 +9,11 @@ This README would normally document whatever steps are necessary to get your app
 ### How do I get set up? ###
 
 * Summary of set up
-** Clone the repo
-** Open index.html in a browser
+	* Clone the repo
+	* Open index.html in a browser
+	* (Y)
 * Deployment instructions
-** Use Amazon EC2
+	* Amazon EC2
 
 ### Contribution guidelines ###
 
