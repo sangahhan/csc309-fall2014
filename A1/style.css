@@ -5,39 +5,42 @@ html {
 
 body {
 	background: rgb(161,202,241); /* Old browsers */
-	background: -moz-linear-gradient(top, rgb(161,202,241) 0%, rgb(108,160,220) 100% fixed); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(161,202,241)), color-stop(100%,rgb(108,160,220)) fixed); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, rgb(161,202,241) 0%,rgb(108,160,220) 100% fixed); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, rgb(161,202,241) 0%,rgb(108,160,220) 100% fixed); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, rgb(161,202,241) 0%,rgb(108,160,220) 100% fixed); /* IE10+ */
-	background: linear-gradient(to bottom, rgb(161,202,241) 0%,rgb(108,160,220) 100% fixed); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a1caf1', endColorstr='#6ca0dc',GradientType=0); /* IE6-9 */
+	background: -webkit-linear-gradient(rgb(161, 202, 241), rgb(108, 160, 220)); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(rgb(161, 202, 241), rgb(108, 160, 220)); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(rgb(161, 202, 241), rgb(108, 160, 220)); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(rgb(161, 202, 241), rgb(108, 160, 220));
+	background-attachment: fixed;
 	padding: 0;
 	margin: 0;
-}
-
-div {
+	font-family: sans-serif;
 }
 
 .panel {
-	border: 1px solid #000;
-	background: #fff;
+	border: 1px solid #000000;
+	background: #ffffff;
 	margin: 9px;
 	padding: 9px;
 }
 
 #header,
 #footer {
-	border-radius: 5px;
+	border-radius: 10px;
+	text-transform: uppercase;
+	color: rgb(128, 0, 0);
+	font-weight: bold;
+	font-size: 2em;
+	text-align: center;
 }
 
-
+nav ul {
+	display: initial;
+	list-style-type: none;
+	padding: 0;
+}
 
 /* desktop */
 @media only screen 
 and (min-width: 1240px) {
-	body {
-	}
 	#wrapper {
 		width: 1240px;
 		margin: 0 auto;
@@ -58,6 +61,11 @@ and (min-width: 1240px) {
 		width: 280px;
 	}
 
+	
+	nav ul li {
+		display: block;
+	}
+
 	#body {
 		float: right;
 		width: 560px;
@@ -73,24 +81,15 @@ and (min-width: 1240px) {
 /* smartphone */
 @media only screen 
 and (max-width: 1240px) {
-	body {
-	}
-	
 	#wrapper {
 		width: 100%;
 		max-width: 980px;
 		margin: 0 auto;
 	}
-	#inner-wrapper {
+
+	nav ul li {
+		display: inline;
 	}
 
-	#navigation {
-	}
-
-	#body {
-	}
-
-	#side-panel {
-	}
 
 }
