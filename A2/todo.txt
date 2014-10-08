@@ -1,0 +1,7 @@
+- physics
+  -> animation
+- look & feel
+- game logistics
+  -> points storage
+  -> ball limit
+  -> two levels:w:
