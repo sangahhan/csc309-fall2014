@@ -4,15 +4,14 @@
 		<title>Assignment 2: Breakout</title>
 		<meta charset="utf-8">
 		<meta name="description" content="Breakout game for g2sangah & g3tdirty's submission of A2, CSC309 Fall 2014">
-		<!-- <link href="style.css" type="text/css" rel="stylesheet"> -->
+		<link href="style.css" type="text/css" rel="stylesheet">
         </head>
 	<body>
-		<canvas id="game-board" width="500" height="300"></canvas>
-		<div>
-			<button onclick="addShape()">Add Circle</button>
-			<button onclick="clearCanvas()">Clear Canvas</button>
-			<button onclick="startAnimation()">Start Animation</button>
-			<button onclick="stopAnimation()">Stop Animation</button>
+		<div id="wrapper">
+			<canvas id="game-board" width="800" height="600"></canvas>
+			<div id="score-div">
+				<p>Score: <span id="score"></span></p>
+			</div>
 		</div>
 		<script src="breakout.js"></script>
 	</body>
