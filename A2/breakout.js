@@ -1,8 +1,9 @@
 var canvas;
 var bricks = [];
-var ball;
+var balls = [];
 var paddle;
 var score = 0;
+var playing = false;
 
 // Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
 function inheritFrom(type) {
@@ -23,6 +24,7 @@ GamePiece.prototype.draw = function() {
 	var ctx = this.context;
 	var x = this.x;
 	var y = this.y;
+	ctx.beginPath();
 	img.onload = function() {
 		ctx.drawImage(img, x, y);
 	};
@@ -46,39 +48,71 @@ Brick.prototype.constructor = Brick;
 
 function Paddle(canvas, x, img) {
 	GamePiece.call(this, canvas, x, canvas.clientHeight - 30, img);
-	this.moving = false;
+	this.width = 32;
 };
 
 Paddle.prototype = inheritFrom(GamePiece.prototype);
 Paddle.prototype.constructor = Paddle;
 
-function setUpBackground(canvas, imgUrl) {
-	var context = canvas.getContext("2d");
-	var img = new Image();
-	img.onload = function(){
-		for (var w = 0; w < canvas.width; w += img.width) {
-			for (var h = 0; h < canvas.height; h  += img.height) {
-				context.drawImage(img, w, h);
-			}
-		}
-	};
-	img.src = imgUrl;
-};
-
 // Draw the bricks all pretty at the top
 function setUpBricks() {
 };
 
-// Begin animations and breaking of bricks!
-function startGame() {
+// Move the bottom paddle with mouse
+function movePaddle() {
+	// precondition: user still has balls available to play with
+	window.onmousemove = function(event) {
+		if (!playing) return;
+		console.log(event);
+		console.log(paddle);
+		// TODO: change this so it lines up with the mouse.
+		// it has to do with the canvas origin vs mousemove origin
+		// too lazy to do the math. thx
+		paddle.x = event.x;
+	}
 };
 
 // Keep score
 function addToScore() {
 };
 
+// Get rid of a ball
+function dropBall() {
+	if (balls) {
+		// pop the first ball... or cut out part of the list... w.e.
+	} else {
+		playing = false;
+	}
+};
+
 // Levels
 function changeLevel() {
+};
+
+// Let's put all the if statements and magic up in hurr
+function gamePlay(canvas) {
+	if (playing) {
+
+		var ball = balls[0];
+	
+		//Clear the canvas.
+		canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+	
+		//Draw bricks
+		for(var i=0; i< bricks.length; i++) {
+			var brick = bricks[i];
+			brick.draw();
+		}
+	
+		// Draw paddle
+		movePaddle();
+		paddle.draw();
+
+		// Draw ball
+		ball.draw();
+	} else { 
+		console.log("LOSER");
+	}
 };
 
 window.onload = function() {
@@ -86,14 +120,16 @@ window.onload = function() {
 	scoreSpan.innerHTML = score;
 	
 	canvas = document.getElementById("game-board");
-	setUpBackground(canvas, "bkg.jpg"); 
 	
-	ball = new Ball(canvas, 50, 50, "football2.png");
-	ball.draw();
 	paddle = new Paddle(canvas, 400, "full4.png");
-	paddle.draw();
-	
-	var testBrick = new Brick(canvas, 200, 200, "wall4.png");
-	testBrick.draw();
+	balls = [new Ball(canvas, 400, 400, "football2.png"),
+	      new Ball(canvas, 400, 400, "football2.png"),
+	      new Ball(canvas, 400, 400, "football2.png")];
+
+	playing = true;
+	setInterval("gamePlay(canvas)", 20);
+
+	//var testBrick = new Brick(canvas, 0,0, "wall4.png");
+	//testBrick.draw();
 };
 
