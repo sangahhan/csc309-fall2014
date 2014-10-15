@@ -20,7 +20,9 @@ function changeLevel() {
 
 // Let's put all the if statements and magic up in hurr
 function gamePlay(canvas) {
-
+	document.onMouseMove = function(event) {
+		// move paddle
+	}
 	// other things will go here, but i know this is part of it
 	if (balls[0]){ 
 		// change slope if ball hits edge 
