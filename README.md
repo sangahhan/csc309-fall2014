@@ -1,2 +1,2 @@
-[A1: HTML5 and CSS3](./A1)
-[A2: Breakout](./A2)
+- [A1: HTML5 and CSS3](csc309/A1)
+- [A2: Breakout](csc309/A2)
