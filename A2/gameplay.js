@@ -51,11 +51,13 @@ function testHitBricks() {
 };
 
 function testHitPaddle() {
+	if (!balls.length) return false;
 	var x_min = paddle.x;
 	var x_max = paddle.x + PADDLE_W;
 	var y = paddle.y;
-	
-	return false;
+	var ball_centre_x = balls[0].x + (balls[0].width / 2);
+	var ball_bottom = balls[0].y + balls[0].height;
+	return ball_centre_x >= x_min && ball_centre_x <= x_max && ball_bottom <= y;
 };
 
 // Move the bottom paddle with mouse
@@ -77,15 +79,24 @@ function resetBoard() {
 	drawAll();
 };
 
+function levelCheck() {
+	if (score == 448) {
+		resetBoard();
+	} else if (score == 896) {
+		scoreSpan.innerHTML = "WINNER";
+		gameStop();
+	}
+};
 
 function gameStop() {
 	clearInterval(interval);
 }
 
 // Let's put all the if statements and magic up in hurr
-function gamePlay() {
+function gameStart() {
 	if (testHitBricks()) scoreSpan.innerHTML = score;
 	if (testHitPaddle()) console.log("put ball bounce code here");
+	levelCheck();
 	drawAll();
 	
 };
@@ -99,6 +110,6 @@ window.onload = function() {
 	var ctx = canvas.getContext("2d");
 	
 	resetBoard();	
-	//interval = setInterval("gamePlay(canvas)")
+	//interval = setInterval("gameStart()")
 };
 
