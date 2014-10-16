@@ -93,12 +93,7 @@ function gameStop() {
 }
 
 // Let's put all the if statements and magic up in hurr
-<<<<<<< HEAD
-function gamePlay() {
-
-=======
 function gameStart() {
->>>>>>> 3a4688de8d03f067682c59f42aa2b115f6ab5db4
 	if (testHitBricks()) scoreSpan.innerHTML = score;
 	if (testHitPaddle()) console.log("put ball bounce code here");
 	levelCheck();
@@ -120,15 +115,9 @@ window.onload = function() {
 	// TODO: set up bricks
 		
 	playing = true;
-	bricks = newBricks(4, 11);
-	interval = setInterval("gamePlay(canvas)", 20);
-	
+	bricks = newBricks(4, 11);	
 	resetBoard();	
-<<<<<<< HEAD
-	//interval = setInterval("gamePlay(canvas)")
+	interval = setInterval("gameStart()", 20);
 
-=======
-	//interval = setInterval("gameStart()")
->>>>>>> 3a4688de8d03f067682c59f42aa2b115f6ab5db4
 };
 
