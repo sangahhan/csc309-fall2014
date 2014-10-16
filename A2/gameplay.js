@@ -98,9 +98,7 @@ function gameStart() {
 	if (testHitPaddle()) console.log("put ball bounce code here");
 	levelCheck();
 	drawAll();
-	
 };
-
 
 window.onload = function() {
 	scoreSpan = document.getElementById("score");
@@ -108,8 +106,17 @@ window.onload = function() {
 	
 	canvas = document.getElementById("game-window");
 	var ctx = canvas.getContext("2d");
-	
+
+	paddle = new Paddle(canvas, 400, PADDLE_I, PADDLE_W, PADDLE_H);
+	balls = [new Ball(canvas, (canvas.width/2) - (BALL_D/2), 
+		canvas.height - PADDLE_H - BALL_D, BALL_I, BALL_D, BALL_D),
+	      new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D),
+	      new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D)];
+	// TODO: set up bricks
+		
+	playing = true;
+	bricks = newBricks(4, 11);	
 	resetBoard();	
-	//interval = setInterval("gameStart()")
+	interval = setInterval("gameStart()", 20);
 };
 
