@@ -118,6 +118,5 @@ window.onload = function() {
 	bricks = newBricks(4, 11);	
 	resetBoard();	
 	interval = setInterval("gameStart()", 20);
-
 };
 
