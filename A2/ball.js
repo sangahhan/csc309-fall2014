@@ -7,17 +7,7 @@ Ball.prototype.constructor = Ball;
 var xdirection = -4;
 var ydirection = -8;
 Ball.prototype.draw = function () {
-	var img = new Image();
-	var ctx = this.context;
-	var x = this.x;
-	var y = this.y;
-	var w = this.width;
-	var h = this.height;
-	ctx.beginPath();
-	img.onload = function() {
-		ctx.drawImage(img, x, y, w, h);
-	}
-	img.src = this.imgUrl;
+	GamePiece.prototype.draw.call(this);
 	this.move();
 	
 };
