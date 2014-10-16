@@ -43,6 +43,8 @@ function testHitBricks() {
 			if (current.testHit(balls[0]))  {
 				score += current.score;
 				bricks[i][j] = null;
+				ydirection *= -1;
+				xdirection *= -1;
 				return true;
 			}}
 		}
@@ -80,9 +82,9 @@ function resetBoard() {
 };
 
 function levelCheck() {
-	if (score == 448) {
+	if (score == 128) {
 		resetBoard();
-	} else if (score == 896) {
+	} else if (score == 256) {
 		scoreSpan.innerHTML = "WINNER";
 		gameStop();
 	}
@@ -106,17 +108,8 @@ window.onload = function() {
 	
 	canvas = document.getElementById("game-window");
 	var ctx = canvas.getContext("2d");
-
-	paddle = new Paddle(canvas, 400, PADDLE_I, PADDLE_W, PADDLE_H);
-	balls = [new Ball(canvas, (canvas.width/2) - (BALL_D/2), 
-		canvas.height - PADDLE_H - BALL_D, BALL_I, BALL_D, BALL_D),
-	      new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D),
-	      new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D)];
-	// TODO: set up bricks
-		
 	playing = true;
-	bricks = newBricks(4, 11);	
 	resetBoard();	
-	interval = setInterval("gameStart()", 20);
+	interval = setInterval("gameStart()", 30);
 };
 

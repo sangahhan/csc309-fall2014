@@ -9,7 +9,7 @@ var BALL_I ="pig.png";
 var BRICK_I = ["yellow-bird.png", "green-bird.png", "blue-bird.png", "red-bird.png"];
 
 var BRICK_ROWS = 4;
-var BRICK_COLS = 10;
+var BRICK_COLS = 8;
 var BRICK_SCORES = [1,3,5,7];
 
 var canvas;
