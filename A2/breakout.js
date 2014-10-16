@@ -1,10 +1,10 @@
 var BRICK_W = 100; 
 var BRICK_H = 50;
-var PADDLE_W = 128;
+var PADDLE_W = 150;
 var PADDLE_H = 30;
 var BALL_D = 50;
 
-var PADDLE_I = "blackbox.jpeg";
+var PADDLE_I = "red.jpg";
 var BALL_I ="pig.png";
 var BRICK_I = ["yellow-bird.png", "green-bird.png", "blue-bird.png", "red-bird.png"];
 

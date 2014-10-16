@@ -4,7 +4,7 @@ html {
 }
 
 body {
-	background: rgb(161,202,241); /* Old browsers */
+	background: url(brick-pattern.jpg);
 	background-attachment: fixed;
 	padding: 0;
 	margin: 0;
@@ -17,6 +17,12 @@ body {
 }
 
 #game-window{
-
+	margin-top: 100px;
+	background: rgba(0, 0, 0, 0.5);
 }
 
+#score-div {
+	text-align: center;
+	font-size: 2em;
+	background: #ff0;
+}
