@@ -1,6 +1,16 @@
+var BRICK_W = 75; 
+var BRICK_H = 40;
+var PADDLE_W = 128;
+var PADDLE_H = 30;
+var BALL_D = 30;
+
+var PADDLE_I = "paddle.png";
+var BRICK_I = "brick.png";
+var BALL_I = "ball.png";
+
 var canvas;
 var interval;
-var bricks = [[][][]]; // [row][col] ... like in Towers of Hanoi
+var bricks; // [row][col] ... like in Towers of Hanoi
 var balls = [];
 var paddle;
 var score = 0;
@@ -15,10 +25,12 @@ function inheritFrom(type) {
 	return new F(); 
 }
 
-function GamePiece(canvas, x, y, img) {
+function GamePiece(canvas, x, y, img, width, height) {
 	this.context = canvas.getContext("2d");
 	this.x = x;
 	this.y = y;
+	this.width = width;
+	this.height = height;
 	this.imgUrl = img;
 };
 
@@ -27,9 +39,11 @@ GamePiece.prototype.draw = function() {
 	var ctx = this.context;
 	var x = this.x;
 	var y = this.y;
+	var w = this.width; 
+	var h = this.height;
 	ctx.beginPath();
 	img.onload = function() {
-		ctx.drawImage(img, x, y);
+		ctx.drawImage(img, x, y, w, h);
 	};
 	img.src = this.imgUrl;
 };

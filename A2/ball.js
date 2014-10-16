@@ -1,5 +1,5 @@
-function Ball(canvas, x, y, img) {
-	GamePiece.call(this, canvas, x, y, img);
+function Ball(canvas, x, y, img, w, h) {
+	GamePiece.call(this, canvas, x, y ,img, w, h);
 };
 
 Ball.prototype = inheritFrom(GamePiece.prototype);
