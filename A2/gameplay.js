@@ -42,8 +42,18 @@ function changeLevel() {
 
 // Let's put all the if statements and magic up in hurr
 function gamePlay(canvas) {
+	drawGamePieces();
 };
 
+function drawGamePieces(){
+	var ctx = canvas.getContext("2d");
+	ctx.clearRect(0,0,canvas.width, canvas.height);
+	ctx.fillStyle="#FF0000";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	paddle.draw();
+	drawBricks(bricks);
+	balls[0].draw();
+}
 
 window.onload = function() {
 	scoreSpan = document.getElementById("score");
@@ -51,19 +61,18 @@ window.onload = function() {
 	
 	canvas = document.getElementById("game-board");
 	var ctx = canvas.getContext("2d");
-	ctx.fillStyle="#FF0000";
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 	
 	paddle = new Paddle(canvas, 400, PADDLE_I, PADDLE_W, PADDLE_H);
-	balls = [new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D),
+	balls = [new Ball(canvas, (canvas.width/2) - (BALL_D/2), 
+		canvas.height - PADDLE_H - BALL_D, BALL_I, BALL_D, BALL_D),
 	      new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D),
 	      new Ball(canvas, 400, 400, BALL_I, BALL_D, BALL_D)];
 	// TODO: set up bricks
 		
 	playing = true;
-	//interval = setInterval("gamePlay(canvas)", 20);
-	paddle.draw();
 	bricks = newBricks(4, 11);
-	drawBricks(bricks);
+	interval = setInterval("gamePlay(canvas)", 20);
+	
 };
 
