@@ -4,9 +4,13 @@ var PADDLE_W = 128;
 var PADDLE_H = 30;
 var BALL_D = 30;
 
-var PADDLE_I = "paddle.png";
-var BRICK_I = "brick.png";
-var BALL_I = "ball.png";
+var PADDLE_I = "blackbox.jpeg";
+var BALL_I ="red.jpg";
+var BRICK_I = ["yellow.jpg", "green.gif", "orange.png", "red.jpg"];
+
+var BRICK_ROWS = 4;
+var BRICK_COLS = 11;
+var BRICK_SCORES = [1,3,5,7];
 
 var canvas;
 var interval;
