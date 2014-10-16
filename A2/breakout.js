@@ -15,8 +15,6 @@ var balls = [];
 var paddle;
 var score = 0;
 var playing = false;
-var dx = 2;
-var dy = 4;
 
 // Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
 function inheritFrom(type) {
