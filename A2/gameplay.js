@@ -35,18 +35,23 @@ function newBalls(num) {
 };
 
 function testHitBricks() {
-	if (!bricks.length) return; 
+	if (!bricks.length) return false; 
 	for (var i = 0; i < bricks.length; i++) {
-		for (var j = 0; j < bricks[i]; j++) {
-			if (bricks[i][j].testHit(balls[0]))  {
-				score += bricks[i][j].score;
+		for (var j = 0; j < bricks[i].length; j++) {
+			var current = bricks[i][j];
+			if (current) {
+			if (current.testHit(balls[0]))  {
+				score += current.score;
 				bricks[i][j] = null;
-			}
+				return true;
+			}}
 		}
 	}
+	return false;
 };
 
 function testHitPaddle() {
+	return false;
 };
 
 // Move the bottom paddle with mouse
