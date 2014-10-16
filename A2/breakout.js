@@ -1,12 +1,16 @@
-var BRICK_W = 75; 
-var BRICK_H = 40;
+var BRICK_W = 100; 
+var BRICK_H = 50;
 var PADDLE_W = 128;
 var PADDLE_H = 30;
-var BALL_D = 30;
+var BALL_D = 50;
 
-var PADDLE_I = "paddle.png";
-var BRICK_I = "brick.png";
-var BALL_I = "ball.png";
+var PADDLE_I = "blackbox.jpeg";
+var BALL_I ="pig.png";
+var BRICK_I = ["yellow-bird.png", "green-bird.png", "blue-bird.png", "red-bird.png"];
+
+var BRICK_ROWS = 4;
+var BRICK_COLS = 10;
+var BRICK_SCORES = [1,3,5,7];
 
 var canvas;
 var interval;
