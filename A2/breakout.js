@@ -6,7 +6,7 @@ var BALL_D = 50;
 
 var PADDLE_I = "blackbox.jpeg";
 var BALL_I ="pig.png";
-var BRICK_I = ["yellow-bird.png", "green-bird.png", "black-bird.png", "red-bird.png"];
+var BRICK_I = ["yellow-bird.png", "green-bird.png", "blue-bird.png", "red-bird.png"];
 
 var BRICK_ROWS = 4;
 var BRICK_COLS = 10;

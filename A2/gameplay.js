@@ -51,15 +51,15 @@ function testHitBricks() {
 };
 
 function testHitPaddle() {
+	var x_min = paddle.x;
+	var x_max = paddle.x + PADDLE_W;
+	var y = paddle.y;
+	
 	return false;
 };
 
 // Move the bottom paddle with mouse
 function movePaddle() {
-};
-
-// Keep score
-function addToScore() {
 };
 
 function drawAll() {
@@ -84,10 +84,10 @@ function gameStop() {
 
 // Let's put all the if statements and magic up in hurr
 function gamePlay() {
-	hitBricks();
+	if (testHitBricks()) scoreSpan.innerHTML = score;
+	if (testHitPaddle()) console.log("put ball bounce code here");
 	drawAll();
-	testHitBricks();
-
+	
 };
 
 
