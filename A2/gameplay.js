@@ -84,21 +84,11 @@ function gameStop() {
 
 // Let's put all the if statements and magic up in hurr
 function gamePlay() {
-	drawGamePieces();
+
 	if (testHitBricks()) scoreSpan.innerHTML = score;
 	if (testHitPaddle()) console.log("put ball bounce code here");
 	drawAll();
 };
-
-function drawGamePieces(){
-	var ctx = canvas.getContext("2d");
-	ctx.clearRect(0,0,canvas.width, canvas.height);
-	ctx.fillStyle="#FF0000";
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	paddle.draw();
-	drawBricks(bricks);
-	balls[0].draw();
-}
 
 window.onload = function() {
 	scoreSpan = document.getElementById("score");

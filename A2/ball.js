@@ -25,7 +25,7 @@ Ball.prototype.move = function () {
 	this.x += xdirection;
 	
 	if (this.x <= 0 || (this.x > canvas.width - BALL_D)){
-		if (this.x < 0){
+		if (this.x <= 0){
 			this.x = 0;
 		} else {
 			this.x = canvas.width - BALL_D;
@@ -35,7 +35,7 @@ Ball.prototype.move = function () {
 
 	this.y += ydirection;
 	if (this.y <= 0 || (this.y > (canvas.height - BALL_D))){
-		if (this.y < 0){
+		if (this.y <= 0){
 			this.y = 0;
 		} else {
 			this.y = canvas.height - BALL_D;
