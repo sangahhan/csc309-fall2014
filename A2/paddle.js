@@ -9,10 +9,9 @@ Paddle.prototype.constructor = Paddle;
 Paddle.prototype.draw = function() {
 	this.move();
 	var ctx = this.context;
-	var x = this.x - (this.width / 2);
 	ctx.fillStyle = this.bkg;
 	ctx.beginPath();
-	ctx.fillRect(x, this.y, this.width, this.height);
+	ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 
 Paddle.prototype.move = function(){

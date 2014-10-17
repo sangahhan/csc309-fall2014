@@ -50,7 +50,7 @@ function testHitPaddle() {
 	
 	/*We don't care if the ball hits the paddle if it is in the
 	middle of the screen */
-	if (balls[0].y < canvas.height - PADDLE_H) return true;
+//	if (balls[0].y < canvas.height - PADDLE_H) return true;
 	
 	var x_min = paddle.x;
 	var x_max = paddle.x + PADDLE_W;
@@ -87,12 +87,15 @@ function resetBoard() {
 	drawAll();
 };
 
+function displayWinner() {
+};
+
 function levelCheck() {
 	if (score == 128) {
 		resetBoard();
-	} else if (score == 256) {
-		scoreSpan.html("WINNER");
+	} else if (score >= 256) {
 		gameStop();
+
 	}
 };
 
@@ -104,13 +107,14 @@ function gameStop() {
 function gameStart() {
 	if (testHitBricks()) scoreSpan.html(score);
 	if (!testHitPaddle()) {
-		if (balls[0].y >= canvas.height) {
+		if (balls[0].y >= (canvas.height - paddle.height)) {
 			gameStop();
 			// TODO: Ball has hit the ground. We must give them a new ball from the list balls. (teehee)
 			// If there are no balls left, tell them they have lost.
 			// Should we let them try again and reset the entire board?
-			console.log(interval);
 		}
+	} else {
+		ydirection *= -1;
 	}
 	levelCheck();
 	drawAll();
