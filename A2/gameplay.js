@@ -56,8 +56,19 @@ function testHitPaddle() {
 function movePaddle(evt) {
 	if (evt.keyCode == 39) rightKeyPressed = true;
 	else if (evt.keyCode == 37) leftKeyPressed = true;
-	else if (evt.keyCode == 38 && !playing && balls.length) {
-		gameStart();
+	else if (evt.keyCode == 13) {
+		if (balls.length) {
+			if (playing) gameStop();
+			else { 
+				gameStart();
+
+		$("#balls").html("Balls left: " + balls.length);
+			}
+		} else {
+			resetBoard();
+			score = 0;
+			gameStart();
+		}
 	}
 	else return;
 };
@@ -99,10 +110,10 @@ function onLose(){
 	balls.shift();
 	if (balls.length) {
 		paddle.x = (canvas.width / 2) - (PADDLE_W/ 2);
-		$("#balls").html("Balls left: " + balls.length);
+		$("#balls").html("Press ENTER to continue.");
 	} else {
 		scoreSpan.html("GAME OVER");
-		$("#balls").html("");
+		$("#balls").html("Press ENTER to play again.");
 	}
 	gameStop();
 };
@@ -124,10 +135,6 @@ function gameRun() {
 		if (!testHitPaddle()) {
 			if (balls[0].y >= (canvas.height - paddle.height)) {
 				onLose();
-			// TODO: Ball has hit the ground. We must give them a new ball from the list balls. (teehee)
-			// If there are no balls left, tell them they have lost.
-			// Should we let them try again and reset the entire board?
-				// when the game is over, don't try to draw again
 				if (!balls.length) return;
 			}
 		} else {
@@ -147,7 +154,6 @@ $(function() {
 	resetBoard();	
 	$(document).keydown(movePaddle);
 	$(document).keyup(stopMovingPaddle);
-	gameStart();
-	$("#balls").html("Balls left: " + balls.length);
+	$("#balls").html("Press ENTER to start/pause the game.");
 });
 
