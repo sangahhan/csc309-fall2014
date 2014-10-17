@@ -8,7 +8,7 @@ Ball.prototype.constructor = Ball;
 var xdirection = -4;
 var ydirection = -8;
 Ball.prototype.draw = function () {
-	var ctx = this.context;
+var ctx = this.context;
 	ctx.beginPath();
 	ctx.fillStyle = this.bkg;
 	ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);

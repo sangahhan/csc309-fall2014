@@ -31,38 +31,34 @@ function newBalls(num) {
 
 function testHitBricks() {
 	if (!bricks.length) return false; 
-	for (var i = 0; i < bricks.length; i++) {
-		if (bricks[i]) {
-			if (bricks[i].testHit(balls[0]))  {
-				score += bricks[i].score;
-				bricks[i] = null;
-				ydirection *= -1;
-				xdirection *= -1;
-				return true;
-			}
-		}
-	}
+	var row = Math.floor(balls[0].y/BRICK_H);
+	var col = Math.floor(balls[0].x/BRICK_W);
+	var index = col + (row * BRICK_COLS)
+	if (balls[0].y < BRICK_ROWS * BRICK_H && row >= 0 && col >= 0 && bricks[index]) {
+		ydirection *= -1;
+		score += bricks[index].score;
+		bricks[index] = null;
+		return true;
+	}            
 	return false;
 };
 
 function testHitPaddle() {
-	if (!balls.length) return false;
-	
-	/*We don't care if the ball hits the paddle if it is in the
-	middle of the screen */
-//	if (balls[0].y < canvas.height - PADDLE_H) return true;
-	
+	if (!balls.length) return false;	
 	var x_min = paddle.x;
 	var x_max = paddle.x + PADDLE_W;
 	var y = paddle.y;
 	var ball_bottom = balls[0].y + balls[0].radius;
-	return balls[0].x >= x_min && balls[0].x <= x_max && ball_bottom >= y;
+	return ydirection > 0 && balls[0].x >= x_min && balls[0].x <= x_max && ball_bottom >= y;
 };
 
 
 function movePaddle(evt) {
 	if (evt.keyCode == 39) rightKeyPressed = true;
 	else if (evt.keyCode == 37) leftKeyPressed = true;
+	else if (evt.keyCode == 38 && !playing && balls.length) {
+		gameStart();
+	}
 	else return;
 };
 
@@ -83,7 +79,7 @@ function drawAll() {
 function resetBoard() {	
 	bricks = newBricks(BRICK_ROWS, BRICK_COLS);
 	balls = newBalls(3);
-	paddle = new Paddle(canvas, canvas.width / 2, PADDLE_I, PADDLE_W, PADDLE_H);
+	paddle = new Paddle(canvas, (canvas.width / 2) - (PADDLE_W/ 2), PADDLE_I, PADDLE_W, PADDLE_H);
 	drawAll();
 };
 
@@ -99,38 +95,57 @@ function levelCheck() {
 	}
 };
 
+function onLose(){
+	balls.shift();
+	if (balls.length) {
+		paddle.x = (canvas.width / 2) - (PADDLE_W/ 2);
+		$("#balls").html("Balls left: " + balls.length);
+	} else {
+		scoreSpan.html("GAME OVER");
+		$("#balls").html("");
+	}
+	gameStop();
+};
+
 function gameStop() {
+	playing = false;
 	clearInterval(interval);
 };
 
-// Let's put all the if statements and magic up in hurr
 function gameStart() {
-	if (testHitBricks()) scoreSpan.html(score);
-	if (!testHitPaddle()) {
-		if (balls[0].y >= (canvas.height - paddle.height)) {
-			gameStop();
+	playing = true;
+	interval = setInterval("gameRun()", 30);
+};
+
+// Let's put all the if statements and magic up in hurr
+function gameRun() {
+	if (playing) {
+		if (testHitBricks()) scoreSpan.html("Score: " + score);
+		if (!testHitPaddle()) {
+			if (balls[0].y >= (canvas.height - paddle.height)) {
+				onLose();
 			// TODO: Ball has hit the ground. We must give them a new ball from the list balls. (teehee)
 			// If there are no balls left, tell them they have lost.
 			// Should we let them try again and reset the entire board?
+			}
+		} else {
+			ydirection *= -1;
 		}
-	} else {
-		console.log("bounceback");
-		ydirection *= -1;
+		levelCheck();
+		drawAll();
 	}
-	levelCheck();
-	drawAll();
 };
 
 $(function() {
 	scoreSpan = $("#score");
-	scoreSpan.html(score);
+	scoreSpan.html("Score: " + score);
 	
 	canvas = $("#game-window")[0];
 	var ctx = canvas.getContext("2d");
-	playing = true;
 	resetBoard();	
-	interval = setInterval("gameStart()", 20);
 	$(document).keydown(movePaddle);
 	$(document).keyup(stopMovingPaddle);
+	gameStart();
+	$("#balls").html("Balls left: " + balls.length);
 });
 

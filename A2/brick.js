@@ -14,11 +14,3 @@ Brick.prototype.draw = function(){
 	ctx.strokeRect(this.x, this.y, this.width, this.height);
 };
 
-Brick.prototype.testHit = function (ball) {
-	var x_min = this.x;
-	var x_max = x_min + this.width;
-	var y_min = this.y;
-	var y_max = y_min + this.height;
-	// TODO: ball can only hit from bottom; make it so that it can hit from all around
-	return ball.x >= x_min && ball.x <= x_max && ball.y >= y_min && ball.y <= y_max;
-};
