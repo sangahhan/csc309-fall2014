@@ -25,3 +25,7 @@ Paddle.prototype.move = function(){
 		if (this.x < 0) this.x = 0;
 	}
 };
+
+Paddle.prototype.shrinkSize = function(){
+	this.width = this.width/2;
+}

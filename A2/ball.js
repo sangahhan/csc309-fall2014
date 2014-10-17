@@ -34,6 +34,9 @@ Ball.prototype.move = function () {
 	this.y += ydirection;
 	if (this.y -  this.width/2 <= 0 || (this.y > canvas.height )){
 		if (this.y - this.width/2 <= 0){
+			if (!smallPaddle){
+				shrinkPaddle();
+			}
 			this.y = this.width/2;
 		} else {
 			this.y = canvas.height;

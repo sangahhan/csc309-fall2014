@@ -68,6 +68,11 @@ function stopMovingPaddle(evt) {
 	else return;
 };
 
+function shrinkPaddle(){
+	smallPaddle = true;
+	paddle.shrinkSize();
+}
+
 function drawAll() {
 	canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 	drawBricks(bricks);
@@ -87,9 +92,9 @@ function displayWinner() {
 };
 
 function levelCheck() {
-	if (score == 128) {
+	if (score == 448) {
 		resetBoard();
-	} else if (score >= 256) {
+	} else if (score >= 896) {
 		gameStop();
 
 	}
@@ -98,7 +103,7 @@ function levelCheck() {
 function onLose(){
 	balls.shift();
 	if (balls.length) {
-		paddle.x = (canvas.width / 2) - (PADDLE_W/ 2);
+		paddle.x = (canvas.width / 2) - (paddle.width/ 2);
 		$("#balls").html("Balls left: " + balls.length);
 	} else {
 		scoreSpan.html("GAME OVER");

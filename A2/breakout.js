@@ -1,16 +1,16 @@
-var BRICK_W = 100; 
-var BRICK_H = 30;
+var BRICK_W = 57; 
+var BRICK_H = 25;
 var PADDLE_W = 150;
-var PADDLE_H = 25;
-var BALL_R = 12;
+var PADDLE_H = 20;
+var BALL_R = 10;
 
 var PADDLE_I = "gray";
 var BALL_I = "#F433FF";
 var BRICK_I = ["yellow", "yellow", "green", "green", "orange", "orange", "red", "red"];
 
 var BRICK_ROWS = 8;
-var BRICK_COLS = 8;
-var BRICK_SCORES = [1,3,5,7];
+var BRICK_COLS = 14;
+var BRICK_SCORES = [1,1,3,3,5,5,7,7];
 
 var canvas;
 var interval;
@@ -22,6 +22,7 @@ var playing = false;
 
 var rightKeyPressed = false; 
 var leftKeyPressed = false;
+var smallPaddle = false;
 
 // Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
 function inheritFrom(type) {
