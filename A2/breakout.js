@@ -20,6 +20,9 @@ var paddle;
 var score = 0;
 var playing = false;
 
+var rightKeyPressed = false; 
+var leftKeyPressed = false;
+
 // Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
 function inheritFrom(type) {
 	function F() {}; // Dummy constructor

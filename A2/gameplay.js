@@ -60,9 +60,18 @@ function testHitPaddle() {
 	return ball_centre_x >= x_min && ball_centre_x <= x_max && ball_bottom <= y;
 };
 
-// Move the bottom paddle with mouse
-function movePaddle() {
-};
+
+function movePaddle(evt) {
+	if (evt.keyCode == 39) rightKeyPressed = true;
+	else if (evt.keyCode == 37) leftKeyPressed = true;
+	else return;
+}
+
+function stopMovingPaddle(evt) {
+	if (evt.keyCode == 39) rightKeyPressed = false;
+	else if (evt.keyCode == 37) leftKeyPressed = false;
+	else return;
+}
 
 function drawAll() {
 	canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
@@ -118,5 +127,7 @@ window.onload = function() {
 	bricks = newBricks(4, 11);	
 	resetBoard();	
 	interval = setInterval("gameStart()", 20);
+	$(document).keydown(movePaddle);
+	$(document).keyup(stopMovingPaddle);
 };
 
