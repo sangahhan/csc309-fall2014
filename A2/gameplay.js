@@ -114,6 +114,7 @@ function gameStart() {
 			// Should we let them try again and reset the entire board?
 		}
 	} else {
+		console.log("bounceback");
 		ydirection *= -1;
 	}
 	levelCheck();
