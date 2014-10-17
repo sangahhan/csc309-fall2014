@@ -1,5 +1,5 @@
 function Paddle(canvas, x, img, w, h) {
-	GamePiece.call(this, canvas, x - (w / 2), canvas.height - h, img, w, h);
+	GamePiece.call(this, canvas, x, canvas.height - h, img, w, h);
 };
 
 Paddle.prototype = inheritFrom(GamePiece.prototype);

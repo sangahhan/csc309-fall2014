@@ -102,7 +102,7 @@ function gameStop() {
 
 // Let's put all the if statements and magic up in hurr
 function gameStart() {
-	if (testHitBricks()) scoreSpan.innerHTML = score;
+	if (testHitBricks()) scoreSpan.html(score);
 	
 	if (!testHitPaddle()) {
 		if (balls[0].y >= canvas.height) {
