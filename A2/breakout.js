@@ -2,10 +2,10 @@ var BRICK_W = 100;
 var BRICK_H = 50;
 var PADDLE_W = 150;
 var PADDLE_H = 30;
-var BALL_D = 50;
+var BALL_R = 25;
 
-var PADDLE_I = "red";
-var BALL_I ="red";
+var PADDLE_I = "gray";
+var BALL_I = "pink";
 var BRICK_I = ["yellow", "green", "orange", "red"];
 
 var BRICK_ROWS = 4;

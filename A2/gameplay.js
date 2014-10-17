@@ -22,10 +22,10 @@ function newBricks(rows, cols) {
 
 function newBalls(num) {
 	var balls = [];
-	var x = (canvas.width / 2) - (BALL_D / 2);
-	var y = canvas.height - PADDLE_H - BALL_D;
+	var x = (canvas.width / 2);
+	var y = canvas.height - PADDLE_H - BALL_R;
 	for (var i = 0; i < num; i++) {
-		balls.push(new Ball(canvas, x, y, BALL_I, BALL_D));
+		balls.push(new Ball(canvas, x, y, BALL_I, BALL_R));
 	}
 	return balls;
 };
@@ -56,9 +56,8 @@ function testHitPaddle() {
 	var x_min = paddle.x;
 	var x_max = paddle.x + PADDLE_W;
 	var y = paddle.y;
-	var ball_centre_x = balls[0].x + (balls[0].width / 2);
-	var ball_bottom = balls[0].y + balls[0].height;
-	return ball_centre_x >= x_min && ball_centre_x <= x_max && ball_bottom >= y;
+	var ball_bottom = balls[0].y + balls[0].radius;
+	return balls[0].x >= x_min && balls[0].x <= x_max && ball_bottom >= y;
 };
 
 
@@ -109,7 +108,7 @@ function gameStart() {
 	if (!testHitPaddle()){
 		gameStop();
 	if (!testHitPaddle()) {
-		if (balls[0].y + balls[0].height >= canvas.height) {
+		if (balls[0].y >= canvas.height) {
 			gameStop();
 			// TODO: click to play again?
 			console.log(interval);
