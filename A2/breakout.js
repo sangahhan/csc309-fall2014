@@ -24,6 +24,12 @@ var rightKeyPressed = false;
 var leftKeyPressed = false;
 var smallPaddle = false;
 
+var xdirection = -4;
+var ydirection = -8;
+var numHits = 0;
+var speedIncreaseOrangeRow = false;
+var speedIncreaseRedRow = false;
+
 // Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
 function inheritFrom(type) {
 	function F() {}; // Dummy constructor

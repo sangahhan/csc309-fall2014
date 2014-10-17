@@ -5,8 +5,7 @@ function Ball(canvas, x, y, bkg, rad) {
 
 Ball.prototype = inheritFrom(GamePiece.prototype);
 Ball.prototype.constructor = Ball;
-var xdirection = -4;
-var ydirection = -8;
+
 Ball.prototype.draw = function () {
 var ctx = this.context;
 	ctx.beginPath();

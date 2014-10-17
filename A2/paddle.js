@@ -1,5 +1,6 @@
 function Paddle(canvas, x, img, w, h) {
 	GamePiece.call(this, canvas, x, canvas.height - h, img, w, h);
+	this.speed = 8;
 };
 
 Paddle.prototype = inheritFrom(GamePiece.prototype);
@@ -16,12 +17,12 @@ Paddle.prototype.draw = function() {
 
 Paddle.prototype.move = function(){
 	if (rightKeyPressed){
-		this.x += 8;
+		this.x += this.speed;
 		if (this.x + this.width > canvas.width) 
 			this.x = canvas.width - this.width;
 	} 
 	if (leftKeyPressed){
-		this.x -= 8;
+		this.x -= this.speed;
 		if (this.x < 0) this.x = 0;
 	}
 };
