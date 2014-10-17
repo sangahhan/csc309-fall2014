@@ -127,6 +127,8 @@ function gameRun() {
 			// TODO: Ball has hit the ground. We must give them a new ball from the list balls. (teehee)
 			// If there are no balls left, tell them they have lost.
 			// Should we let them try again and reset the entire board?
+				// when the game is over, don't try to draw again
+				if (!balls.length) return;
 			}
 		} else {
 			ydirection *= -1;
