@@ -1,9 +1,7 @@
 // Draw the bricks all pretty at the top
 function drawBricks(bricks) {
 	for (var i = 0; i < bricks.length; i++) {
-		for (var j = 0; j < bricks[i].length; j++) {
-			if (bricks[i][j]) bricks[i][j].draw();
-		}
+		if (bricks[i]) bricks[i].draw();
 	}
 };
 
@@ -12,14 +10,12 @@ function newBricks(rows, cols) {
 	var current_x = 0;
 	var current_y = 0;
 	for (var i = BRICK_ROWS; i > 0; i--) {
-		var row = [];
 		for (var j = 0; j < cols; j++) {
-			row.push(new Brick(canvas, current_x, current_y, BRICK_I[i-1], BRICK_W, BRICK_H, BRICK_SCORES[i-1]));
+			bricks.push(new Brick(canvas, current_x, current_y, BRICK_I[i-1], BRICK_W, BRICK_H, BRICK_SCORES[i-1]));
 			current_x += BRICK_W;
 		}
 		current_y += BRICK_H;
 		current_x = 0;
-		bricks.push(row);
 	}
 	return bricks;
 };
@@ -37,16 +33,14 @@ function newBalls(num) {
 function testHitBricks() {
 	if (!bricks.length) return false; 
 	for (var i = 0; i < bricks.length; i++) {
-		for (var j = 0; j < bricks[i].length; j++) {
-			var current = bricks[i][j];
-			if (current) {
-			if (current.testHit(balls[0]))  {
-				score += current.score;
-				bricks[i][j] = null;
+		if (bricks[i]) {
+			if (bricks[i].testHit(balls[0]))  {
+				score += bricks[i].score;
+				bricks[i] = null;
 				ydirection *= -1;
 				xdirection *= -1;
 				return true;
-			}}
+			}
 		}
 	}
 	return false;
@@ -64,7 +58,7 @@ function testHitPaddle() {
 	var y = paddle.y;
 	var ball_centre_x = balls[0].x + (balls[0].width / 2);
 	var ball_bottom = balls[0].y + balls[0].height;
-	return ball_centre_x >= x_min && ball_centre_x <= x_max && ball_bottom <= y;
+	return ball_centre_x >= x_min && ball_centre_x <= x_max && ball_bottom >= y;
 };
 
 
@@ -112,11 +106,14 @@ function gameStop() {
 function gameStart() {
 	if (testHitBricks()) scoreSpan.innerHTML = score;
 	
-	//What is this for?
-	if (testHitPaddle()) console.log("put ball bounce code here");
-	
 	if (!testHitPaddle()){
 		gameStop();
+	if (!testHitPaddle()) {
+		if (balls[0].y + balls[0].height >= canvas.height) {
+			gameStop();
+			// TODO: click to play again?
+			console.log(interval);
+		}
 	}
 	levelCheck();
 	drawAll();

@@ -4,9 +4,9 @@ var PADDLE_W = 150;
 var PADDLE_H = 30;
 var BALL_D = 50;
 
-var PADDLE_I = "red.jpg";
-var BALL_I ="pig.png";
-var BRICK_I = ["yellow-bird.png", "green-bird.png", "blue-bird.png", "red-bird.png"];
+var PADDLE_I = "red";
+var BALL_I ="red";
+var BRICK_I = ["yellow", "green", "orange", "red"];
 
 var BRICK_ROWS = 4;
 var BRICK_COLS = 8;
@@ -30,26 +30,19 @@ function inheritFrom(type) {
 	return new F(); 
 }
 
-function GamePiece(canvas, x, y, img, width, height) {
+function GamePiece(canvas, x, y, bkg, width, height) {
 	this.context = canvas.getContext("2d");
 	this.x = x;
 	this.y = y;
 	this.width = width;
 	this.height = height;
-	this.imgUrl = img;
+	this.bkg = bkg;
 };
 
 GamePiece.prototype.draw = function() {
-	var img = new Image();
 	var ctx = this.context;
-	var x = this.x;
-	var y = this.y;
-	var w = this.width; 
-	var h = this.height;
 	ctx.beginPath();
-	img.onload = function() {
-		ctx.drawImage(img, x, y, w, h);
-	};
-	img.src = this.imgUrl;
+	ctx.fillStyle = this.bkg;
+	ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 

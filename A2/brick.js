@@ -1,10 +1,18 @@
-function Brick(canvas, x, y, img, w, h, s) {
-	GamePiece.call(this, canvas, x, y, img, w, h);
+function Brick(canvas, x, y, bkg, w, h, s) {
+	GamePiece.call(this, canvas, x, y, bkg, w, h);
 	this.score = s;
 };
 
 Brick.prototype = inheritFrom(GamePiece.prototype);
 Brick.prototype.constructor = Brick;
+
+Brick.prototype.draw = function(){	
+	GamePiece.prototype.draw.call(this);
+	var ctx = this.context;
+	ctx.lineWidth  = 1;
+	ctx.strokeStyle = "black";
+	ctx.strokeRect(this.x, this.y, this.width, this.height);
+}
 
 Brick.prototype.testHit = function (ball) {
 	var x_min = this.x;

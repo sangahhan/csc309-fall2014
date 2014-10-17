@@ -8,17 +8,11 @@ Paddle.prototype.constructor = Paddle;
 
 Paddle.prototype.draw = function() {
 	this.move();
-	var img = new Image();
 	var ctx = this.context;
-	var x = this.x;
-	var y = this.y;
-	var w = this.width;
-	var h = this.height;
+	var x = this.x - (this.width / 2);
+	ctx.fillStyle = this.bkg;
 	ctx.beginPath();
-	img.onload = function() {
-		ctx.drawImage(img, x, y, w, h);
-	}
-	img.src = this.imgUrl;
+	ctx.fillRect(x, this.y, this.width, this.height);
 };
 
 Paddle.prototype.move = function(){

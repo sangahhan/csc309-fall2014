@@ -1,5 +1,5 @@
-function Ball(canvas, x, y, img, diameter) {
-	GamePiece.call(this, canvas, x, y ,img, diameter, diameter);
+function Ball(canvas, x, y, bkg, diameter) {
+	GamePiece.call(this, canvas, x, y, bkg, diameter, diameter);
 };
 
 Ball.prototype = inheritFrom(GamePiece.prototype);
@@ -7,7 +7,12 @@ Ball.prototype.constructor = Ball;
 var xdirection = -4;
 var ydirection = -8;
 Ball.prototype.draw = function () {
-	GamePiece.prototype.draw.call(this);
+	var ctx = this.context;
+	ctx.beginPath();
+	ctx.fillStyle = this.bkg;
+	ctx.arc(this.x, this.y, this.width / 2, 0, 2 * Math.PI, false);
+	ctx.fill();
+
 	this.move();
 	
 };
