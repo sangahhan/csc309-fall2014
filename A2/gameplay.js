@@ -103,11 +103,12 @@ function gameStop() {
 // Let's put all the if statements and magic up in hurr
 function gameStart() {
 	if (testHitBricks()) scoreSpan.html(score);
-	
 	if (!testHitPaddle()) {
 		if (balls[0].y >= canvas.height) {
 			gameStop();
-			// TODO: click to play again?
+			// TODO: Ball has hit the ground. We must give them a new ball from the list balls. (teehee)
+			// If there are no balls left, tell them they have lost.
+			// Should we let them try again and reset the entire board?
 			console.log(interval);
 		}
 	}
