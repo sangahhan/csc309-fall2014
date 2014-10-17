@@ -1,8 +1,8 @@
 var BRICK_W = 100; 
 var BRICK_H = 50;
 var PADDLE_W = 150;
-var PADDLE_H = 30;
-var BALL_R = 25;
+var PADDLE_H = 25;
+var BALL_R = 15;
 
 var PADDLE_I = "gray";
 var BALL_I = "pink";
