@@ -1,14 +1,14 @@
 var BRICK_W = 100; 
-var BRICK_H = 50;
+var BRICK_H = 30;
 var PADDLE_W = 150;
 var PADDLE_H = 25;
-var BALL_R = 15;
+var BALL_R = 12;
 
 var PADDLE_I = "gray";
-var BALL_I = "pink";
-var BRICK_I = ["yellow", "green", "orange", "red"];
+var BALL_I = "#F433FF";
+var BRICK_I = ["yellow", "yellow", "green", "green", "orange", "orange", "red", "red"];
 
-var BRICK_ROWS = 4;
+var BRICK_ROWS = 8;
 var BRICK_COLS = 8;
 var BRICK_SCORES = [1,3,5,7];
 
