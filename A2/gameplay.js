@@ -52,6 +52,11 @@ function testHitBricks() {
 
 function testHitPaddle() {
 	if (!balls.length) return false;
+	
+	/*We don't care if the ball hits the paddle if it is in the
+	middle of the screen */
+	if (balls[0].y < canvas.height - PADDLE_H - BALL_D) return true;
+	
 	var x_min = paddle.x;
 	var x_max = paddle.x + PADDLE_W;
 	var y = paddle.y;
@@ -104,7 +109,13 @@ function gameStop() {
 // Let's put all the if statements and magic up in hurr
 function gameStart() {
 	if (testHitBricks()) scoreSpan.innerHTML = score;
+	
+	//What is this for?
 	if (testHitPaddle()) console.log("put ball bounce code here");
+	
+	if (!testHitPaddle()){
+		gameStop();
+	}
 	levelCheck();
 	drawAll();
 };

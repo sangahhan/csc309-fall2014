@@ -19,6 +19,7 @@ Ball.prototype.draw = function () {
 	}
 	img.src = this.imgUrl;
 	this.move();
+	
 };
 Ball.prototype.move = function () {
 
@@ -34,11 +35,11 @@ Ball.prototype.move = function () {
 	}
 
 	this.y += ydirection;
-	if (this.y <= 0 || (this.y > (canvas.height - BALL_D))){
+	if (this.y <= 0 || (this.y > (canvas.height - PADDLE_H - BALL_D))){
 		if (this.y <= 0){
 			this.y = 0;
 		} else {
-			this.y = canvas.height - BALL_D;
+			this.y = canvas.height - PADDLE_H - BALL_D;
 		}	
 		ydirection = ydirection * -1;
 	}
