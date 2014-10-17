@@ -1,4 +1,3 @@
-// Draw the bricks all pretty at the top
 function drawBricks(bricks) {
 	for (var i = 0; i < bricks.length; i++) {
 		if (bricks[i]) bricks[i].draw();
@@ -51,7 +50,7 @@ function testHitPaddle() {
 	
 	/*We don't care if the ball hits the paddle if it is in the
 	middle of the screen */
-	if (balls[0].y < canvas.height - PADDLE_H - BALL_D) return true;
+	if (balls[0].y < canvas.height - PADDLE_H) return true;
 	
 	var x_min = paddle.x;
 	var x_max = paddle.x + PADDLE_W;
@@ -65,20 +64,20 @@ function movePaddle(evt) {
 	if (evt.keyCode == 39) rightKeyPressed = true;
 	else if (evt.keyCode == 37) leftKeyPressed = true;
 	else return;
-}
+};
 
 function stopMovingPaddle(evt) {
 	if (evt.keyCode == 39) rightKeyPressed = false;
 	else if (evt.keyCode == 37) leftKeyPressed = false;
 	else return;
-}
+};
 
 function drawAll() {
 	canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 	drawBricks(bricks);
 	balls[0].draw();
 	paddle.draw();
-}
+};
 
 // clear the board and reset
 function resetBoard() {	
@@ -99,14 +98,12 @@ function levelCheck() {
 
 function gameStop() {
 	clearInterval(interval);
-}
+};
 
 // Let's put all the if statements and magic up in hurr
 function gameStart() {
 	if (testHitBricks()) scoreSpan.innerHTML = score;
 	
-	if (!testHitPaddle()){
-		gameStop();
 	if (!testHitPaddle()) {
 		if (balls[0].y >= canvas.height) {
 			gameStop();
@@ -118,16 +115,16 @@ function gameStart() {
 	drawAll();
 };
 
-window.onload = function() {
-	scoreSpan = document.getElementById("score");
-	scoreSpan.innerHTML = score;
+$(function() {
+	scoreSpan = $("#score");
+	scoreSpan.html(score);
 	
-	canvas = document.getElementById("game-window");
+	canvas = $("#game-window")[0];
 	var ctx = canvas.getContext("2d");
 	playing = true;
 	resetBoard();	
 	interval = setInterval("gameStart()", 20);
 	$(document).keydown(movePaddle);
 	$(document).keyup(stopMovingPaddle);
-};
+});
 

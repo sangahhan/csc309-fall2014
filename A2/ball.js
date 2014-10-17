@@ -17,6 +17,7 @@ Ball.prototype.draw = function () {
 	this.move();
 	
 };
+
 Ball.prototype.move = function () {
 
 	this.x += xdirection;
@@ -39,6 +40,6 @@ Ball.prototype.move = function () {
 		}	
 		ydirection = ydirection * -1;
 	}
-}
+};
 
 

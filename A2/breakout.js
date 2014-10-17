@@ -28,7 +28,7 @@ function inheritFrom(type) {
 	function F() {}; // Dummy constructor
 	F.prototype = type; 
 	return new F(); 
-}
+};
 
 function GamePiece(canvas, x, y, bkg, width, height) {
 	this.context = canvas.getContext("2d");

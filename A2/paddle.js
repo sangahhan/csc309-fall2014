@@ -18,14 +18,11 @@ Paddle.prototype.draw = function() {
 Paddle.prototype.move = function(){
 	if (rightKeyPressed){
 		this.x += 8;
-		if (this.x + this.width > canvas.width){
+		if (this.x + this.width > canvas.width) 
 			this.x = canvas.width - this.width;
-		}
 	} 
 	if (leftKeyPressed){
 		this.x -= 8;
-		if (this.x < 0){
-			this.x = 0;
-		}	
+		if (this.x < 0) this.x = 0;
 	}
-}
+};
