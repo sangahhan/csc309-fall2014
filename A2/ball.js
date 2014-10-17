@@ -32,11 +32,11 @@ Ball.prototype.move = function () {
 	}
 
 	this.y += ydirection;
-	if (this.y <= 0 || (this.y > (canvas.height - this.width))){
+	if (this.y <= 0 || (this.y > (canvas.height))){
 		if (this.y <= 0){
 			this.y = 0;
 		} else {
-			this.y = canvas.height - this.width;
+			this.y = canvas.height;
 		}	
 		ydirection = ydirection * -1;
 	}

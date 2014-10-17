@@ -91,7 +91,7 @@ function levelCheck() {
 	if (score == 128) {
 		resetBoard();
 	} else if (score == 256) {
-		scoreSpan.innerHTML = "WINNER";
+		scoreSpan.html("WINNER");
 		gameStop();
 	}
 };
