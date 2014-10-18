@@ -1,4 +1,8 @@
 /* Main CSS file for A2 in CSC309 Fall 2014, by Sang-Ah Han (g2sangah) & Binuri Walpitagamage (g3tdirty) */
+@font-face {
+	font-family: RobotoCondensed-Light;
+	src: url(ttf/RobotoCondensed-Light.ttf);
+}
 
 html {
 }
@@ -7,7 +11,7 @@ body {
 	background: #eee;
 	padding: 0;
 	margin: 0;
-	font-family: sans-serif;
+	font-family: RobotoCondensed-Light, sans-serif;
 }
 
 #wrapper {
@@ -16,8 +20,10 @@ body {
 }
 
 #game-window{
-	margin-top: 50px;
+	margin-top: 20px;
 	background: rgba(0, 0, 0, 0.87);
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
 	border-radius: 30px;
 }
 
@@ -28,6 +34,9 @@ body {
 	padding: 10px;
 	margin-top: 5px;
 	color: #fff;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
 
 #score {
@@ -36,4 +45,16 @@ body {
 
 #balls {
 	float: left;
+}
+
+@media only screen and (min-width: 800px) and (min-height: 631px) {	
+	#wrapper {
+		visibility: visible;
+	}
+}
+
+@media only screen and (max-width: 799px), only screen and (max-height: 630px){
+	#wrapper {
+		visibility: hidden;
+	}
 }

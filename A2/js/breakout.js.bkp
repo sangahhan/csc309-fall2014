@@ -1,5 +1,5 @@
-var PADDLE_I = "#9E9E9E";
-var BALL_I = "#F433FF";
+var PADDLE_I = "#795548";
+var BALL_I = "#f06292";
 var BRICK_BKG = [
 	"#fbc02d", "#fbc02d",  //yellow
 	"#056f00", "#056f00", //green
@@ -20,12 +20,11 @@ var LEVEL_SCORE = 0;
 for (var i = 0; i < BRICK_ROWS; i++) {
 	LEVEL_SCORE += BRICK_SCORES[i] * BRICK_COLS;
 }
-var BRICK_W = Math.floor(800/BRICK_COLS);
+var BRICK_W = 800/BRICK_COLS;
 var BRICK_H = 25;
 var PADDLE_W = 150;
 var PADDLE_H = 20;
 var BALL_R = 10;
-
 
 var canvas;
 var interval;

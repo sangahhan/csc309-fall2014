@@ -129,9 +129,11 @@ function drawAll() {
 
 // clear the board and reset
 function resetBoard() {	
-	var numHits = 0;
-	var speedIncreaseOrangeRow = false;
-	var speedIncreaseRedRow = false;
+	numHits = 0;
+	speedIncreaseOrangeRow = false;
+	speedIncreaseRedRow = false;
+	xdirection = -4;
+	ydirection = -8;
 	
 	bricks = newBricks(BRICK_ROWS, BRICK_COLS);
 	balls = newBalls(3);
