@@ -38,6 +38,20 @@ function testHitBricks() {
 		ydirection *= -1;
 		score += bricks[index].score;
 		bricks[index] = null;
+		
+		numHits += 1;
+		if (numHits == 4 || numHits == 12){
+			increaseBallSpeed();
+		}
+		
+		if ((row == 2 || row == 3) && (!speedIncreaseOrangeRow)){
+			speedIncreaseOrangeRow = true;
+			increaseBallSpeed();
+		}
+		if ((row == 0 || row == 1) && (!speedIncreaseRedRow)){
+			speedIncreaseRedRow = true;
+			increaseBallSpeed();
+		}
 		return true;
 	}            
 	return false;
@@ -79,6 +93,28 @@ function stopMovingPaddle(evt) {
 	else return;
 };
 
+function shrinkPaddle(){
+	smallPaddle = true;
+	paddle.shrinkSize();
+}
+
+function increaseBallSpeed(){
+	if (xdirection > 0){
+		xdirection += 2;
+	} else {
+		xdirection -= 2;
+	}
+	
+	if (ydirection >0){
+		ydirection += 2;
+	} else  {
+		ydirection -= 2;
+	}
+	
+	paddle.speed += 2;
+}
+
+
 function drawAll() {
 	canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 	drawBricks(bricks);
@@ -88,6 +124,10 @@ function drawAll() {
 
 // clear the board and reset
 function resetBoard() {	
+	var numHits = 0;
+	var speedIncreaseOrangeRow = false;
+	var speedIncreaseRedRow = false;
+	
 	bricks = newBricks(BRICK_ROWS, BRICK_COLS);
 	balls = newBalls(3);
 	paddle = new Paddle(canvas, (canvas.width / 2) - (PADDLE_W/ 2), PADDLE_I, PADDLE_W, PADDLE_H);
@@ -98,9 +138,9 @@ function displayWinner() {
 };
 
 function levelCheck() {
-	if (score == 128) {
+	if (score == 448) {
 		resetBoard();
-	} else if (score >= 256) {
+	} else if (score >= 896) {
 		gameStop();
 
 	}

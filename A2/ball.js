@@ -5,8 +5,7 @@ function Ball(canvas, x, y, bkg, rad) {
 
 Ball.prototype = inheritFrom(GamePiece.prototype);
 Ball.prototype.constructor = Ball;
-var xdirection = -4;
-var ydirection = -8;
+
 Ball.prototype.draw = function () {
 var ctx = this.context;
 	ctx.beginPath();
@@ -22,19 +21,22 @@ Ball.prototype.move = function () {
 
 	this.x += xdirection;
 	
-	if (this.x <= 0 || (this.x > canvas.width - this.width)){
-		if (this.x <= 0){
-			this.x = 0;
+	if (this.x - this.width/2 <= 0 || (this.x >= canvas.width - this.width/2)){
+		if (this.x - this.width/2 <= 0){
+			this.x = this.width/2;
 		} else {
-			this.x = canvas.width - this.width;
+			this.x = canvas.width - this.width/2;
 		}
 		xdirection = xdirection * -1;
 	}
 
 	this.y += ydirection;
-	if (this.y <= 0 || (this.y > (canvas.height))){
-		if (this.y <= 0){
-			this.y = 0;
+	if (this.y -  this.width/2 <= 0 || (this.y > canvas.height )){
+		if (this.y - this.width/2 <= 0){
+			if (!smallPaddle){
+				shrinkPaddle();
+			}
+			this.y = this.width/2;
 		} else {
 			this.y = canvas.height;
 		}	
