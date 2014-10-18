@@ -14,7 +14,7 @@ var BRICK_SCORES = [1,1,3,3,5,5,7,7];
 
 var canvas;
 var interval;
-var bricks; // [row][col] ... like in Towers of Hanoi
+var bricks; 
 var balls = [];
 var paddle;
 var score = 0;

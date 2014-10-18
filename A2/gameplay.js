@@ -75,13 +75,13 @@ function movePaddle(evt) {
 			if (playing) gameStop();
 			else { 
 				gameStart();
-				$("#balls").html("Balls left: " + balls.length);
+				ballsSpan.html("Balls left: " + balls.length);
 			}
 		} else {
 			resetBoard();
 			score = 0;
 			//gameStart();
-			$("#balls").html("Press ENTER to start/pause the game.");
+			ballsSpan.html("Press ENTER to start/pause the game.");
 			scoreSpan.html("Score: " + score);
 		}
 	}
@@ -135,15 +135,13 @@ function resetBoard() {
 	drawAll();
 };
 
-function displayWinner() {
-};
-
 function levelCheck() {
 	if (score == 448) {
 		resetBoard();
 	} else if (score >= 896) {
 		gameStop();
-
+		scoreSpan.html("WINNER");
+		ballsSpan.html("Press ENTER to play again.");
 	}
 };
 
@@ -151,10 +149,10 @@ function onLose(){
 	balls.shift();
 	if (balls.length) {
 		paddle.x = (canvas.width / 2) - (PADDLE_W/ 2);
-		$("#balls").html("Press ENTER to continue.");
+		ballsSpan.html("Press ENTER to continue.");
 	} else {
 		scoreSpan.html("GAME OVER");
-		$("#balls").html("Press ENTER to play again.");
+		ballsSpan.html("Press ENTER to play again.");
 	}
 	gameStop();
 };
@@ -189,12 +187,14 @@ function gameRun() {
 $(function() {
 	scoreSpan = $("#score");
 	scoreSpan.html("Score: " + score);
-	
+		
+	ballsSpan = $("#balls");
+
 	canvas = $("#game-window")[0];
 	var ctx = canvas.getContext("2d");
 	resetBoard();	
 	$(document).keydown(movePaddle);
 	$(document).keyup(stopMovingPaddle);
-	$("#balls").html("Press ENTER to start/pause the game.");
+	ballsSpan.html("Press ENTER to start/pause the game.");
 });
 
