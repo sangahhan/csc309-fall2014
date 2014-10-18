@@ -75,13 +75,14 @@ function movePaddle(evt) {
 			if (playing) gameStop();
 			else { 
 				gameStart();
-
-		$("#balls").html("Balls left: " + balls.length);
+				$("#balls").html("Balls left: " + balls.length);
 			}
 		} else {
 			resetBoard();
 			score = 0;
-			gameStart();
+			//gameStart();
+			$("#balls").html("Press ENTER to start/pause the game.");
+			scoreSpan.html("Score: " + score);
 		}
 	}
 	else return;
