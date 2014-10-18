@@ -1,16 +1,31 @@
-var BRICK_W = 57; 
+var PADDLE_I = "#9E9E9E";
+var BALL_I = "#F433FF";
+var BRICK_BKG = [
+	"#fbc02d", "#fbc02d",  //yellow
+	"#056f00", "#056f00", //green
+	"#e65100", "#e65100",  //orange
+	"#c41411", "#c41411" //red
+];
+var BRICK_BKG_S = [
+	"#fff176", "#fff176",   //yellow
+	"#2baf2b", "#2baf2b", //green
+	"#fb8c00", "#fb8c00",  //orange
+	"#f36c60", "#f36c60" //red
+];
+
+var BRICK_SCORES = [1,1,3,3,5,5,7,7];
+var BRICK_COLS = 14;
+var BRICK_ROWS = BRICK_SCORES.length;
+var LEVEL_SCORE = 0;
+for (var i = 0; i < BRICK_ROWS; i++) {
+	LEVEL_SCORE += BRICK_SCORES[i] * BRICK_COLS;
+}
+var BRICK_W = Math.floor(800/BRICK_COLS);
 var BRICK_H = 25;
 var PADDLE_W = 150;
 var PADDLE_H = 20;
 var BALL_R = 10;
 
-var PADDLE_I = "gray";
-var BALL_I = "#F433FF";
-var BRICK_I = ["yellow", "yellow", "green", "green", "orange", "orange", "red", "red"];
-
-var BRICK_ROWS = 8;
-var BRICK_COLS = 14;
-var BRICK_SCORES = [1,1,3,3,5,5,7,7];
 
 var canvas;
 var interval;

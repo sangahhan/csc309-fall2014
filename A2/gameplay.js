@@ -10,7 +10,11 @@ function newBricks(rows, cols) {
 	var current_y = 0;
 	for (var i = BRICK_ROWS; i > 0; i--) {
 		for (var j = 0; j < cols; j++) {
-			bricks.push(new Brick(canvas, current_x, current_y, BRICK_I[i-1], BRICK_W, BRICK_H, BRICK_SCORES[i-1]));
+			bricks.push(new Brick(canvas, current_x, current_y, 
+						BRICK_BKG[i-1], 
+						BRICK_BKG_S[i-1], 
+						BRICK_W, BRICK_H, 
+						BRICK_SCORES[i-1]));
 			current_x += BRICK_W;
 		}
 		current_y += BRICK_H;
@@ -37,7 +41,7 @@ function testHitBricks() {
 	if (balls[0].y < BRICK_ROWS * BRICK_H && row >= 0 && col >= 0 && bricks[index]) {
 		ydirection *= -1;
 		score += bricks[index].score;
-		bricks[index] = null;
+		bricks[index] = 0;
 		
 		numHits += 1;
 		if (numHits == 4 || numHits == 12){
@@ -60,7 +64,7 @@ function testHitBricks() {
 function testHitPaddle() {
 	if (!balls.length) return false;	
 	var x_min = paddle.x;
-	var x_max = paddle.x + PADDLE_W;
+	var x_max = paddle.x + paddle.width;
 	var y = paddle.y;
 	var ball_bottom = balls[0].y + balls[0].radius;
 	return ydirection > 0 && balls[0].x >= x_min && balls[0].x <= x_max && ball_bottom >= y;
@@ -112,7 +116,7 @@ function increaseBallSpeed(){
 		ydirection -= 2;
 	}
 	
-	paddle.speed += 2;
+	paddle.speed += 3;
 }
 
 
@@ -136,19 +140,28 @@ function resetBoard() {
 };
 
 function levelCheck() {
-	if (score == 448) {
-		resetBoard();
-	} else if (score >= 896) {
-		gameStop();
-		scoreSpan.html("WINNER");
-		ballsSpan.html("Press ENTER to play again.");
+	var sum;
+	for (var i = 0; i < bricks.length; i++) { sum += bricks[i];} // will either be 0 or a string
+	if (!sum) {
+		if (score == LEVEL_SCORE) {
+			resetBoard();
+			gameStop();
+			ballsSpan.html("LEVEL 2");
+			return true;
+		} else if (score == LEVEL_SCORE * 2) {
+			gameStop();
+			scoreSpan.html("WINNER");
+			ballsSpan.html("Press ENTER to play again.");
+			return true;
+		}
 	}
+	return false;
 };
 
 function onLose(){
 	balls.shift();
 	if (balls.length) {
-		paddle.x = (canvas.width / 2) - (PADDLE_W/ 2);
+		paddle.x = (canvas.width / 2) - (paddle.width/ 2);
 		ballsSpan.html("Press ENTER to continue.");
 	} else {
 		scoreSpan.html("GAME OVER");
@@ -179,8 +192,7 @@ function gameRun() {
 		} else {
 			ydirection *= -1;
 		}
-		levelCheck();
-		drawAll();
+		if (!levelCheck()) drawAll();
 	}
 };
 

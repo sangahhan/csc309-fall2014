@@ -4,7 +4,7 @@ html {
 }
 
 body {
-	background: #ebebeb;
+	background: #eee;
 	padding: 0;
 	margin: 0;
 	font-family: sans-serif;
@@ -17,16 +17,17 @@ body {
 
 #game-window{
 	margin-top: 50px;
-	background: rgba(0, 0, 0, 0.75);
+	background: rgba(0, 0, 0, 0.87);
 	border-radius: 30px;
 }
 
 #stats {
-	font-size: 2em;
-	background: #fff;
+	font-size: 1.7em;
+	background: #5C6BC0;
 	overflow: auto;
 	padding: 10px;
 	margin-top: 5px;
+	color: #fff;
 }
 
 #score {
