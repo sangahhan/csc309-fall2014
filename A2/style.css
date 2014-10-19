@@ -15,8 +15,8 @@ body {
 }
 
 #wrapper {
-	width: 800px;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
 #game-window{
@@ -47,14 +47,27 @@ body {
 	float: left;
 }
 
+#error {
+	margin: 0 auto;
+	text-align: center;
+}
+
 @media only screen and (min-width: 800px) and (min-height: 631px) {	
 	#wrapper {
+		width: 800px;
 		visibility: visible;
+	}
+	#error {
+		visibility: hidden;
 	}
 }
 
 @media only screen and (max-width: 799px), only screen and (max-height: 630px){
 	#wrapper {
+		width: 100%;
 		visibility: hidden;
+	}
+	#error {
+		visibility: visible;
 	}
 }
