@@ -226,39 +226,81 @@ function newBalls(num) {
 	return balls;
 };
 
+/*
+	Given x and y coordinates, calculate the brick to which the coordinate
+	belongs to. Return the index in the list, the row and the column the 
+	brick
+*/
+function calculateBrickLocation(x, y){
+	var row = Math.floor(y/BRICK_H);
+	var col = Math.floor(x/BRICK_W);
+	var index = col + (row * BRICK_COLS);
+	return [index, row, col];
+}
+
 /* 
  * Return true if the current ball hits a brick, false otherwise. 
  * Precondition: a ball exists in the global list of balls
  */
 function testHitBricks() {
-	if (!bricks.length) return false; 
-	var row = Math.floor(balls[0].y/BRICK_H);
-	var col = Math.floor(balls[0].x/BRICK_W);
-	var index = col + (row * BRICK_COLS)
-	if (balls[0].y < BRICK_ROWS * BRICK_H && row >= 0 && col >= 0 && bricks[index]) {
-		ydirection *= -1;
-		score += bricks[index].score;
-		bricks[index] = 0;
+	if (!bricks.length || balls[0].y - balls[0].radius > BRICK_ROWS * BRICK_H) return false; 
+	var hit = false;
 	
-		// Increase ball speed if we've reached a certain number of hits
-		numHits += 1;
-		if (numHits == 4 || numHits == 12){
-			increaseBallSpeed();
+	var hitOrder = [[balls[0].x, balls[0].y - balls[0].radius], //from the bottom 
+					[balls[0].x + balls[0].radius, balls[0].y], //from the left 
+					[balls[0].x, balls[0].y + balls[0].radius], //from the top
+					[balls[0].x - balls[0].radius, balls[0].y]]; //from the right
+	
+	var index; var row; var col;
+	for (var i = 0; i < 4; i++){
+		result = calculateBrickLocation(hitOrder[i][0], hitOrder[i][1]);
+		index = result[0];
+		row = result[1];
+		col = result[2];
+		
+		if (index >= 0 && row < BRICK_ROWS && col < BRICK_COLS && bricks[index]){
+			hit = true;
+			if (i == 0){
+				// A hit from the bottom
+				balls[0].y = bricks[index].y + bricks[index].height + balls[0].radius;
+				ydirection *= -1;
+			} else if (i == 1){
+				// A hit from the left
+				balls[0].x = bricks[index].x -  balls[0].radius;
+				xdirection *= -1;
+			} else if (i == 2){
+				//A hit from the top
+				ydirection *= -1;
+				balls[0].y = bricks[index].y -  balls[0].radius;
+			} else {			
+				// A hit from the right
+				balls[0].x = bricks[index].x + bricks[index].width + balls[0].radius;
+				xdirection *= -1;
+			}
+
+			score += bricks[index].score;
+			bricks[index] = 0;
+	
+			// Increase ball speed if we've reached a certain number of hits
+			numHits += 1;
+			if (numHits == 4 || numHits == 12){
+				increaseBallSpeed();
+			}
+		
+			if ((row == 2 || row == 3) && (!speedIncreaseOrangeRow)){
+				speedIncreaseOrangeRow = true;
+				increaseBallSpeed();
+			}
+			if ((row == 0 || row == 1) && (!speedIncreaseRedRow)){
+				speedIncreaseRedRow = true;
+				increaseBallSpeed();
+			}
 		}
 		
-		if ((row == 2 || row == 3) && (!speedIncreaseOrangeRow)){
-			speedIncreaseOrangeRow = true;
-			increaseBallSpeed();
-		}
-		if ((row == 0 || row == 1) && (!speedIncreaseRedRow)){
-			speedIncreaseRedRow = true;
-			increaseBallSpeed();
-		}
-		return true;
+		if (hit) break;
 	}            
-	return false;
+	return hit;
 };
-
 /*
  * Return true if the current ball hits the paddle, false otherwise. 
  */
