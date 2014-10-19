@@ -15,9 +15,7 @@ var BRICK_BKG_S = [
 
 var BRICK_SCORES = [1,1,3,3,5,5,7,7];
 var BRICK_COLS = 14;
-BRICK_COLS = 2;
 var BRICK_ROWS = BRICK_SCORES.length;
-BRICK_ROWS = 1;
 var LEVEL_SCORE = 0;
 for (var i = 0; i < BRICK_ROWS; i++) {
 	LEVEL_SCORE += BRICK_SCORES[i] * BRICK_COLS;
