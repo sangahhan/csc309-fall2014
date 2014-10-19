@@ -331,7 +331,7 @@ function increaseBallSpeed(){
 	}
 	
 	// When the paddle is small, need to move faster
-	if(smallPaddle)
+	if(smallPaddle){
 		paddle.speed += 5;
 	} else {
 		paddle.speed += 3;
