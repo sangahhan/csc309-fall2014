@@ -37,6 +37,7 @@ var playing = false;
 var rightKeyPressed = false; 
 var leftKeyPressed = false;
 var smallPaddle = false;
+var currPaddleSpeed = 8;
 
 var xdirection = -4;
 var ydirection = -8;
@@ -151,7 +152,7 @@ Brick.prototype.draw = function(){
 
 function Paddle(canvas, x, img, w, h) {
 	GamePiece.call(this, canvas, x, canvas.height - h, img, w, h);
-	this.speed = 8;
+	this.speed = currPaddleSpeed;
 };
 
 Paddle.prototype = inheritFrom(GamePiece.prototype);
@@ -323,12 +324,18 @@ function increaseBallSpeed(){
 	}
 	
 	if (ydirection >0){
-		ydirection += 2;
+		ydirection += 1;
 	} else  {
-		ydirection -= 2;
+		ydirection -= 1;
 	}
 	
-	paddle.speed += 3;
+	// When the paddle is small, need to move faster
+	if(smallPaddle)
+		paddle.speed += 5;
+	} else {
+		paddle.speed += 3;
+	}
+	currPaddleSpeed = paddle.speed;
 }
 
 /* 
@@ -349,12 +356,27 @@ function resetBoard() {
 	numHits = 0;
 	speedIncreaseOrangeRow = false;
 	speedIncreaseRedRow = false;
-	xdirection = -4;
-	ydirection = -8;
 	
 	bricks = newBricks(BRICK_ROWS, BRICK_COLS);
 	balls = newBalls(3);
 	paddle = new Paddle(canvas, (canvas.width / 2) - (PADDLE_W/ 2), PADDLE_I, PADDLE_W, PADDLE_H);
+	
+	// If the game is reset to the very beginning, then reset the speed of the
+	// ball and the paddle. Otherwise, only change the direction of the 
+	// ball.
+	smallPaddle = false;
+	
+	if (score < LEVEL_SCORE && numHits < 4){
+		xdirection = -4;
+		ydirection = -8;
+		currPaddleSpeed = 8;
+		paddle.speed = currPaddleSpeed;
+	} else {
+		if (ydirection > 0){
+			ydirection *= -1;
+		}
+	}
+	
 	drawAll();
 };
 
