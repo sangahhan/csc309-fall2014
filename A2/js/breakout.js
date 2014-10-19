@@ -33,6 +33,7 @@ var balls = [];
 var paddle;
 var score = 0;
 var playing = false;
+var hasWon = false;
 
 var rightKeyPressed = false; 
 var leftKeyPressed = false;
@@ -45,8 +46,10 @@ var numHits = 0;
 var speedIncreaseOrangeRow = false;
 var speedIncreaseRedRow = false;
 
-// Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
-// To be used for multi-arg inheritance
+/*
+ * To be used for multi-arg inheritance
+ * Taken from: http://stackoverflow.com/questions/7533473/javascript-inheritance-when-constructor-has-arguments
+ */
 function inheritFrom(type) {
 	function F() {}; // Dummy constructor
 	F.prototype = type; 
@@ -76,7 +79,8 @@ GamePiece.prototype.draw = function() {
 };
 
 /*
- * The game ball -- takes canvas, x & y coordinates, a background colour and radius
+ * The game ball; takes canvas, x & y coordinates, a background colour and 
+ * radius
  */
 function Ball(canvas, x, y, bkg, rad) {
 	GamePiece.call(this, canvas, x, y, bkg, rad * 2, rad * 2);
@@ -95,7 +99,6 @@ Ball.prototype.draw = function () {
 	ctx.fillStyle = this.bkg;
 	ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
 	ctx.fill();
-	this.move();
 };
 
 /*
@@ -103,8 +106,9 @@ Ball.prototype.draw = function () {
  */
 Ball.prototype.move = function () {
 	this.x += xdirection;
-	if (this.x - this.width/2 <= 0 || (this.x >= canvas.width - this.width/2)){
-		if (this.x - this.width/2 <= 0){
+	if (this.x - this.width/2 <= 0 || 
+			(this.x >= canvas.width - this.width/2)) {
+		if (this.x - this.width/2 <= 0) {
 			this.x = this.width/2;
 		} else {
 			this.x = canvas.width - this.width/2;
@@ -112,9 +116,9 @@ Ball.prototype.move = function () {
 		xdirection = xdirection * -1;
 	}
 	this.y += ydirection;
-	if (this.y -  this.width/2 <= 0 || (this.y > canvas.height )){
+	if (this.y -  this.width/2 <= 0 || (this.y > canvas.height )) {
 		if (this.y - this.width/2 <= 0){
-			if (!smallPaddle){
+			if (!smallPaddle) {
 				shrinkPaddle();
 			}
 			this.y = this.width/2;
@@ -227,9 +231,9 @@ function newBalls(num) {
 };
 
 /*
-	Given x and y coordinates, calculate the brick to which the coordinate
-	belongs to. Return the index in the list, the row and the column the 
-	brick
+ * Given x and y coordinates, calculate the brick to which the coordinate
+ * belongs to. Return the brick's index in the list, the row and the column the 
+ * brick as a list.
 */
 function calculateBrickLocation(x, y){
 	var row = Math.floor(y/BRICK_H);
@@ -243,13 +247,15 @@ function calculateBrickLocation(x, y){
  * Precondition: a ball exists in the global list of balls
  */
 function testHitBricks() {
-	if (!bricks.length || balls[0].y - balls[0].radius > BRICK_ROWS * BRICK_H) return false; 
+	if (!bricks.length || 
+			balls[0].y - balls[0].radius > BRICK_ROWS * BRICK_H) 
+		return false; 
 	var hit = false;
 	
-	var hitOrder = [[balls[0].x, balls[0].y - balls[0].radius], //from the bottom 
-					[balls[0].x + balls[0].radius, balls[0].y], //from the left 
-					[balls[0].x, balls[0].y + balls[0].radius], //from the top
-					[balls[0].x - balls[0].radius, balls[0].y]]; //from the right
+	var hitOrder = [[balls[0].x, balls[0].y - balls[0].radius], // bottom 
+		[balls[0].x + balls[0].radius, balls[0].y], // left 
+		[balls[0].x, balls[0].y + balls[0].radius], // top
+		[balls[0].x - balls[0].radius, balls[0].y]]; // right
 	
 	var index; var row; var col;
 	for (var i = 0; i < 4; i++){
@@ -258,11 +264,13 @@ function testHitBricks() {
 		row = result[1];
 		col = result[2];
 		
-		if (index >= 0 && row < BRICK_ROWS && col < BRICK_COLS && bricks[index]){
+		if (index >= 0 && row < BRICK_ROWS && col < BRICK_COLS && 
+				bricks[index]){
 			hit = true;
 			if (i == 0){
 				// A hit from the bottom
-				balls[0].y = bricks[index].y + bricks[index].height + balls[0].radius;
+				balls[0].y = bricks[index].y + 
+					bricks[index].height + balls[0].radius;
 				ydirection *= -1;
 			} else if (i == 1){
 				// A hit from the left
@@ -274,24 +282,26 @@ function testHitBricks() {
 				balls[0].y = bricks[index].y -  balls[0].radius;
 			} else {			
 				// A hit from the right
-				balls[0].x = bricks[index].x + bricks[index].width + balls[0].radius;
+				balls[0].x = bricks[index].x + 
+					bricks[index].width + balls[0].radius;
 				xdirection *= -1;
 			}
 
 			score += bricks[index].score;
 			bricks[index] = 0;
 	
-			// Increase ball speed if we've reached a certain number of hits
+			// Increase ball speed after a certain number of hits
 			numHits += 1;
 			if (numHits == 4 || numHits == 12){
 				increaseBallSpeed();
 			}
 		
-			if ((row == 2 || row == 3) && (!speedIncreaseOrangeRow)){
+			if ((row == 2 || row == 3) && 
+					(!speedIncreaseOrangeRow)) {
 				speedIncreaseOrangeRow = true;
 				increaseBallSpeed();
 			}
-			if ((row == 0 || row == 1) && (!speedIncreaseRedRow)){
+			if ((row == 0 || row == 1) && (!speedIncreaseRedRow)) {
 				speedIncreaseRedRow = true;
 				increaseBallSpeed();
 			}
@@ -310,7 +320,8 @@ function testHitPaddle() {
 	var x_max = paddle.x + paddle.width;
 	var y = paddle.y;
 	var ball_bottom = balls[0].y + balls[0].radius;
-	return ydirection > 0 && balls[0].x >= x_min && balls[0].x <= x_max && ball_bottom >= y;
+	return ydirection > 0 && balls[0].x >= x_min && 
+		balls[0].x <= x_max && ball_bottom >= y;
 };
 
 /*
@@ -321,16 +332,21 @@ function movePaddle(evt) {
 	if (evt.keyCode == 39) rightKeyPressed = true;
 	else if (evt.keyCode == 37) leftKeyPressed = true;
 	else if (evt.keyCode == 13) {
-		if (balls.length) {
+		if (balls.length && !hasWon) {
 			if (playing) gameStop();
 			else { 
 				gameStart();
 				ballsSpan.html("Balls left: " + balls.length);
 			}
 		} else {
-			resetBoard();
+			hasWon = false;
+			// back to beginning
 			score = 0;
+			// reset the balls before we try to draw them
 			balls = newBalls(3);
+			resetBoard(1);
+			gameStop();
+			drawAll(0);
 			ballsSpan.html("Press ENTER to start/pause the game.");
 			scoreSpan.html("Score: " + score);
 		}
@@ -360,24 +376,11 @@ function shrinkPaddle(){
  * Increase ball speed.
  */
 function increaseBallSpeed(){
-	if (xdirection > 0){
-		xdirection += 2;
-	} else {
-		xdirection -= 2;
-	}
-	
-	if (ydirection >0){
-		ydirection += 1;
-	} else  {
-		ydirection -= 1;
-	}
+	xdirection > 0? xdirection += 2: xdirection -= 2;
+	ydirection > 0? ydirection += 1: ydirection -= 1;
 	
 	// When the paddle is small, need to move faster
-	if(smallPaddle){
-		paddle.speed += 5;
-	} else {
-		paddle.speed += 3;
-	}
+	smallPaddle? paddle.speed += 5: paddle.speed += 3;
 	currPaddleSpeed = paddle.speed;
 }
 
@@ -385,27 +388,32 @@ function increaseBallSpeed(){
  * Draw bricks, paddle and current ball on the board.
  * Precondition: balls exist in the global list of balls.
  */
-function drawAll() {
+function drawAll(moveBall) {
 	canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 	drawBricks(bricks);
 	balls[0].draw();
+	if (moveBall) balls[0].move();
 	paddle.draw();
 };
 
 /* 
  * Clear the board, reset all values and draw again.
+ * Takes a boolean that will determine whether or not to reset the balls.
  */
-function resetBoard() {	
+function resetBoard(resetBalls) {	
 	numHits = 0;
 	speedIncreaseOrangeRow = false;
 	speedIncreaseRedRow = false;
 	
 	bricks = newBricks(BRICK_ROWS, BRICK_COLS);
-	paddle = new Paddle(canvas, (canvas.width / 2) - (PADDLE_W/ 2), PADDLE_I, PADDLE_W, PADDLE_H);
-	
-	// If the game is reset to the very beginning, then reset the speed of the
-	// ball and the paddle. Otherwise, only change the direction of the 
-	// ball.
+	paddle = new Paddle(canvas, (canvas.width / 2) - (PADDLE_W/ 2), 
+			PADDLE_I, PADDLE_W, PADDLE_H);
+	if (resetBalls) balls = newBalls(3);	
+	/* 
+	 * If the game is reset to the very beginning, then reset the speed of 
+	 * the ball and the paddle. Otherwise, only change the direction of the 
+	 * ball.
+	 */
 	smallPaddle = false;
 	
 	if (score < LEVEL_SCORE && numHits < 4){
@@ -414,12 +422,9 @@ function resetBoard() {
 		currPaddleSpeed = 8;
 		paddle.speed = currPaddleSpeed;
 	} else {
-		if (ydirection > 0){
-			ydirection *= -1;
-		}
+		if (ydirection > 0) direction *= -1;
 	}
 	
-	drawAll();
 };
 
 /*
@@ -430,18 +435,20 @@ function levelCheck() {
 	for (var i = 0; i < bricks.length; i++) { sum += bricks[i];} 	
 	if (!sum) {
 		if (score == LEVEL_SCORE) {
-			resetBoard();
-			console.log(balls);
+			resetBoard(0);
 			var x = (canvas.width / 2);
 			var y = canvas.height - PADDLE_H - BALL_R;
 			balls[0].x = x;
 			balls[0].y = y;
-			drawAll();
 			gameStop();
+			drawAll(0);
 			ballsSpan.html("LEVEL 2");
 			return true;
 		} else if (score == LEVEL_SCORE * 2) {
+			hasWon = true;
 			gameStop();
+			score = 0;
+			resetBoard(1);
 			scoreSpan.html("WINNER");
 			ballsSpan.html("Press ENTER to play again.");
 			return true;
@@ -456,6 +463,7 @@ function levelCheck() {
 function onLose(){
 	balls.shift();
 	if (balls.length) {
+		// move the ball to center
 		paddle.x = (canvas.width / 2) - (paddle.width/ 2);
 		ballsSpan.html("Press ENTER to continue.");
 	} else {
@@ -497,9 +505,11 @@ function gameRun() {
 				if (!balls.length) return;
 			}
 		} else {
-			ydirection *= -1;
+			if (balls.length) {
+				ydirection *= -1;
+			}
 		}
-		if (!levelCheck()) drawAll();
+		if (!levelCheck() && balls.length) drawAll(1);
 	}
 };
 
@@ -510,8 +520,8 @@ $(function() {
 	ballsSpan = $("#balls");
 
 	canvas = $("#game-window")[0];
-	balls = newBalls(3);
-	resetBoard();	
+	resetBoard(1);
+	drawAll(0);
 	$(document).keydown(movePaddle);
 	$(document).keyup(stopMovingPaddle);
 	ballsSpan.html("Press ENTER to start/pause the game.");
