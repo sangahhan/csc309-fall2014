@@ -15,7 +15,9 @@ var BRICK_BKG_S = [
 
 var BRICK_SCORES = [1,1,3,3,5,5,7,7];
 var BRICK_COLS = 14;
+BRICK_COLS = 2;
 var BRICK_ROWS = BRICK_SCORES.length;
+BRICK_ROWS = 1;
 var LEVEL_SCORE = 0;
 for (var i = 0; i < BRICK_ROWS; i++) {
 	LEVEL_SCORE += BRICK_SCORES[i] * BRICK_COLS;
@@ -287,6 +289,7 @@ function movePaddle(evt) {
 		} else {
 			resetBoard();
 			score = 0;
+			balls = newBalls(3);
 			ballsSpan.html("Press ENTER to start/pause the game.");
 			scoreSpan.html("Score: " + score);
 		}
@@ -353,7 +356,6 @@ function resetBoard() {
 	ydirection = -8;
 	
 	bricks = newBricks(BRICK_ROWS, BRICK_COLS);
-	balls = newBalls(3);
 	paddle = new Paddle(canvas, (canvas.width / 2) - (PADDLE_W/ 2), PADDLE_I, PADDLE_W, PADDLE_H);
 	drawAll();
 };
@@ -363,9 +365,16 @@ function resetBoard() {
  */
 function levelCheck() {
 	var sum; // will either be 0 or a string
-	for (var i = 0; i < bricks.length; i++) { sum += bricks[i];} 	if (!sum) {
+	for (var i = 0; i < bricks.length; i++) { sum += bricks[i];} 	
+	if (!sum) {
 		if (score == LEVEL_SCORE) {
 			resetBoard();
+			console.log(balls);
+			var x = (canvas.width / 2);
+			var y = canvas.height - PADDLE_H - BALL_R;
+			balls[0].x = x;
+			balls[0].y = y;
+			drawAll();
 			gameStop();
 			ballsSpan.html("LEVEL 2");
 			return true;
@@ -439,6 +448,7 @@ $(function() {
 	ballsSpan = $("#balls");
 
 	canvas = $("#game-window")[0];
+	balls = newBalls(3);
 	resetBoard();	
 	$(document).keydown(movePaddle);
 	$(document).keyup(stopMovingPaddle);
