@@ -1,0 +1,11 @@
+# OS Generated Files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+
+# Config Files for CodeIgniter #
+################################
+A3/estore/application/config/config.php
+A3/estore/application/config/database.php
