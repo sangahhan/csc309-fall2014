@@ -1,0 +1,10 @@
+
+# Config Files for CodeIgniter #
+################################
+application/config/*
+
+# Machine-specific #
+####################
+images/*
+
+
