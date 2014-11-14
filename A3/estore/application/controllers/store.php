@@ -10,31 +10,19 @@ class Store extends CI_Controller {
 	    	
 	    	$config['upload_path'] = './images/product/';
 	    	$config['allowed_types'] = 'gif|jpg|png';
-/*	    	$config['max_size'] = '100';
-	    	$config['max_width'] = '1024';
-	    	$config['max_height'] = '768';
-*/
 	    		    	
 	    	$this->load->library('upload', $config);
 	    	
     }
-
-    function load_view($view_name, $data=false){
-	    $this->load->view('templates/header.php');
-	    if (isset($data)) $this->load->view($view_name, $data);
-	    else $this->load->view($view_name);
-	    $this->load->view('templates/footer.php');
-    }
-
     function index() {
     		$this->load->model('product_model');
     		$products = $this->product_model->getAll();
 		$data['products']=$products;
-    		$this->load_view('product/list.php',$data);
+    		load_view($this, 'product/list.php',$data);
     }
     
     function newForm() {
-	    	$this->load_view('product/newForm.php');
+		load_view($this, 'product/newForm.php');
     }
     
 	function create() {
@@ -64,11 +52,11 @@ class Store extends CI_Controller {
 		else {
 			if ( !$fileUploadSuccess) {
 				$data['fileerror'] = $this->upload->display_errors();
-				$this->load_view('product/newForm.php',$data);
+				load_view($this, 'product/newForm.php',$data);
 				return;
 			}
 			
-			$this->load_view('product/newForm.php');
+			load_view($this,'product/newForm.php');
 		}	
 	}
 	
@@ -76,14 +64,14 @@ class Store extends CI_Controller {
 		$this->load->model('product_model');
 		$product = $this->product_model->get($id);
 		$data['product']=$product;
-		$this->load_view('product/read.php',$data);
+		load_view($this, 'product/read.php',$data);
 	}
 	
 	function editForm($id) {
 		$this->load->model('product_model');
 		$product = $this->product_model->get($id);
 		$data['product']=$product;
-		$this->load_view('product/editForm.php',$data);
+		load_view($this, 'product/editForm.php',$data);
 	}
 	
 	function update($id) {
@@ -111,7 +99,7 @@ class Store extends CI_Controller {
 			$product->description = set_value('description');
 			$product->price = set_value('price');
 			$data['product']=$product;
-			$this->load_view('product/editForm.php',$data);
+			load_view($this, 'product/editForm.php',$data);
 		}
 	}
     	
