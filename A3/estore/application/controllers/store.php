@@ -19,9 +19,10 @@ class Store extends CI_Controller {
 	    	
     }
 
-    function load_view($view_name, $data){
+    function load_view($view_name, $data=false){
 	    $this->load->view('templates/header.php');
-	    $this->load->view($view_name, $data);
+	    if (isset($data)) $this->load->view($view_name, $data);
+	    else $this->load->view($view_name);
 	    $this->load->view('templates/footer.php');
     }
 
@@ -33,7 +34,7 @@ class Store extends CI_Controller {
     }
     
     function newForm() {
-	    	$this->load->view('product/newForm.php');
+	    	$this->load_view('product/newForm.php');
     }
     
 	function create() {
@@ -63,11 +64,11 @@ class Store extends CI_Controller {
 		else {
 			if ( !$fileUploadSuccess) {
 				$data['fileerror'] = $this->upload->display_errors();
-				$this->load->view('product/newForm.php',$data);
+				$this->load_view('product/newForm.php',$data);
 				return;
 			}
 			
-			$this->load->view('product/newForm.php');
+			$this->load_view('product/newForm.php');
 		}	
 	}
 	
@@ -75,14 +76,14 @@ class Store extends CI_Controller {
 		$this->load->model('product_model');
 		$product = $this->product_model->get($id);
 		$data['product']=$product;
-		$this->load->view('product/read.php',$data);
+		$this->load_view('product/read.php',$data);
 	}
 	
 	function editForm($id) {
 		$this->load->model('product_model');
 		$product = $this->product_model->get($id);
 		$data['product']=$product;
-		$this->load->view('product/editForm.php',$data);
+		$this->load_view('product/editForm.php',$data);
 	}
 	
 	function update($id) {
@@ -110,7 +111,7 @@ class Store extends CI_Controller {
 			$product->description = set_value('description');
 			$product->price = set_value('price');
 			$data['product']=$product;
-			$this->load->view('product/editForm.php',$data);
+			$this->load_view('product/editForm.php',$data);
 		}
 	}
     	

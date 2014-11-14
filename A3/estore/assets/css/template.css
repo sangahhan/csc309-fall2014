@@ -1,0 +1,72 @@
+/* Main CSS file for A2 in CSC309 Fall 2014, by Sang-Ah Han (g2sangah) & Binuri Walpitagamage (g3tdirty) */
+@font-face {
+	font-family: Roboto;
+	src: url(/assets/ttf/Roboto-Regular.ttf);
+}
+
+@font-face {
+	font-family: Roboto;
+	src: url(../ttf/Roboto-Bold.ttf);
+	font-weight: bold;
+}
+
+
+@font-face {
+	font-family: Roboto;
+	src: url(../ttf/Roboto-Light.ttf);
+	font-weight: lighter;
+}
+html {
+}
+
+body {
+	background: #FAFAFA;
+	padding: 0;
+	margin: 0;
+	font-family: Roboto, sans-serif;
+}
+
+input,label {
+	display: block;
+}
+
+
+h1 {
+	font-size:2em;
+}
+
+h2{
+	font-size:1.5em;
+}
+
+
+#header{
+	font-size: 3em;
+	width: 100%;
+	background: #5C6BC0;
+	padding: 10px;
+	color: #FAFAFA;
+	font-weight: lighter;
+}
+
+
+#main{
+	margin: 0 auto;
+	width:100%;
+	padding: 10px;
+}
+
+#main a{
+	text-decoration: none;
+}
+
+#main a:link, 
+#main a:visited {
+	color: #303F9F;
+}
+
+#main a:hover, 
+#main a:active {
+	color: #FAFAFA;
+	background-color: #303F9F;
+}
