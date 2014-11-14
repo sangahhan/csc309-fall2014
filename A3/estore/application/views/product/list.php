@@ -1,4 +1,4 @@
-<h2>Product Table</h2>
+<h1>Product Table</h1>
 <?php 
 		echo "<p>" . anchor('store/newForm','Add New') . "</p>";
  	  
@@ -18,6 +18,6 @@
 				
 			echo "</tr>";
 		}
-		echo "<table>";
+		echo "</table>";
 ?>	
 
