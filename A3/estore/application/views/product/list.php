@@ -1,23 +1,24 @@
-<h1>Product Table</h1>
+<h1>Products</h1>
 <?php 
 		echo "<p>" . anchor('store/newForm','Add New') . "</p>";
  	  
-		echo "<table>";
-		echo "<tr><th>Name</th><th>Description</th><th>Price</th><th>Photo</th></tr>";
+		echo "<div id=\"products-table\">";
+		//echo "<tr><th>Name</th><th>Description</th><th>Price</th><th>Photo</th></tr>";
 		
 		foreach ($products as $product) {
-			echo "<tr>";
-			echo "<td>" . $product->name . "</td>";
-			echo "<td>" . $product->description . "</td>";
-			echo "<td>" . $product->price . "</td>";
-			echo "<td><img src='" . base_url() . "images/product/" . $product->photo_url . "' width='100px' /></td>";
-				
-			echo "<td>" . anchor("store/delete/$product->id",'Delete',"onClick='return confirm(\"Do you really want to delete this record?\");'") . "</td>";
-			echo "<td>" . anchor("store/editForm/$product->id",'Edit') . "</td>";
-			echo "<td>" . anchor("store/read/$product->id",'View') . "</td>";
-				
-			echo "</tr>";
+			echo "<div class=\"products-table-cell\">";
+			echo "<h1>" . $product->name . "</h1>";
+			echo "<img class=\"product-photo\" src=\"" . base_url() . "images/product/" . $product->photo_url . "\" width=\"100px\" /></td>";
+			echo "<p class=\"description\">" . $product->description . "</p>";
+
+			echo "<span class=\"price\"> $" . $product->price . "</span>";
+			echo "<ul class=\"actions\">";	
+			echo "<li>" . anchor("store/delete/$product->id",'Delete',"onClick='return confirm(\"Do you really want to delete this record?\");'") . "</li>";
+			echo "<li>" . anchor("store/editForm/$product->id",'Edit') . "</li>";
+			echo "<li>" . anchor("store/read/$product->id",'View') . "</li>";
+			echo "</ul>";
+			echo "</div>";
 		}
-		echo "</table>";
+		echo "</div>";
 ?>	
 
