@@ -6,5 +6,6 @@ application/config/*
 # Machine-specific #
 ####################
 images/*
+images/*/*
 
 
