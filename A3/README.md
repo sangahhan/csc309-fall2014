@@ -1,6 +1,6 @@
 # Flow Chart 
 
-![Flow chart](A3/CSC309_eStore.jpg "Flow chart")
+![Flow chart](http://i.imgur.com/Vf7z06M.jpg "Flow chart")
 
 Made using [Draw.io](https://www.draw.io)
 
