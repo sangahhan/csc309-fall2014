@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = '127.0.0.1';
 $db['default']['username'] = 'root';  
-$db['default']['password'] = 'q';
+$db['default']['password'] = 'YOUR_PASSWORD_HERE';
 $db['default']['database'] = 'csc309_estore';  
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
