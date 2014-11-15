@@ -53,13 +53,26 @@ h2{
 	font-size: 2.5em;
 }
 
-#header #site-name a:link, a:visited {
+#header a:link, 
+#header a:visited {
 	color: #FAFAFA;
 	text-decoration: none;
 }
 
-#header #site-name a:hover, a:active {
-	background-color: #7986CB;
+#header a:hover, 
+#header a:active {
+	color: #7986CB;
+}
+
+#header ul#main-nav {
+	float: right;
+	list-style-type:none;
+	display: inline;
+}
+
+#header ul#main-nav li {
+	margin: 0 1em 0 0;
+	display: inline;
 }
 
 #main{
