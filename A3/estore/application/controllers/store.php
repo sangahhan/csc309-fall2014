@@ -15,6 +15,7 @@ class Store extends CI_Controller {
 
     }
     function index() {
+        authenticate_login($this);
         $this->load->model('product_model');
         $products = $this->product_model->getAll();
         $data['products']=$products;
