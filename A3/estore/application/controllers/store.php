@@ -24,11 +24,13 @@ class Store extends CI_Controller {
 
     function newForm() {
         authenticate_login($this);
+        authenticate_admin($this);
         load_view($this, 'product/newForm.php');
     }
 
     function create() {
         authenticate_login($this);
+        authenticate_admin($this);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name','Name','required|is_unique[products.name]');
         $this->form_validation->set_rules('description','Description','required');
@@ -70,6 +72,7 @@ class Store extends CI_Controller {
 
     function editForm($id) {
         authenticate_login($this);
+        authenticate_admin($this);
         $this->load->model('product_model');
         $product = $this->product_model->get($id);
         $data['product']=$product;
@@ -78,6 +81,7 @@ class Store extends CI_Controller {
 
     function update($id) {
         authenticate_login($this);
+        authenticate_admin($this);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name','Name','required');
         $this->form_validation->set_rules('description','Description','required');
@@ -108,6 +112,7 @@ class Store extends CI_Controller {
 
     function delete($id) {
         authenticate_login($this);
+        authenticate_admin($this);
         $this->load->model('product_model');
 
         if (isset($id))
@@ -116,9 +121,5 @@ class Store extends CI_Controller {
         //Then we redirect to the index page again
         redirect('store/index', 'refresh');
     }
-
-
-
-
 
 }

@@ -123,6 +123,13 @@ class Auth extends CI_Controller {
         load_view($this, 'auth/permission_denied.php');
     }
 
+    /* Deny access when a non admin user tries to access sections with admin
+     * privileges
+     */
+    function deny_access_non_admin(){
+        load_view($this, 'auth/admin_priv_needed.php');
+    }
+
     /* Deny access when an already logged in user tries to login or register */
     function logged_in_user(){
         load_view($this, 'auth/logged_in_user.php');
