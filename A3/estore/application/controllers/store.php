@@ -122,4 +122,75 @@ class Store extends CI_Controller {
         redirect('store/index', 'refresh');
     }
 
+    function cart(){
+        $items = $this->session->userdata('cart');
+        $data['items'] = $items;
+        load_view($this, 'product/cart.php', $data);
+    }
+
+    function add_to_cart($product_id){
+        $items = $this->session->userdata('cart');
+
+        if (array_key_exists($product_id, $items)){
+            $item = & $items[$product_id];
+            $item['quantity'] = $item['quantity'] + 1;
+        } else {
+            $this->load->model('product_model');
+            $product = $this->product_model->get($product_id);
+            if (isset($product)){
+                $items[$product_id] = array("name" => $product->name,
+                                    "quantity" => 1);
+            }
+        }
+
+        $this->session->set_userdata('cart', $items);
+        redirect('store/index', 'refresh');
+    }
+
+    function reduce_from_cart($product_id){
+        $items = $this->session->userdata('cart');
+
+        if (array_key_exists($product_id, $items)){
+            $item = & $items[$product_id];
+
+            if ($item['quantity'] <= 1){
+                unset($items[$product_id]);
+            } else {
+                $item['quantity'] = $item['quantity'] - 1;
+            }
+        }
+
+        $this->session->set_userdata('cart', $items);
+
+        $data['items'] = $items;
+        load_view($this, 'product/cart.php', $data);
+    }
+
+    function increase_in_cart($product_id){
+        $items = $this->session->userdata('cart');
+
+        if (array_key_exists($product_id, $items)){
+            $item = & $items[$product_id];
+            $item['quantity'] = $item['quantity'] + 1;
+        }
+
+        $this->session->set_userdata('cart', $items);
+
+        $data['items'] = $items;
+        load_view($this, 'product/cart.php', $data);
+    }
+
+    function remove_from_cart($product_id){
+        $items = $this->session->userdata('cart');
+
+        if (array_key_exists($product_id, $items)){
+            $item = & $items[$product_id];
+            unset($items[$product_id]);
+        }
+
+        $this->session->set_userdata('cart', $items);
+
+        $data['items'] = $items;
+        load_view($this, 'product/cart.php', $data);
+    }
 }

@@ -35,6 +35,7 @@ class Auth extends CI_Controller {
             if( $this->customer_model->check_user_authentication($user)){
                 $this->session->set_userdata('username', $user['username']);
                 $this->session->set_userdata('logged_in', 1);
+                $this->session->set_userdata('cart', array());
                 redirect(site_url('/store'));
             }
         }
@@ -69,7 +70,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('last','Last Name',
                 'required|max_length[24]');
         $this->form_validation->set_rules('email',
-                'Email','required|max_length[45]|callback_email_check');
+                'Email','required|max_length[45]|callback__email_check');
 
         if ($this->form_validation->run() == true) {
             $this->load->model('customer_model');
@@ -94,7 +95,7 @@ class Auth extends CI_Controller {
 
     /* Return true if the given email has correct format.
      */
-    function email_check($e){
+    function _email_check($e){
         if (!filter_var($e,FILTER_VALIDATE_EMAIL)){
             $this->form_validation->set_message('email_check',
                 'Invalid email format. Example: user@domain.com');

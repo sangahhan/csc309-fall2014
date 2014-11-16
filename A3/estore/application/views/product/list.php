@@ -16,6 +16,7 @@
 			echo "<li>" . anchor("store/delete/$product->id",'Delete',"onClick='return confirm(\"Do you really want to delete this record?\");'") . "</li>";
 			echo "<li>" . anchor("store/editForm/$product->id",'Edit') . "</li>";
 			echo "<li>" . anchor("store/read/$product->id",'View') . "</li>";
+			echo "<li>" . anchor("store/add_to_cart/$product->id",'Add to Cart') . "</li>";
 			echo "</ul>";
 			echo "</div>";
 		}
