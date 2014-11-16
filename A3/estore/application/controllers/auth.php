@@ -12,7 +12,10 @@ class Auth extends CI_Controller {
     /* If the user is not logged in, display the login form.
      */
     function index() {
-        check_logged_out($this);
+        if(!check_logged_out($this)){
+            return;
+        }
+
         $this->load->model('customer_model');
         $data['failed_attempt'] = 0;
         load_view($this, 'auth/authenticate.php', $data);
@@ -24,7 +27,11 @@ class Auth extends CI_Controller {
      * login and make the user login again
      */
     function login() {
-        check_logged_out($this);
+
+        if(!check_logged_out($this)){
+            return;
+        }
+
         if( $this->input->post()){
             $this->load->model('customer_model');
             $user = array(
@@ -32,7 +39,7 @@ class Auth extends CI_Controller {
                 'password' => $this->input->post('password')
             );
 
-            if( $this->customer_model->check_user_authentication($user)){
+            if($this->customer_model->check_user_authentication($user)){
                 $this->session->set_userdata('username', $user['username']);
                 $this->session->set_userdata('logged_in', 1);
                 $this->session->set_userdata('cart', array());
@@ -47,7 +54,9 @@ class Auth extends CI_Controller {
     /* If a user is not already logged in, display the form for registration.
      */
     function registration_form(){
-        check_logged_out($this);
+        if(!check_logged_out($this)){
+            return;
+        }
         load_view($this, 'auth/registrationForm.php');
     }
 
@@ -57,7 +66,9 @@ class Auth extends CI_Controller {
      * load the registration form view
      */
     function register() {
-        check_logged_out($this);
+        if(!check_logged_out($this)){
+            return;
+        }
 
         $this->load->library('form_validation');
 
@@ -117,22 +128,5 @@ class Auth extends CI_Controller {
         $this->session->unset_userdata($current_user);
         $this->session->sess_destroy();
         redirect(site_url('/auth'), 'refresh');
-    }
-
-    /* Deny access when a non logged in user tries to access the store */
-    function deny_access(){
-        load_view($this, 'auth/permission_denied.php');
-    }
-
-    /* Deny access when a non admin user tries to access sections with admin
-     * privileges
-     */
-    function deny_access_non_admin(){
-        load_view($this, 'auth/admin_priv_needed.php');
-    }
-
-    /* Deny access when an already logged in user tries to login or register */
-    function logged_in_user(){
-        load_view($this, 'auth/logged_in_user.php');
     }
 }

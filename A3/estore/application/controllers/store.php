@@ -14,28 +14,40 @@ class Store extends CI_Controller {
         $this->load->library('upload', $config);
 
     }
+
     function index() {
-        authenticate_login($this);
+
+        if (!authenticate_login($this)){
+            return;
+        }
+
         $this->load->model('product_model');
         $products = $this->product_model->getAll();
         $data['products']=$products;
         load_view($this, 'product/list.php',$data);
+
     }
 
     function newForm() {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         load_view($this, 'product/newForm.php');
     }
 
     function create() {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name','Name','required|is_unique[products.name]');
         $this->form_validation->set_rules('description','Description','required');
         $this->form_validation->set_rules('price','Price','required');
+
         $fileUploadSuccess = $this->upload->do_upload();
+
         if ($this->form_validation->run() == true && $fileUploadSuccess) {
             $this->load->model('product_model');
 
@@ -50,38 +62,59 @@ class Store extends CI_Controller {
 
             //Then we redirect to the index page again
             redirect('store/index', 'refresh');
-        }
-        else {
+        } else {
             if ( !$fileUploadSuccess) {
                 $data['fileerror'] = $this->upload->display_errors();
                 load_view($this, 'product/newForm.php',$data);
                 return;
             }
-
             load_view($this,'product/newForm.php');
         }
     }
 
+
     function read($id) {
-        authenticate_login($this);
+        if (!authenticate_login($this)){
+            return;
+        }
+
         $this->load->model('product_model');
         $product = $this->product_model->get($id);
-        $data['product']=$product;
-        load_view($this, 'product/read.php',$data);
+        if (isset($product)){
+            $data['product']=$product;
+            load_view($this, 'product/read.php',$data);
+        } else {
+            load_view($this, 'auth/non_existent.php');
+        }
     }
 
     function editForm($id) {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         $this->load->model('product_model');
         $product = $this->product_model->get($id);
-        $data['product']=$product;
-        load_view($this, 'product/editForm.php',$data);
+        if (isset($product)){
+            $data['product']=$product;
+            load_view($this, 'product/editForm.php',$data);
+        } else {
+            load_view($this, 'auth/non_existent.php');
+        }
     }
 
     function update($id) {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
+        $this->load->model('product_model');
+        $product = $this->product_model->get($id);
+        if (!isset($product)){
+            load_view($this, 'auth/non_existent.php');
+            return;
+        }
+
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name','Name','required');
         $this->form_validation->set_rules('description','Description','required');
@@ -94,7 +127,6 @@ class Store extends CI_Controller {
             $product->description = $this->input->get_post('description');
             $product->price = $this->input->get_post('price');
 
-            $this->load->model('product_model');
             $this->product_model->update($product);
             //Then we redirect to the index page again
             redirect('store/index', 'refresh');
@@ -111,9 +143,16 @@ class Store extends CI_Controller {
     }
 
     function delete($id) {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         $this->load->model('product_model');
+        $product = $this->product_model->get($id);
+        if (!isset($product)){
+            load_view($this, 'auth/non_existent.php');
+            return;
+        }
 
         if (isset($id))
             $this->product_model->delete($id);
@@ -123,14 +162,20 @@ class Store extends CI_Controller {
     }
 
     function cart(){
-        authenticate_login($this);
+        if (!authenticate_login($this)){
+            return;
+        }
+
         $items = $this->session->userdata('cart');
         $data['items'] = $items;
         load_view($this, 'product/cart.php', $data);
     }
 
     function add_to_cart($product_id){
-        authenticate_login($this);
+        if (!authenticate_login($this)){
+            return;
+        }
+
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
@@ -150,7 +195,10 @@ class Store extends CI_Controller {
     }
 
     function reduce_from_cart($product_id){
-        authenticate_login($this);
+        if (!authenticate_login($this)){
+            return;
+        }
+
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
@@ -170,7 +218,10 @@ class Store extends CI_Controller {
     }
 
     function increase_in_cart($product_id){
-        authenticate_login($this);
+        if (!authenticate_login($this)){
+            return;
+        }
+
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
@@ -185,7 +236,10 @@ class Store extends CI_Controller {
     }
 
     function remove_from_cart($product_id){
-        authenticate_login($this);
+        if (!authenticate_login($this)){
+            return;
+        }
+        
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){

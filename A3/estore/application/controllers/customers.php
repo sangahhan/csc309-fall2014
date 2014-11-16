@@ -12,8 +12,10 @@ class Customers extends CI_Controller {
     /* Returns a list of all the customers
      */
     function index() {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         $this->load->model('customer_model');
         $customers = $this->customer_model->getAll();
         $data['customers']=$customers;
@@ -24,9 +26,16 @@ class Customers extends CI_Controller {
      * Given a customer id, delete the customer.
      */
     function delete($id) {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         $this->load->model('customer_model');
+        $customer = $this->customer_model->get($id);
+        if (!isset($customer)){
+            load_view($this, 'auth/non_existent.php');
+            return;
+        }
 
         if (isset($id)){
             $this->customer_model->delete($id);
@@ -40,12 +49,18 @@ class Customers extends CI_Controller {
      * Given a customer id, return the customer with the given id.
      */
     function read($id) {
-        authenticate_login($this);
-        authenticate_admin($this);
+        if (!authenticate_login($this) or !authenticate_admin($this)){
+            return;
+        };
+
         $this->load->model('customer_model');
         $customer = $this->customer_model->get($id);
-        $data['customer']=$customer;
-        load_view($this, 'customers/read.php',$data);
+        if (isset($customer)){
+            $data['customer']=$customer;
+            load_view($this, 'customers/read.php',$data);
+        } else {
+            load_view($this, 'auth/non_existent.php');
+        }
     }
 
 }

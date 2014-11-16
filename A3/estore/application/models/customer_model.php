@@ -10,8 +10,9 @@ class Customer_model extends CI_Model {
 	function get($id)
 	{
 		$query = $this->db->get_where('customers',array('id' => $id));
-
-		return $query->row(0,'Customer');
+		if ($query->num_rows() > 0){
+			return $query->row(0,'Customer');
+		}
 	}
 
 	function delete($id) {

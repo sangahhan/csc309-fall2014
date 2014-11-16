@@ -10,10 +10,11 @@ class Product_model extends CI_Model {
 	function get($id)
 	{
 		$query = $this->db->get_where('products',array('id' => $id));
-		
-		return $query->row(0,'Product');
+		if ($query->num_rows() > 0){
+			return $query->row(0,'Product');
+		}
 	}
-	
+
 	function delete($id) {
 		return $this->db->delete("products",array('id' => $id ));
 	}

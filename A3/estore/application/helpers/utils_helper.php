@@ -21,34 +21,42 @@ if ( ! function_exists('load_view()')){
 }
 
 if ( ! function_exists('authenticate_login()')){
-	/* Given a controller, if a user is not logged in, deny access.
+	/* Given a controller, if a user is not logged in, indicate to login and
+	 * return false. Else return true.
 	 */
 	function authenticate_login($cont){
 		if(!$cont->session->userdata('logged_in')){
-			redirect(site_url('/auth/deny_access'));
+			load_view($cont, 'auth/permission_denied.php');
+			return false;
 		}
+		return true;
 	}
 }
 
 if ( ! function_exists('check_logged_out()')){
-	/* Given a controller, if a user is already logged in, ensure that a
-	 * second user can't login or register.
+	/* Given a controller, if a user is already logged in display the view to
+	 * indicate it and return false, Otherwise, return true.
 	 */
 	function check_logged_out($cont){
 		if($cont->session->userdata('logged_in')){
-			redirect(site_url('/auth/logged_in_user'));
+			load_view($cont, 'auth/logged_in_user.php');
+			return false;
 		}
+		return true;
 	}
 }
 
 
 if ( ! function_exists('authenticate_admin()')){
-	/* Given a controller, if a user is not logged in, deny access.
+	/* Given a controller, if the user is not an admin user, indicate that
+	 * The user needs admin permissions and return false. Else, return true.
 	*/
 	function authenticate_admin($cont){
 		if($cont->session->userdata('username') != 'admin'){
-			redirect(site_url('/auth/deny_access_non_admin'));
+			load_view($cont, 'auth/admin_priv_needed.php');
+			return false;
 		}
+		return true;
 	}
 }
 
