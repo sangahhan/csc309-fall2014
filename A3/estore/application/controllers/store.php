@@ -123,12 +123,14 @@ class Store extends CI_Controller {
     }
 
     function cart(){
+        authenticate_login($this);
         $items = $this->session->userdata('cart');
         $data['items'] = $items;
         load_view($this, 'product/cart.php', $data);
     }
 
     function add_to_cart($product_id){
+        authenticate_login($this);
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
@@ -148,6 +150,7 @@ class Store extends CI_Controller {
     }
 
     function reduce_from_cart($product_id){
+        authenticate_login($this);
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
@@ -167,6 +170,7 @@ class Store extends CI_Controller {
     }
 
     function increase_in_cart($product_id){
+        authenticate_login($this);
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
@@ -181,6 +185,7 @@ class Store extends CI_Controller {
     }
 
     function remove_from_cart($product_id){
+        authenticate_login($this);
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
