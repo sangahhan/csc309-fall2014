@@ -9,6 +9,8 @@ class Customers extends CI_Controller {
 
     }
 
+    /* Returns a list of all the customers
+     */
     function index() {
         authenticate_login($this);
         authenticate_admin($this);
@@ -18,6 +20,9 @@ class Customers extends CI_Controller {
         load_view($this, 'customers/list.php',$data);
     }
 
+    /*
+     * Given a customer id, delete the customer.
+     */
     function delete($id) {
         authenticate_login($this);
         authenticate_admin($this);
@@ -29,6 +34,18 @@ class Customers extends CI_Controller {
 
         //Then we redirect to the customers page again
         redirect('customers', 'refresh');
+    }
+
+    /*
+     * Given a customer id, return the customer with the given id.
+     */
+    function read($id) {
+        authenticate_login($this);
+        authenticate_admin($this);
+        $this->load->model('customer_model');
+        $customer = $this->customer_model->get($id);
+        $data['customer']=$customer;
+        load_view($this, 'customers/read.php',$data);
     }
 
 }
