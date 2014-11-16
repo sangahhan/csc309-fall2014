@@ -42,4 +42,15 @@ if ( ! function_exists('check_logged_out()')){
 }
 
 
+if ( ! function_exists('authenticate_admin()')){
+	/* Given a controller, if a user is not logged in, deny access.
+	*/
+	function authenticate_admin($cont){
+		if($cont->session->userdata('username') != 'admin'){
+			redirect(site_url('/auth/deny_access_non_admin'));
+		}
+	}
+}
+
+
 ?>
