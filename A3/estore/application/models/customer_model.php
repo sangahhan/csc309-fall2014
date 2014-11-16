@@ -15,6 +15,9 @@ class Customer_model extends CI_Model {
 	}
 
 	function delete($id) {
+		//TODO : delete all the customer orders first.
+		// Get all the orders that is by the customer
+		// For each order, delete the order_item. Then delete the order itself.
 		return $this->db->delete("customers",array('id' => $id ));
 	}
 
