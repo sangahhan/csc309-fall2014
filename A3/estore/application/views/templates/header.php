@@ -12,16 +12,18 @@
 		<div id="header">
 		<span id="site-name"><a href="<?php echo base_url(); ?>">eStore</a></span>
 <?php 
-		if (!check_logged_out($this)){
-?>	
-		<ul id="main-nav">
-			<li><a href="#">Inventory</a></li>
-			<li><a href="#">Orders</a></li>
-			<li><a href="#">Customers</a></li>
-			<li><?= anchor("auth/logout",'Logout') ?></li>
-		</ul>
-<?php 
-		}
+if ($this->session->userdata('logged_in')){
+	echo "<ul id=\"main-nav\">";	
+	if ($this->session->userdata('username') == 'admin'){
+		echo "<li>" . anchor('#', 'Inventory') . "</li>";
+		echo "<li>" . anchor('#', 'Orders') . "</li>";
+		echo "<li>" . anchor('#', 'Customers') . "</li>";
+	} else {
+		echo "<li>" . anchor('#', 'Cart') . "</li>";
+	}
+	echo "<li>" . anchor("auth/logout",'Logout') . "</li>";
+	echo "</ul>";
+}
 ?>
 		</div>
 		<div id="main-wrapper">

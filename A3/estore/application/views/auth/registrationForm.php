@@ -1,9 +1,4 @@
-<h2>Registration</h2>
-
-<style>
-    input { display: block;}
-
-</style>
+<h1>Registration</h1>
 
 <?php
     echo "<p>" . anchor('auth','Back') . "</p>";

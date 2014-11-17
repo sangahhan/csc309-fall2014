@@ -1,4 +1,4 @@
-<h2>This page does not exist!</h2>
+<h1>This page does not exist!</h1>
 
 <style>
     input { display: block;}

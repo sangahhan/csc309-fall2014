@@ -1,15 +1,8 @@
-<h2>Login</h2>
+<h1>Login</h1>
 
-<style>
-    input { display: block;}
-</style>
-
-
-<div>
     <?php if ( $failed_attempt) {?>
         <p> Login failed, please try again </p>
     <?php } ?>
-</div>
 
 <?php
 
