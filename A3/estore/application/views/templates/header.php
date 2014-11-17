@@ -11,11 +11,18 @@
 	<body>
 		<div id="header">
 		<span id="site-name"><a href="<?php echo base_url(); ?>">eStore</a></span>
+<?php 
+		if (!check_logged_out($this)){
+?>	
 		<ul id="main-nav">
 			<li><a href="#">Inventory</a></li>
 			<li><a href="#">Orders</a></li>
 			<li><a href="#">Customers</a></li>
+			<li><?= anchor("auth/logout",'Logout') ?></li>
 		</ul>
+<?php 
+		}
+?>
 		</div>
 		<div id="main-wrapper">
 		<div id="main">
