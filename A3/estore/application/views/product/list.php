@@ -1,9 +1,10 @@
 <h1>Products</h1>
 <?php
-echo "<p>" . anchor('store/newForm','Add New') . "</p>";
+if (is_admin($this->session)){
+	echo "<p>" . anchor('store/newForm','Add New') . "</p>";
+}
 
 echo "<div id=\"products-table\">";
-//echo "<tr><th>Name</th><th>Description</th><th>Price</th><th>Photo</th></tr>";
 
 foreach ($products as $product) {
 	echo "<div class=\"products-table-cell\">";

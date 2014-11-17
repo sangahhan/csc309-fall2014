@@ -19,7 +19,7 @@ if (is_logged_in($this->session)){
 		echo "<li>" . anchor('#', 'Orders') . "</li>";
 		echo "<li>" . anchor('#', 'Customers') . "</li>";
 	} else {
-		echo "<li>" . anchor('#', 'Cart') . "</li>";
+		echo "<li>" . anchor(site_url('cart'), 'Cart') . "</li>";
 	}
 	echo "<li>" . anchor("auth/logout",'Logout') . "</li>";
 	echo "</ul>";
