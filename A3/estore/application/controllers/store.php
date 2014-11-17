@@ -21,11 +21,7 @@ class Store extends CI_Controller {
             return;
         }
 
-        $this->load->model('product_model');
-        $products = $this->product_model->getAll();
-        $data['products']=$products;
-        load_view($this, 'product/list.php',$data);
-
+        load_product_list($this);
     }
 
     function newForm() {
@@ -187,11 +183,14 @@ class Store extends CI_Controller {
             if (isset($product)){
                 $items[$product_id] = array("name" => $product->name,
                                     "quantity" => 1);
+            } else {
+                load_view($this, 'auth/non_existent.php');
+                return;
             }
         }
 
         $this->session->set_userdata('cart', $items);
-        redirect('store/index', 'refresh');
+        load_product_list($this);
     }
 
     function reduce_from_cart($product_id){
@@ -209,6 +208,9 @@ class Store extends CI_Controller {
             } else {
                 $item['quantity'] = $item['quantity'] - 1;
             }
+        } else {
+            load_view($this, 'auth/non_existent.php');
+            return;
         }
 
         $this->session->set_userdata('cart', $items);
@@ -227,6 +229,9 @@ class Store extends CI_Controller {
         if (array_key_exists($product_id, $items)){
             $item = & $items[$product_id];
             $item['quantity'] = $item['quantity'] + 1;
+        } else {
+            load_view($this, 'auth/non_existent.php');
+            return;
         }
 
         $this->session->set_userdata('cart', $items);
@@ -239,12 +244,15 @@ class Store extends CI_Controller {
         if (!authenticate_login($this)){
             return;
         }
-        
+
         $items = $this->session->userdata('cart');
 
         if (array_key_exists($product_id, $items)){
             $item = & $items[$product_id];
             unset($items[$product_id]);
+        } else {
+            load_view($this, 'auth/non_existent.php');
+            return;
         }
 
         $this->session->set_userdata('cart', $items);

@@ -20,6 +20,14 @@ if ( ! function_exists('load_view()')){
 	}
 }
 
+if ( ! function_exists('load_product_list()')){
+	function load_product_list($cont){
+		$cont->load->model('product_model');
+		$products = $cont->product_model->getAll();
+		$data['products']=$products;
+		load_view($cont, 'product/list.php',$data);
+	}
+}
 if ( ! function_exists('authenticate_login()')){
 	/* Given a controller, if a user is not logged in, indicate to login and
 	 * return false. Else return true.
