@@ -1,7 +1,7 @@
-<h2>Registration</h2>
+<h1>Payment</h1>
 
 <?php
-    echo "<p>" . anchor('auth','Back') . "</p>";
+    echo "<p>" . anchor(site_url('cart'),'Back to Cart') . "</p>";
 
     echo form_open('cart/checkout_summary');
 

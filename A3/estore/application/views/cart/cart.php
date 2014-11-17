@@ -1,6 +1,6 @@
 <h1>Shopping Cart</h1>
 <?php
-echo "<p>" . anchor('store/','Back') . "</p>";
+echo "<p>" . anchor('store/','Back to Store') . "</p>";
 foreach (array_keys($items) as $item_key) {
 	
 	echo "<h3>". $items[$item_key]['name'] . " (". $items[$item_key]['quantity'] . ")</h3>";
@@ -14,5 +14,8 @@ foreach (array_keys($items) as $item_key) {
 	echo "</ul>";
 }
 
-	echo "Total: " . $total;
+echo "Total: " . $total;
+
+echo anchor(site_url('cart/checkout_form'), 'Checkout');
+
 ?>

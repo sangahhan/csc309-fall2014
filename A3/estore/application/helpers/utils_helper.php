@@ -88,7 +88,7 @@ if ( ! function_exists('load_cart_view()')){
 	}
 }
 
-if ( ! function_exists('caclulate_total()')){
+if ( ! function_exists('calculate_total()')){
 	function calculate_total($cont, $items){
 		$cont->load->model('product_model');
 		$total = 0;
