@@ -32,7 +32,7 @@ class Cart extends CI_Controller {
             $product = $this->product_model->get($product_id);
             if (isset($product)){
                 $items[$product_id] = array("name" => $product->name,
-                                    "quantity" => 1
+                                    "quantity" => 1,
 				    "price" => $product->price);
             } else {
                 load_view($this, 'auth/non_existent.php');
