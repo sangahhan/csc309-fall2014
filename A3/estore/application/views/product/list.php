@@ -8,9 +8,9 @@ echo "<div id=\"products-table\">";
 
 foreach ($products as $product) {
 	echo "<div class=\"products-table-cell\">";
-	echo "<h1>" . $product->name . "</h1>";
-	echo "<img class=\"product-photo\" src=\"" . base_url() . "images/product/" . $product->photo_url . "\" width=\"100px\" /></td>";
 	echo "<div class=\"info\">";
+	echo "<h1>" . $product->name . "</h1>";
+	echo "<img class=\"product-photo\" src=\"" . base_url() . "images/product/" . $product->photo_url . "\" /></td>";
 	echo "<span class=\"price\"> $" . $product->price . "</span>";
 	echo "<p class=\"description\">" . $product->description . "</p>";
 	echo "</div>";
