@@ -44,7 +44,7 @@ foreach (array_keys($items) as $item_key) {
 			"<?= site_url('cart/checkout')?>", 
 			"json=" + JSON.stringify(data), 
 			function (data) {
-				location.replace("<?= site_url('store') ?>");
+				location.replace("<?= site_url('cart/receipt') ?>/" + data);
 			});
 	});
 });

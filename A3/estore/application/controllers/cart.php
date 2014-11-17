@@ -181,28 +181,32 @@ class Cart extends CI_Controller {
 		$order_details = $data->order_details;
 		$items = $data->items;
 		
-		$order = new Order();
-		$order->customer_id = $order_details->customer_id;
-		$order->order_date = $order_details->order_date;
-		$order->order_time = $order_details->order_time;
-		$order->total = $order_details->total;
-		$order->creditcard_number = $order_details->creditcard_number;
-		$order->creditcard_month = $order_details->creditcard_month;
-		$order->creditcard_year = $order_details->creditcard_year;
-
 		if ($this->order_model->insert($order_details)){
-		$new_order_id = $this->db->insert_id();
+			$new_order_id = $this->db->insert_id();
+		
+			if (!empty($items)){
+			foreach ($items as $item){
+				$order_item = new Order_Item();
+				$order_item->order_id = $new_order_id;
+				$order_item->product_id = $item->product_id;
+				$order_item->quantity = $item->quantity;
+				$this->order_item_model->insert($order_item);
+			}}
+			$this->output->set_output($new_order_id);
 		}
-		if (!empty($items)){
-		foreach ($items as $item){
-			$order_item = new Order_Item();
-			$order_item->order_id = $new_order_id;
-			$order_item->product_id = $item->product_id;
-			$order_item->quantity = $item->quantity;
-			$this->order_item_model->insert($order_item);
-		}}
-		$this->output->set_output($new_order_id);
 
+	}
+
+	function receipt($order_id) {
+		$this->load->model('order_model');
+		$this->load->model('order_item_model');
+		// get order		
+		$order = $this->order_model->get($order_id);
+		// get items
+		$items = $this->order_item_model->get_order($order_id);
+		load_view($this, 'cart/receipt.php', array (
+			'order_details' => $order,
+			'items' => $items));
 	}
 
 
