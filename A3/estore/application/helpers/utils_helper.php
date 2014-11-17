@@ -78,5 +78,27 @@ if ( ! function_exists('authenticate_admin()')){
 	}
 }
 
+if ( ! function_exists('load_cart_view()')){
+	function load_cart_view($cont){
+
+		$items = $cont->session->userdata('cart');
+		$data['items'] = $items;
+		$data['total'] = calculate_total($cont, $items);
+		load_view($cont, 'cart/cart.php', $data);
+	}
+}
+
+if ( ! function_exists('caclulate_total()')){
+	function calculate_total($cont, $items){
+		$cont->load->model('product_model');
+		$total = 0;
+		foreach (array_keys($items)  as $item_key){
+			$product = $cont->product_model->get($item_key);
+			$total = $total + ($product->price * $items[$item_key]['quantity']);
+		}
+
+		return $total;
+	}
+}
 
 ?>

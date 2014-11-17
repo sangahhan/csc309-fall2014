@@ -1,11 +1,10 @@
 <h1>Shopping Cart</h1>
 <?php
 echo "<p>" . anchor('store/','Back') . "</p>";
-$sum = 0;
 foreach (array_keys($items) as $item_key) {
 	
 	echo "<h3>". $items[$item_key]['name'] . " (". $items[$item_key]['quantity'] . ")</h3>";
-	$sum = $sum + ($items[$item_key]['quantity'] * $items[$item_key]['price']);
+
 	echo "<ul class=\"actions\">";
 	
 	echo "<li>" . anchor("store/read/$item_key",'View') . "</li>";
@@ -15,5 +14,5 @@ foreach (array_keys($items) as $item_key) {
 	echo "</ul>";
 }
 
-	echo "Total: " . $sum;
+	echo "Total: " . $total;
 ?>
