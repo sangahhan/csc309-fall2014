@@ -11,11 +11,6 @@
 }
 
 
-@font-face {
-	font-family: Roboto;
-	src: url(../ttf/Roboto-Light.ttf);
-	font-weight: lighter;
-}
 html {
 }
 
@@ -75,6 +70,11 @@ h2{
 	display: inline;
 }
 
+#main-wrapper, #header-wrapper{
+	width: 80%;
+	margin: 0 auto;
+}
+
 #main{
 	margin: 1em;
 }
@@ -98,8 +98,6 @@ h2{
 	padding: 0.5em;
 	display: block;
 }
-
-/* Page-specific styles */
 
 div#products-table {
 }

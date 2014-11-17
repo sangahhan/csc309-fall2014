@@ -10,6 +10,7 @@
 	</head>
 	<body>
 		<div id="header">
+		<div id="header-wrapper">
 		<span id="site-name"><a href="<?php echo base_url(); ?>">eStore</a></span>
 <?php 
 if (is_logged_in($this->session)){
@@ -26,6 +27,7 @@ if (is_logged_in($this->session)){
 	echo "</ul>";
 }
 ?>
+</div>
 		</div>
 		<div id="main-wrapper">
 		<div id="main">
