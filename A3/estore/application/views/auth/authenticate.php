@@ -12,7 +12,7 @@
     echo form_error('username');
     echo form_input('username', set_value(''), "required");
 
-    echo form_label('Passowrd');
+    echo form_label('Password');
     echo form_error('description');
     echo form_password('password', set_value(''),"required");
     echo "<br>";

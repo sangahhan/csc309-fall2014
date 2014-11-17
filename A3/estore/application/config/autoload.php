@@ -112,7 +112,7 @@ $autoload['language'] = array();
 */
 
 //$autoload['model'] = array('MCats','MProducts','MOrders','MAdmins','MSizes','MColors', 'MPages', 'MSubscribers');
-$autoload['model'] = array('Product', 'Customer', 'Order');
+$autoload['model'] = array('Product', 'Customer', 'Order', 'Order_Item');
 $autoload['helper'] = array('form', 'url', 'utils');
 
 

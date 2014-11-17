@@ -38,9 +38,10 @@ class Auth extends CI_Controller {
                 'username' => $this->input->post('username'),
                 'password' => $this->input->post('password')
             );
-
-            if($this->customer_model->check_user_authentication($user)){
-                $this->session->set_userdata('username', $user['username']);
+		$userid = $this->customer_model->check_user_authentication($user);
+            if($userid != NULL){
+		    $this->session->set_userdata('username', $user['username']);
+		    $this->session->set_userdata('user_id', $userid);
                 $this->session->set_userdata('logged_in', 1);
                 $this->session->set_userdata('cart', array());
                 redirect(site_url('/store'));

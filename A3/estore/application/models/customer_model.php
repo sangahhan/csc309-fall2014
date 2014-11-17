@@ -33,8 +33,8 @@ class Customer_model extends CI_Model {
 												'email'=> $customer->email));
 	}
 
-	/* Given username and password, return if the provided credentials are
-	 * valid.
+	/* Given username and password, return the user's userID if the provided 
+	 * credentials are valid. Otherwise return NULL.
 	 */
 	function check_user_authentication($user_info){
 		// TODO: Encrypt password before checking for password
@@ -44,10 +44,10 @@ class Customer_model extends CI_Model {
 		$query = $this->db->get_where('customers', array('login'=> $user_info['username'],
 			'password'=> $user_info['password']));
         if($query->num_rows() == 1 ){
-            return TRUE;
+            return $query->row(0)->id;
         }
 
-        return FALSE;
+        return NULL;
 
 	}
 
