@@ -9,7 +9,7 @@ class Orders extends CI_Controller {
 
     }
 
-    /* Returns a list of all the customers
+    /* Returns a list of all the orders
      */
     function index() {
         if (!authenticate_login($this) or !authenticate_admin($this)){
@@ -23,41 +23,41 @@ class Orders extends CI_Controller {
     }
 
     /*
-     * Given a customer id, delete the customer.
+     * Given a order id, delete the order.
      */
     function delete($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
         };
 
-        $this->load->model('customer_model');
-        $customer = $this->customer_model->get($id);
-        if (!isset($customer)){
+        $this->load->model('order_model');
+        $order = $this->order_model->get($id);
+        if (!isset($order)){
             load_view($this, 'auth/non_existent.php');
             return;
         }
 
         if (isset($id)){
-            $this->customer_model->delete($id);
+            $this->order_model->delete($id);
         }
 
-        //Then we redirect to the customers page again
-        redirect('customers', 'refresh');
+        //Then we redirect to the orders page again
+        redirect('orders', 'refresh');
     }
 
     /*
-     * Given a customer id, return the customer with the given id.
+     * Given a order id, return the order with the given id.
      */
     function read($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
         };
 
-        $this->load->model('customer_model');
-        $customer = $this->customer_model->get($id);
-        if (isset($customer)){
-            $data['customer']=$customer;
-            load_view($this, 'customers/read.php',$data);
+        $this->load->model('order_model');
+        $order = $this->order_model->get($id);
+        if (isset($order)){
+            $data['order']=$order;
+            load_view($this, 'orders/read.php',$data);
         } else {
             load_view($this, 'auth/non_existent.php');
         }

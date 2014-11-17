@@ -3,7 +3,7 @@
 
         echo "<p>" . anchor(,'Back') . "</p>";
         echo "<p>" . anchor('cart/','Cancel') . "</p>";
-        echo "<h4> Total : " . $total . "</h4>";
+        echo "<h4> Total : " . $order_details->total . "</h4>";
         foreach (array_keys($items) as $item_key) {
             echo "<p> Product Name : " . $items[$item_key]['name'] . "<p>";
             echo "<span class=\"quantity\"> Quantity : " . $items[$item_key]['quantity'] . "</span>";

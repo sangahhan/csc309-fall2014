@@ -103,13 +103,15 @@ div#products-table {
 }
 
 div.products-table-cell {
+	box-shadow: 2px 2px 2px #9E9E9E;
 	background-color: #EEE;
 	margin: 0 0 1em 0; /* 1em space below each cell */
 	padding: 0.5em;
 }
 
 div.products-table-cell ul.actions {
-	list-style-type: none;
+	list-style-type:none;
+	clear: both;
 	padding:0;
 	margin: 0;
 }
