@@ -132,7 +132,10 @@ class Cart extends CI_Controller {
             $order->creditcard_number = $this->input->get_post('creditcard_number');
             $order->creditcard_month = $this->input->get_post('month');
             $order->creditcard_year = $this->input->get_post('year');
-
+            $items = $this->session->set_userdata('card_info', array(
+                                                            'number' => $order->creditcard_number,
+                                                            'month' =>  $order->creditcard_month,
+                                                            'year' => $order->creditcard_year));
             $items = $this->session->userdata('cart');
             $data['order_details'] = $order;
             $data['total'] = calculate_total($this, $items);
@@ -161,6 +164,10 @@ class Cart extends CI_Controller {
             return false;
         }
         return true;
+    }
+
+    function checkout(){
+
     }
 
 

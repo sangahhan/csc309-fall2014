@@ -11,8 +11,6 @@
         echo "<br>";
         echo "<br>";
 
-        echo form_open("cart/checkout");
-
         echo "<h4> Payment information </h4>";
         echo "<p> Credit card number : " . $order_details->creditcard_number . "<p>";
         echo "<p> Expiry date : " . $order_details->creditcard_month . "/" . $order_details->creditcard_year . "</span>";
@@ -20,6 +18,6 @@
         echo "<br>";
         echo "<br>";
 
-        echo form_submit('submit', 'Confirm');
-        echo form_close();
+        echo "<p>" . anchor('cart/checkout/','Confirm') . "</p>";
+
 ?>
