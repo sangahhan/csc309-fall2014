@@ -12,9 +12,9 @@
 		<div id="header">
 		<span id="site-name"><a href="<?php echo base_url(); ?>">eStore</a></span>
 <?php 
-if ($this->session->userdata('logged_in')){
+if (is_logged_in($this->session)){
 	echo "<ul id=\"main-nav\">";	
-	if ($this->session->userdata('username') == 'admin'){
+	if (is_admin($this->session)){
 		echo "<li>" . anchor('#', 'Inventory') . "</li>";
 		echo "<li>" . anchor('#', 'Orders') . "</li>";
 		echo "<li>" . anchor('#', 'Customers') . "</li>";

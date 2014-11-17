@@ -28,12 +28,22 @@ if ( ! function_exists('load_product_list()')){
 		load_view($cont, 'product/list.php',$data);
 	}
 }
+if ( ! function_exists('is_logged_in()')){
+	function is_logged_in($session){
+		return $session->userdata('logged_in');
+	}
+}
+if ( ! function_exists('is_admin()')){
+	function is_admin($session){
+		return $session->userdata('username') == 'admin';
+	}
+}
 if ( ! function_exists('authenticate_login()')){
 	/* Given a controller, if a user is not logged in, indicate to login and
 	 * return false. Else return true.
 	 */
 	function authenticate_login($cont){
-		if(!$cont->session->userdata('logged_in')){
+		if(! is_logged_in($cont->session)){
 			load_view($cont, 'auth/permission_denied.php');
 			return false;
 		}
@@ -46,7 +56,7 @@ if ( ! function_exists('check_logged_out()')){
 	 * indicate it and return false, Otherwise, return true.
 	 */
 	function check_logged_out($cont){
-		if($cont->session->userdata('logged_in')){
+		if(is_logged_in($cont->session)){
 			load_view($cont, 'auth/logged_in_user.php');
 			return false;
 		}
@@ -60,7 +70,7 @@ if ( ! function_exists('authenticate_admin()')){
 	 * The user needs admin permissions and return false. Else, return true.
 	*/
 	function authenticate_admin($cont){
-		if($cont->session->userdata('username') != 'admin'){
+		if(! is_admin($cont->session)){
 			load_view($cont, 'auth/admin_priv_needed.php');
 			return false;
 		}
