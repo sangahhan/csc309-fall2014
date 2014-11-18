@@ -1,5 +1,5 @@
-<h1>Receipt for Order #<?= $order_details->id ?></h1>
 <?php
+echo "<h1>Receipt for Order #" . $order_details->id . "</h1>";
 echo "<h2>Customer Information</h2>";
 echo "<div class=\"cart-cell\">";
 echo "<div class=\"info\">";

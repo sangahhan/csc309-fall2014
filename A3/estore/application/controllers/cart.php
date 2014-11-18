@@ -272,7 +272,7 @@ class Cart extends CI_Controller {
 			} else {
 				//TODO
 				load_view($this, 'auth/generic_permission_denied.php',
-					array("You do not have permission to view this content."));
+					array('message' => "You do not have permission to view this content."));
 			}
 		} else {
 			load_view($this, 'auth/non_existent.php');
