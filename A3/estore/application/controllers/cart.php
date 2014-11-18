@@ -215,7 +215,6 @@ class Cart extends CI_Controller {
 			$new_order_id = $this->db->insert_id();
 
 			foreach (array_keys($items) as $item_key) {
-				echo $item_key;
 				$order_item = new Order_Item();
 				$order_item->order_id = $new_order_id;
 				$order_item->product_id = $item_key;
@@ -230,6 +229,17 @@ class Cart extends CI_Controller {
 				array("Unfortunately, there has been an error in the checkout process. Please retry."));
 			} else {
     			$this->db->trans_commit();
+
+				$message = get_email_content($this, $order);
+
+				$this->load->model('customer_model');
+				$customer = $this->customer_model->get($this->session->userdata('user_id'));
+				$status = send_email($this, $message, $customer->email);
+
+				// TODO: Print out the staus of the email in the reciept. If the
+				// email wasnt sent, tell them to print the receipt for sure?
+				$this->session->set_userdata('email_error', $status);
+
 				$this->session->set_userdata('cart', array());
 				$this->session->set_userdata('total', 0);
 				redirect('cart/receipt/'.$new_order_id, 'refresh');

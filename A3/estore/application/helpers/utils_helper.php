@@ -101,4 +101,55 @@ if ( ! function_exists('calculate_total()')){
 	}
 }
 
+
+/*
+ * Send an email to the current logged in customer with message as the email
+ * content. If the email is successfully sent, return TRUE. Else, return False.
+ */
+if ( ! function_exists('send_email()')){
+	function send_email($cont, $message, $email){
+
+    	// Loads the email library
+    	$cont->load->library('email');
+
+    	// Defines the email details
+    	$cont->email->from("estore309@gmail.com", 'eStore');
+    	$cont->email->to($email);
+    	$cont->email->subject('eStore Receipt');
+    	$cont->email->message($message);
+
+    	// If true, the email will be sent
+    	if ($cont->email->send()) {
+    		return TRUE;
+    	} else {
+    		return FALSE;
+    	}
+	}
+}
+
+/*
+ * Given an order, create the content of an email reciept to be sent to the customer.
+ */
+if ( ! function_exists('get_email_content()')){
+	function get_email_content($cont, $order){
+
+		$content = "";
+		if (isset($order)){
+			$data['order_details'] = $order;
+
+			$items = $cont->order_item_model->get_order($order->id);
+			$data['items'] = $items;
+
+
+			$cont->load->model('customer_model');
+			$customer = $cont->customer_model->get($order->customer_id);
+			$data['customer'] = $customer;
+
+			$content = $cont->load->view('templates/email.php', $data, TRUE);
+		}
+
+		return $content;
+	}
+}
+
 ?>
