@@ -122,7 +122,8 @@ input:hover.button
 
 
 #main input,
-#main select{
+#main select,
+#main textarea{
 	padding: 0.25em;
 	margin: 0 0 1em 0;
 	display: block;

@@ -186,11 +186,12 @@ class Cart extends CI_Controller {
 		if (! $order_info){
 			//TODO
 			load_view($this, 'auth/generic_error.php',
-				array("Unfortunately, there has been an error in the checkout process. Please retry."));
+				array(
+					'messsage' => "Unfortunately, there has been an error in the checkout process. Please retry."));
 		} elseif (! $items or empty($items)) {
 			// TODO:
 			load_view($this, 'auth/generic_permission_denied.php',
-				array("In order to proceed with checkout, you need a non empty shopping cart."));
+				array('message' => "In order to proceed with checkout, you need a non-empty shopping cart."));
 		} else {
 			$this->load->model('order_model');
 			$this->load->model('order_item_model');
@@ -226,7 +227,7 @@ class Cart extends CI_Controller {
 				$this->db->trans_rollback();
 				// TODO: Redirect back to cart.
 				load_view($this, 'auth/generic_error.php',
-				array("Unfortunately, there has been an error in the checkout process. Please retry."));
+				array('message' => "Unfortunately, there has been an error in the checkout process. Please retry."));
 			} else {
     			$this->db->trans_commit();
 
@@ -238,7 +239,7 @@ class Cart extends CI_Controller {
 
 				// TODO: Print out the staus of the email in the reciept. If the
 				// email wasnt sent, tell them to print the receipt for sure?
-				$this->session->set_userdata('email_error', $status);
+				$this->session->set_userdata('email_sent', $status);
 
 				$this->session->set_userdata('cart', array());
 				$this->session->set_userdata('total', 0);

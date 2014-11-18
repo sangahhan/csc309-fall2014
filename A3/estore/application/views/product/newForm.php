@@ -11,7 +11,7 @@ echo form_input('name',set_value('name'),"required");
 
 echo form_label('Description');
 echo form_error('description');
-echo form_input('description',set_value('description'),"required");
+echo form_textarea('description',set_value('description'),"required");
 
 echo form_label('Price');
 echo form_error('price');

@@ -38,9 +38,14 @@ echo "</div>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
 echo "<br />";
+echo "<div>";
+if ($this->session->userdata('email_sent')) {
+	echo "<p>This receipt has been sent to your e-mail address.</p>";
+	$this->session->unset_userdata('email_sent');	
+}
 echo anchor("#", "Print", array (
 		'class' => 'button',
 		'onclick' => "window.print()"
 	));
-
+echo "</div>";
 ?>

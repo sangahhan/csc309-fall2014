@@ -16,13 +16,13 @@
 
 	echo form_label('Description');
 	echo form_error('description');
-	echo form_input('description',$product->description,"required");
+	echo form_textarea('description',$product->description,"required");
 	
 	echo form_label('Price');
 	echo form_error('price');
 	echo form_input('price',$product->price,"required");
 	
-	echo form_submit('submit', 'Save');
+	echo form_submit('submit', 'Save', 'class="button"');
 	echo form_close();
 ?>	
 

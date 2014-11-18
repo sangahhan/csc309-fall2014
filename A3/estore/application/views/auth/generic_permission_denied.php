@@ -1,4 +1,4 @@
 <h1>Permission Denied</h1>
 <?php
-    echo "<p>" . $message . " " .  anchor('auth','Return to login page') . "</p>";
+    echo "<p>" . $message . " " .  anchor(site_url('auth'),'Return to login page') . "</p>";
 ?>
