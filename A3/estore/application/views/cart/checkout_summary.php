@@ -29,34 +29,6 @@ echo "</div>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
 echo "<br />";
-echo "<a href=\"#\" id=\"purchase-link\" class=\"button\">" . "Confirm" . "</a>";
-
+echo "<p>" . anchor('cart/checkout','Confirm') .  "</p>";
+	
 ?>
-<!-- TODO: clean up this JS -->
-<script>
-$(function(){
-	var data = {};
-	data['order_details'] = <?= json_encode($order_details) ?>;
-	var items = [];
-<?php 	
-foreach (array_keys($items) as $item_key) {
-?>
-	items.push({
-	'product_id': <?= $item_key ?>,
-		'quantity': <?= $items[$item_key]['quantity']?>
-}
-);
-<?php 
-}
-?>
-data['items'] = items;
-$('#purchase-link').click(function(){
-	$.post(
-		"<?= site_url('cart/checkout')?>", 
-		"json=" + JSON.stringify(data), 
-			function (data) {
-				location.replace("<?= site_url('cart/receipt') ?>/" + data);
-			});
-});
-});
-</script>

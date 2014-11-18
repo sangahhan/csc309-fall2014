@@ -1,12 +1,19 @@
 <?php
 class Customer_model extends CI_Model {
 
+	/* Returns a list of all entries in the 'customers'  database as Customer
+	 * objects
+	*/
 	function getAll()
 	{
 		$query = $this->db->get('customers');
 		return $query->result('Customer');
 	}
 
+	/*
+	 * Given a customer id, return the customer with the given id. If the
+	 * id is invalid, return null.
+	 */
 	function get($id)
 	{
 		$query = $this->db->get_where('customers',array('id' => $id));
@@ -15,13 +22,17 @@ class Customer_model extends CI_Model {
 		}
 	}
 
+	/*
+	 * Delete a customer
+	 */
 	function delete($id) {
-		//TODO : delete all the customer orders first.
-		// Get all the orders that is by the customer
-		// For each order, delete the order_item. Then delete the order itself.
+
 		return $this->db->delete("customers",array('id' => $id ));
 	}
 
+	/*
+	 * Insert a customer in to the database given a Customer object
+	 */
 	function insert($customer) {
 		// TODO: Encrypt password before inserting
 		// $this->load->library('encrypt');

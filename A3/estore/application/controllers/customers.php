@@ -37,6 +37,12 @@ class Customers extends CI_Controller {
             return;
         }
 
+        if ($customer->login == "admin"){
+            // TODO:
+            load_view($this, 'auth/generic_permission_denied.php',
+                            array('err' => 'Admin user cannot be deleted.'));
+        }
+
         if (isset($id)){
             $this->customer_model->delete($id);
         }
