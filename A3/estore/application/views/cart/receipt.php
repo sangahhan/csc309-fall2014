@@ -38,6 +38,9 @@ echo "</div>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
 echo "<br />";
-echo "<a href=\"#\" id=\"print-link\" class=\"button\">" . "Print" . "</a>";
+echo anchor("#", "Print", array (
+		'class' => 'button',
+		'onclick' => "window.print()"
+	));
 
 ?>
