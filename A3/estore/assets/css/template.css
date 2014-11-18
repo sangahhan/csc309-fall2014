@@ -10,10 +10,10 @@
 	font-weight: bold;
 }
 
-*{
+* {
 	font-size: 1em;
-	font-family: Roboto, sans-serif;
-}
+	font-family: Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+}	
 
 html {
 }

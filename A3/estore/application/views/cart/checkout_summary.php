@@ -29,6 +29,6 @@ echo "</div>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
 echo "<br />";
-echo "<p>" . anchor('cart/checkout','Confirm') .  "</p>";
+echo "<p>" . anchor('cart/checkout','Confirm', 'class="button"') .  "</p>";
 	
 ?>
