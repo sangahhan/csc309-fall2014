@@ -53,10 +53,19 @@ class Orders extends CI_Controller {
             return;
         };
 
-        $this->load->model('order_model');
-        $order = $this->order_model->get($id);
+		$this->load->model('order_model');
+		$this->load->model('order_item_model');
+		$this->load->model('customer_model');
+		// get order		
+		$order = $this->order_model->get($id);
+		// get items
+		$items = $this->order_item_model->get_order($id);
+		// get customer
+		$customer = $this->customer_model->get($order->customer_id);
         if (isset($order)){
-            $data['order']=$order;
+		$data['order']=$order;
+		$data['items'] = $items;
+		$data['customer'] = $customer;
             load_view($this, 'orders/read.php',$data);
         } else {
             load_view($this, 'auth/non_existent.php');

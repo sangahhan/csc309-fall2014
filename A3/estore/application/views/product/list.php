@@ -1,7 +1,7 @@
 <h1>Products</h1>
 <?php
 if (is_admin($this->session)){
-	echo "<p>" . anchor('store/newForm','Add New') . "</p>";
+	echo "<p>" . anchor('store/newForm','Add New', 'class="button"') . "</p>";
 }
 
 echo "<div id=\"products-table\">";
@@ -9,7 +9,7 @@ echo "<div id=\"products-table\">";
 foreach ($products as $product) {
 	echo "<div class=\"products-table-cell\">";
 	echo "<div class=\"info\">";
-	echo "<h1>" . $product->name . "</h1>";
+	echo "<h2>" . $product->name . "</h2>";
 	echo "<img class=\"product-photo\" src=\"" . base_url() . "images/product/" . $product->photo_url . "\" /></td>";
 	echo "<span class=\"price\"><strong>Price: </strong>$" . $product->price . "</span>";
 	echo "<p class=\"description\">" . $product->description . "</p>";

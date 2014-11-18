@@ -128,12 +128,12 @@ input:hover.button
 	display: block;
 }
 
-div#products-table {
-}
+/* shared amongst select views */
 
 div.products-table-cell, 
 div.products-read-cell,
-div.cart-cell {
+div.cart-cell,
+div.admin-table-cell{
 	background-color:#E0E0E0;
 	border-style: solid;
 	border-color: #757575;
@@ -141,34 +141,46 @@ div.cart-cell {
 	padding: 0;
 	margin: 0 0 0.5em 0;
 }
-/* store/list */
-
-div.products-table-cell .info {
-	margin: 0.5em;
-	clear: both;
-	height: 100%;
-}
-
 div.cart-cell ul.actions, 
-div.products-table-cell ul.actions {
-
+div.products-table-cell ul.actions,
+div.admin-table-cell ul.actions{
 	list-style-type:none;
 	clear: both;
-	padding: 0.2em;
+	padding: 0.2em 0;
 	background: #BDBDBD;
 	margin: 0;
 	text-align: right;
 }
+div.products-table-cell h2,
+div.cart-cell h2,
+div.admin-table-cell h2{
+	font-size: 1.25em;
+	margin: 0 0 0.5em 0;
+}
 
-div.products-table-cell ul.actions li{
+div.products-table-cell ul.actions li,
+div.cart-cell ul.actions li,
+div.admin-table-cell ul.actions li{
 	display: inline;
 	margin: 0 0.75em 0 0; /* space after each action link per cell */
 }
-div.products-table-cell h2,
-div.cart-cell h2{
-	font-size: 1.25em;
-	margin: 0 0 10px 0;
+div.cart-cell p,
+div.admin-table-cell p{
+	margin: 0;
 }
+
+div.products-table-cell .info ,
+div.admin-table-cell .info ,
+div.cart-cell .info {
+	float: left;
+	margin: 0.75em;
+}
+
+div.actions {
+	margin: 1em 0 0 0 ;
+}
+
+/* store/list */
 div.products-table-cell .description {
 	margin: 0;
 }
@@ -183,7 +195,7 @@ div.products-table-cell .product-photo {
 
 div.products-read-cell {
 	margin: 0;
-	padding: 0.5em;
+	padding: 0.75em;
 }
 
 div.products-read-cell .product-photo {
@@ -195,11 +207,6 @@ div.products-read-cell p {
 }
 
 /* cart */
-
-div.cart-cell ul.actions li{
-	display: inline;
-	margin: 0 0.75em 0 0; /* space after each action link per cell */
-}
 
 div.cart-cell .quantity-control {
 	display: inline-block;
@@ -219,14 +226,6 @@ div.cart-cell .quantity-control .quantity {
 #main div.cart-cell .quantity-control .spinner a.button{
 	text-align: center;
 	padding: 0 1em;
-}
-div.cart-cell .info {
-	float: left;
-	margin: 1em;
-}
-
-div.cart-cell  p{
-	margin: 0;
 }
 
 div.cart-cell h3 {

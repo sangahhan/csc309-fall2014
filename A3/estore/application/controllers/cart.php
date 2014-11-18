@@ -202,13 +202,17 @@ class Cart extends CI_Controller {
 	function receipt($order_id) {
 		$this->load->model('order_model');
 		$this->load->model('order_item_model');
+		$this->load->model('customer_model');
 		// get order		
-		$order = $this->order_model->get($order_id);
+		$order = $this->order_model->get($order_id);	
 		// get items
 		$items = $this->order_item_model->get_order($order_id);
+		// get customer
+		$customer = $this->customer_model->get($order->customer_id);
 		load_view($this, 'cart/receipt.php', array (
 			'order_details' => $order,
 			'items' => $items,
+			'customer' => $customer
 			));
 	}
 

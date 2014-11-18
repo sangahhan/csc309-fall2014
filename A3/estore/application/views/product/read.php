@@ -6,12 +6,24 @@
 		echo "</div>";
 	}
 
-	echo "<p>" . anchor(site_url('store'),'Back to store') . "</p>";
+//	echo "<p>" . anchor(site_url('store'),'Back to store') . "</p>";
 	products_read_cell("<img class=\"product-photo\" src='" . base_url() . "images/product/" . $product->photo_url . "'/>");
-	products_read_cell("<span class=\"id\"><strong>Product ID: </strong>" . $product->id . "</span>" . "<br />" . 
+	$product_info = "<span class=\"id\"><strong>Product ID: </strong>" . $product->id . "</span>" . "<br />" . 
 		"<span class=\"price\"><strong>Price: </strong>$" . $product->price . "</span>" . "<br />" . 
-		"<p class=\"description\">" . $product->description . "</p>" . 
-		anchor("cart/add_to_cart/$product->id",'Add to Cart', array('class' => 'button')));
+		"<p class=\"description\">" . $product->description . "</p>";
+	products_read_cell($product_info);
+	echo "<div class=\"actions\">";
+	if (is_admin($this->session)){
+		echo
+			anchor("store/delete/$product->id",'Delete',
+				array (
+					'onclick' => "return confirm('Do you really want to delete this record?');",
+					'class' => 'button'
+				)) . " " . 
+		anchor("store/editForm/$product->id",'Edit', 'class="button"'); 
+	} else {
+		echo anchor("cart/add_to_cart/$product->id",'Add to Cart', array('class' => 'button'));
+	}
 	echo "</div>";
 		
 ?>	

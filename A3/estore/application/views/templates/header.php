@@ -16,7 +16,7 @@
 if (is_logged_in($this->session)){
 	echo "<ul id=\"main-nav\">";	
 	if (is_admin($this->session)){
-		echo "<li>" . anchor('#', 'Orders') . "</li>";
+		echo "<li>" . anchor(site_url('orders'), 'Orders') . "</li>";
 		echo "<li>" . anchor(site_url('customers'), 'Customers') . "</li>";
 		echo "<li>" . anchor(site_url('store'), 'Inventory') . "</li>";
 	} else {
