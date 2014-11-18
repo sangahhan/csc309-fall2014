@@ -130,22 +130,22 @@ class Cart extends CI_Controller {
 
 		if ($this->form_validation->run() == true) {
 
-			$now = new DateTime("now");
 			$order = new Order();
-			$order->customer_id = $this->session->userdata('user_id');
 			$order->creditcard_number = $this->input->get_post('creditcard_number');
 			$order->creditcard_month = $this->input->get_post('month');
 			$order->creditcard_year = $this->input->get_post('year');
-			$order->order_time = $now->format('H:i:s');
-			$order->order_date = $now->format('Y-m-d');
-			$items = $this->session->set_userdata('card_info', array(
-				'number' => $order->creditcard_number,
-				'month' =>  $order->creditcard_month,
-				'year' => $order->creditcard_year));
+
 			$items = $this->session->userdata('cart');
 			$order->total = calculate_total($this, $items);
+
 			$data['order_details'] = $order;
 			$data['items'] = $items;
+
+			$this->session->set_userdata('order_info', array(
+				'number' => $order->creditcard_number,
+				'month' =>  $order->creditcard_month,
+				'year' => $order->creditcard_year,
+				'total' => $order->total));
 
 			load_view($this,'cart/checkout_summary.php', $data);
 
@@ -174,43 +174,75 @@ class Cart extends CI_Controller {
 	}
 
 	function checkout(){
-		$this->session->set_userdata('cart', array());
-		$this->load->model('order_model');
-		$this->load->model('order_item_model');
-		$data = json_decode($this->input->get_post('json'));
-		$order_details = $data->order_details;
-		$items = $data->items;
 
-		// TODO: what if user makes transaction with empty cart?
-		
-		if ($this->order_model->insert($order_details)){
+		$order_info = $this->session->userdata('order_info');
+		$items = $this->session->userdata('cart');
+		if (! $order_info){
+			load_view($this, 'cart/checkout_error');
+		} elseif (! $items or empty($items)) {
+			// TODO: Cant checkout an empty cart
+			load_view($this, 'cart/empty_cart');
+		} else {
+			$this->load->model('order_model');
+			$this->load->model('order_item_model');
+
+			$now = new DateTime("now");
+
+			$order = new Order();
+			$order->customer_id = $this->session->userdata('user_id');
+			$order->order_time = $now->format('H:i:s');
+			$order->order_date = $now->format('Y-m-d');
+			$order->total = $order_info['total'];
+			$order->creditcard_number = $order_info['number'];
+			$order->creditcard_year = $order_info['year'];
+			$order->creditcard_month = $order_info['month'];
+
+			$data = array('order_info' => array());
+			$this->session->unset_userdata($data);
+
+			$this->db->trans_begin();
+
+			$this->order_model->insert($order);
 			$new_order_id = $this->db->insert_id();
-		
-			if (!empty($items)){
-			foreach ($items as $item){
+
+			foreach (array_keys($items) as $item_key) {
+				echo $item_key;
 				$order_item = new Order_Item();
 				$order_item->order_id = $new_order_id;
-				$order_item->product_id = $item->product_id;
-				$order_item->quantity = $item->quantity;
+				$order_item->product_id = $item_key;
+				$order_item->quantity = $items[$item_key]['quantity'];
 				$this->order_item_model->insert($order_item);
-			}}
-			$this->output->set_output($new_order_id);
-		}
+			}
 
+			if ($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+				// TODO: Redirect back to cart.
+				load_view('cart/checkout_error/');
+    		} else {
+    			$this->db->trans_commit();
+				$this->session->set_userdata('cart', array());
+				$this->session->set_userdata('total', 0);
+				redirect('cart/receipt/'.$new_order_id, 'refresh');
+    		}
+		}
 	}
 
 	function receipt($order_id) {
 		$this->load->model('order_model');
 		$this->load->model('order_item_model');
-		// get order		
+		// get order
 		$order = $this->order_model->get($order_id);
-		// get items
-		$items = $this->order_item_model->get_order($order_id);
-		load_view($this, 'cart/receipt.php', array (
-			'order_details' => $order,
-			'items' => $items,
-			));
+		if (isset($order)){
+			if ($order->customer_id == $this->session->userdata('user_id');
+				$data['order_details'] = $order;
+				$items = $this->order_item_model->get_order($order_id);
+				load_view($this, 'cart/receipt.php', $data);
+			} else {
+				// TODO: Permission denied.
+				load_view($this, 'order/no_permission.php');
+			}
+		} else {
+			load_view($this, 'auth/non_existent.php');
+		}
 	}
-
-
 }
