@@ -11,7 +11,7 @@ class Cart extends CI_Controller {
 
 	function index() {
 
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
 
@@ -19,7 +19,7 @@ class Cart extends CI_Controller {
 	}
 
 	function add_to_cart($product_id){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
 
@@ -36,7 +36,7 @@ class Cart extends CI_Controller {
 					"quantity" => 1,
 					"price" => $product->price);
 			} else {
-				load_view($this, 'auth/non_existent.php');
+				load_error_view($this, 'store', '404');
 				return;
 			}
 		}
@@ -46,7 +46,7 @@ class Cart extends CI_Controller {
 	}
 
 	function reduce_from_cart($product_id){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
 
@@ -61,7 +61,7 @@ class Cart extends CI_Controller {
 				$item['quantity'] = $item['quantity'] - 1;
 			}
 		} else {
-			load_view($this, 'auth/non_existent.php');
+			load_error_view($this, 'cart', '404');;
 			return;
 		}
 
@@ -71,7 +71,7 @@ class Cart extends CI_Controller {
 	}
 
 	function increase_in_cart($product_id){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
 
@@ -81,7 +81,7 @@ class Cart extends CI_Controller {
 			$item = & $items[$product_id];
 			$item['quantity'] = $item['quantity'] + 1;
 		} else {
-			load_view($this, 'auth/non_existent.php');
+			load_error_view($this, 'cart', '404');
 			return;
 		}
 
@@ -91,7 +91,7 @@ class Cart extends CI_Controller {
 	}
 
 	function remove_from_cart($product_id){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
 
@@ -101,7 +101,7 @@ class Cart extends CI_Controller {
 			$item = & $items[$product_id];
 			unset($items[$product_id]);
 		} else {
-			load_view($this, 'auth/non_existent.php');
+			load_error_view($this, 'cart', '404');
 			return;
 		}
 
@@ -111,17 +111,33 @@ class Cart extends CI_Controller {
 	}
 
 	function checkout_form(){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
+
+		$items = $this->session->userdata('cart');
+		if (! $items or empty($items)) {
+			load_error_view($this, 'store', 'generic',
+				"In order to proceed with checkout, you need a non empty shopping cart.");
+			return;
+		};
+
 		load_view($this, 'cart/checkout_form.php');
 
 	}
 
 	function checkout_summary(){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
+
+		$items = $this->session->userdata('cart');
+		if (! $items or empty($items)) {
+			load_error_view($this, 'store', 'generic',
+				"In order to proceed with checkout, you need a non empty shopping cart.");
+			return;
+		};
+
 
 		$this->load->library('form_validation');
 
@@ -138,7 +154,7 @@ class Cart extends CI_Controller {
 			$order->creditcard_month = $this->input->get_post('month');
 			$order->creditcard_year = $this->input->get_post('year');
 
-			$items = $this->session->userdata('cart');
+
 			$order->total = calculate_total($this, $items);
 
 			$data['order_details'] = $order;
@@ -177,21 +193,18 @@ class Cart extends CI_Controller {
 	}
 
 	function checkout(){
-		if (!authenticate_login($this)){
+		if (!authenticate_login($this) or !authenticate_non_admin($this)){
 			return;
 		}
 
 		$order_info = $this->session->userdata('order_info');
 		$items = $this->session->userdata('cart');
 		if (! $order_info){
-			//TODO
-			load_view($this, 'auth/generic_error.php',
-				array(
-					'messsage' => "Unfortunately, there has been an error in the checkout process. Please retry."));
+			load_error_view($this, 'cart', 'error',
+				"Unfortunately, there has been an error in the checkout process. Please retry.");
 		} elseif (! $items or empty($items)) {
-			// TODO:
-			load_view($this, 'auth/generic_permission_denied.php',
-				array('message' => "In order to proceed with checkout, you need a non-empty shopping cart."));
+			load_error_view($this, 'store', 'generic',
+				"In order to proceed with checkout, you need a non empty shopping cart.");
 		} else {
 			$this->load->model('order_model');
 			$this->load->model('order_item_model');
@@ -226,8 +239,8 @@ class Cart extends CI_Controller {
 			if ($this->db->trans_status() === FALSE){
 				$this->db->trans_rollback();
 				// TODO: Redirect back to cart.
-				load_view($this, 'auth/generic_error.php',
-				array('message' => "Unfortunately, there has been an error in the checkout process. Please retry."));
+				load_error_view($this, 'cart', 'error',
+					"Unfortunately, there has been an error in the checkout process. Please retry.");
 			} else {
     			$this->db->trans_commit();
 
@@ -271,12 +284,10 @@ class Cart extends CI_Controller {
 
 				load_view($this, 'cart/receipt.php', $data);
 			} else {
-				//TODO
-				load_view($this, 'auth/generic_permission_denied.php',
-					array('message' => "You do not have permission to view this content."));
+				load_error_view($this, 'store', '403');
 			}
 		} else {
-			load_view($this, 'auth/non_existent.php');
+			load_error_view($this, 'cart', '404');
 		}
 	}
 }

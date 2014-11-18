@@ -1,3 +1,7 @@
+<?php if ($this->session->flashdata('redirect')) {?>
+    <p> Sorry! You need to be logged in to view store content </p>
+<?php } ?>
+
 <h1>Login</h1>
 
     <?php if ( $failed_attempt) {?>

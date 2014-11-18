@@ -33,7 +33,7 @@ class Orders extends CI_Controller {
         $this->load->model('order_model');
         $order = $this->order_model->get($id);
         if (!isset($order)){
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'orders', '404');
             return;
         }
 
@@ -70,7 +70,7 @@ class Orders extends CI_Controller {
 		    $data['customer'] = $customer;
             load_view($this, 'orders/read.php', $data);
         } else {
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'orders', '404');
         }
     }
 

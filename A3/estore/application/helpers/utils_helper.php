@@ -39,13 +39,12 @@ if ( ! function_exists('is_admin()')){
 	}
 }
 if ( ! function_exists('authenticate_login()')){
-	/* Given a controller, if a user is not logged in, indicate to login and
-	 * return false. Else return true.
+	/* Given a controller, if a user is not logged in, redirect to login. Else return true.
 	 */
 	function authenticate_login($cont){
 		if(! is_logged_in($cont->session)){
-			load_view($cont, 'auth/permission_denied.php');
-			return false;
+			$cont->session->set_flashdata('redirect', 1);
+			redirect('auth', 'refresh', 401);
 		}
 		return true;
 	}
@@ -57,7 +56,7 @@ if ( ! function_exists('check_logged_out()')){
 	 */
 	function check_logged_out($cont){
 		if(is_logged_in($cont->session)){
-			load_view($cont, 'auth/logged_in_user.php');
+			load_error_view($cont, 'store', '403', 'You are already logged in. To register or login as a new user, please logout first.');
 			return false;
 		}
 		return true;
@@ -71,7 +70,20 @@ if ( ! function_exists('authenticate_admin()')){
 	*/
 	function authenticate_admin($cont){
 		if(! is_admin($cont->session)){
-			load_view($cont, 'auth/admin_priv_needed.php');
+			load_error_view($cont, 'store', '403', 'To view this page, administrative privileges are required.');
+			return false;
+		}
+		return true;
+	}
+}
+
+if ( ! function_exists('authenticate_non_admin()')){
+	/* Given a controller, if the is an admin user, indicate that
+	* The user cannot checkout items from the store.
+	*/
+	function authenticate_non_admin($cont){
+		if(is_admin($cont->session)){
+			load_error_view($cont, 'store', '403', 'Admin users cannot use the shopping cart functionalities');
 			return false;
 		}
 		return true;
@@ -151,5 +163,58 @@ if ( ! function_exists('get_email_content()')){
 		return $content;
 	}
 }
+
+/*
+* Given an order, create the content of an email reciept to be sent to the customer.
+*/
+if ( ! function_exists('load_error_view()')){
+	function load_error_view($cont, $return, $title, $msg=false){
+
+		if ($return == 'auth'){
+			$link = "/auth";
+			$phrase = 'login page';
+		} else if ($return == 'cart'){
+			$link = "/cart";
+			$phrase = 'cart';
+		} else if ($return == 'customers'){
+			$link = '/customers';
+			$phrase = 'customer page';
+		} else if ($return == 'orders'){
+			$link = '/orders';
+			$phrase = 'orders';
+		} else {
+			$link = '/store';
+			$phrase = 'store';
+		}
+
+		$data['return_link'] = $link;
+		$data['return_phrase'] = $phrase;
+
+
+		if (!$msg and $title == "403"){
+			$msg = "You do not have permission to view this content";
+		} else if (!$msg){
+			$msg = "Sorry! The page you are looking for does not exist.";
+		}
+
+		$data['err_msg'] = $msg;
+
+		if ($title == "404"){
+			$data['title'] = "404 Page not found!";
+			$cont->output->set_header("HTTP/1.1 404 Not Found");
+		} else if ($title == "403"){
+			$data['title'] = "403 Permission denied!";
+			$cont->output->set_header("HTTP/1.1 403 Forbidden");
+		} else if ($title == "error"){
+			$data['title'] = "Error!";
+		} else {
+			$data['title'] = "Sorry!";
+		}
+
+
+		load_view($cont,'templates/error.php', $data);
+	}
+}
+
 
 ?>
