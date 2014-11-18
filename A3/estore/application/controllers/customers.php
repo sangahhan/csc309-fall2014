@@ -33,14 +33,12 @@ class Customers extends CI_Controller {
         $this->load->model('customer_model');
         $customer = $this->customer_model->get($id);
         if (!isset($customer)){
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'customers', '404');
             return;
         }
 
         if ($customer->login == "admin"){
-            // TODO:
-            load_view($this, 'auth/generic_permission_denied.php',
-                            array('err' => 'Admin user cannot be deleted.'));
+            load_error_view($this, 'customers', '403', 'Admin user cannot be deleted.');
         }
 
         if (isset($id)){
@@ -65,7 +63,7 @@ class Customers extends CI_Controller {
             $data['customer']=$customer;
             load_view($this, 'customers/read.php',$data);
         } else {
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'customers', '404');
         }
     }
 

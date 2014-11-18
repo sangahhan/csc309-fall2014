@@ -80,7 +80,7 @@ class Store extends CI_Controller {
             $data['product']=$product;
             load_view($this, 'product/read.php',$data);
         } else {
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'store', '404');
         }
     }
 
@@ -95,7 +95,7 @@ class Store extends CI_Controller {
             $data['product']=$product;
             load_view($this, 'product/editForm.php',$data);
         } else {
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'store', '404');
         }
     }
 
@@ -107,7 +107,7 @@ class Store extends CI_Controller {
         $this->load->model('product_model');
         $product = $this->product_model->get($id);
         if (!isset($product)){
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'store', '404');
             return;
         }
 
@@ -146,7 +146,7 @@ class Store extends CI_Controller {
         $this->load->model('product_model');
         $product = $this->product_model->get($id);
         if (!isset($product)){
-            load_view($this, 'auth/non_existent.php');
+            load_error_view($this, 'store', '404');
             return;
         }
 
