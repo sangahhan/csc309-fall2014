@@ -10,7 +10,8 @@
 	products_read_cell("<img class=\"product-photo\" src='" . base_url() . "images/product/" . $product->photo_url . "'/>");
 	products_read_cell("<span class=\"id\"><strong>Product ID: </strong>" . $product->id . "</span>" . "<br />" . 
 		"<span class=\"price\"><strong>Price: </strong>$" . $product->price . "</span>" . "<br />" . 
-		"<p class=\"description\">" . $product->description . "</p>");
+		"<p class=\"description\">" . $product->description . "</p>" . 
+		anchor("cart/add_to_cart/$product->id",'Add to Cart', array('class' => 'button')));
 	echo "</div>";
 		
 ?>	

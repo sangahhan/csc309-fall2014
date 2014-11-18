@@ -1,7 +1,7 @@
 <h1>Payment</h1>
 
 <?php
-    echo "<p>" . anchor(site_url('cart'),'Back to Cart') . "</p>";
+    echo "<p>" . anchor(site_url('cart'),'Back to cart') . "</p>";
 
     echo form_open('cart/checkout_summary');
 
@@ -9,29 +9,25 @@
     echo form_error('creditcard_number');
     echo form_input('creditcard_number',set_value('creditcard_number'),"required");
 
-    echo "<br>";
 
     $months = array(
-                '01' => 'Jan',
-                '02' => 'Feb',
-                '03' => 'Mar',
-                '04' => 'Apr',
+                '01' => 'January',
+                '02' => 'February',
+                '03' => 'March',
+                '04' => 'April',
                 '05' => 'May',
-                '06' => 'Jun',
-                '07' => 'Jul',
-                '08' => 'Aug',
-                '09' => 'Sep',
-                '10' => 'Oct',
-                '11' => 'Nov',
-                '12' => 'Dec',
+                '06' => 'June',
+                '07' => 'July',
+                '08' => 'August',
+                '09' => 'September',
+                '10' => 'October',
+                '11' => 'November',
+                '12' => 'December',
     );
 
     echo form_label('Expiration month');
     echo form_error('creditcard_month');
     echo form_dropdown('month', $months, '01');
-
-    echo "<br>";
-    echo "<br>";
 
     $years = array(
                 '2014' => '2014',
@@ -53,10 +49,7 @@
     echo form_error('creditcard_year');
     echo form_dropdown('year', $years, '2014');
 
-    echo "<br>";
-    echo "<br>";
 
-
-    echo form_submit('submit', 'Proceed');
+    echo form_submit('submit', 'Proceed', 'class="button"');
     echo form_close();
 ?>

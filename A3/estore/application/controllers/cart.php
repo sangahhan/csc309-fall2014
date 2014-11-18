@@ -180,6 +180,8 @@ class Cart extends CI_Controller {
 		$data = json_decode($this->input->get_post('json'));
 		$order_details = $data->order_details;
 		$items = $data->items;
+
+		// TODO: what if user makes transaction with empty cart?
 		
 		if ($this->order_model->insert($order_details)){
 			$new_order_id = $this->db->insert_id();
@@ -206,7 +208,8 @@ class Cart extends CI_Controller {
 		$items = $this->order_item_model->get_order($order_id);
 		load_view($this, 'cart/receipt.php', array (
 			'order_details' => $order,
-			'items' => $items));
+			'items' => $items,
+			));
 	}
 
 

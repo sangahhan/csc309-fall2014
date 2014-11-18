@@ -23,6 +23,7 @@ class Order_Item_model extends CI_Model {
 			for ($i = 0; $i < count($result); $i++){
 				$product = $this->product_model->get($result[$i]->product_id);
 				$result[$i]->name = $product->name;
+				$result[$i]->price = $product->price;
 			}
 			return $result;
 		}

@@ -27,6 +27,6 @@
 
     echo "<br>";
 
-    echo form_submit('submit', 'Register');
+    echo form_submit('submit', 'Register', 'class="button"');
     echo form_close();
 ?>

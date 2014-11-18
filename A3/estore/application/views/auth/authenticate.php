@@ -15,9 +15,8 @@
     echo form_label('Password');
     echo form_error('description');
     echo form_password('password', set_value(''),"required");
-    echo "<br>";
 
-    echo form_submit('submit', 'Login');
+    echo form_submit('submit', 'Login', 'class="button"');
     echo form_close();
 
     echo "<p> Don't have an account? " . anchor('auth/registration_form','Register') . "</p>";
