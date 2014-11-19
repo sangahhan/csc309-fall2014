@@ -120,6 +120,9 @@ input:hover.button
 	margin: 1em;
 }
 
+#main label {
+	font-weight: bold;
+}
 
 #main input,
 #main select,
@@ -129,6 +132,10 @@ input:hover.button
 	display: block;
 	background-color: #E0E0E0;
 	border: #BDBDBD 1px solid;
+}
+
+#main p.error {
+	margin: 0;
 }
 
 /* shared amongst select views */

@@ -3,19 +3,22 @@
 <?php
 echo "<p>" . anchor(site_url('cart'),'Back to cart') . "</p>";
 
-echo form_open('cart/checkout_summary', array('onSubmit' => 'return validateCreditCardExpiryDate()'));
+echo form_open('cart/checkout_summary', array('onSubmit' => 'return validateCreditCard()'));
+
+echo "<p class=\"error\" d=\"creditcard-number-error\"></p>";
 
 echo form_label('Credit card number');
 echo form_error('creditcard_number');
 echo form_input( array(
 	'name' => 'creditcard_number',
+	'id' => 'creditcard-number',
 	'pattern' => '\d{16}',
 	'title' => 'A card number must consist of 16 digits.',
 	'x-moz-errormessage' => 'A card number must consist of 16 digits.',
 	'required' => 'required'
 ));
 
-echo "<p id=\"creditcard-expiry-error\"></p>";
+echo "<p class=\"error\" id=\"creditcard-expiry-error\"></p>";
 
 $months = array(
 	'01' => 'January',
