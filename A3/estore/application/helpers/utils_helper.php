@@ -135,11 +135,7 @@ if ( ! function_exists('send_email()')){
 
 	// Define email config
 		$config = array (
-		'protocol' => 'mail',
 		'mailtype' => 'html',
-		'charset' => 'utf-8',
-		'priority' => '3', 
-		'wordwrap' => false
 	);
     	// Loads the email library
 	$cont->load->library('email');
