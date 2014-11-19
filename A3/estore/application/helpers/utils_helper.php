@@ -120,7 +120,7 @@ if (! function_exists('get_print_page()')) {
 			'order_id' => $order_id,
 			'print' => $print
 		);
-		$html = $cont->load->view('templates/print_page.php', $data, true);
+		$html = $cont->load->view('templates/print_receipt.php', $data, true);
 		if ($trim) return trim(str_replace(PHP_EOL, '', $html));
 		return $html;
 	}

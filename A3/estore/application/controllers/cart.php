@@ -281,7 +281,7 @@ class Cart extends CI_Controller {
 
 				$customer = $this->customer_model->get($user_id);
 				$data['customer'] = $customer;
-				$content = get_email_content($this, $order);
+				$content = $this->load->view('templates/receipt_contents.php', $data, true);
 				$printable_content = get_print_page($this, $content, $order->id, true, true);
 				load_view($this, 'cart/receipt.php', 
 					array(
