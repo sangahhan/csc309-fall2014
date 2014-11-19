@@ -227,6 +227,7 @@ class Cart extends CI_Controller {
 
 			$this->order_model->insert($order);
 			$new_order_id = $this->db->insert_id();
+			$order->id = $new_order_id;
 
 			foreach (array_keys($items) as $item_key) {
 				$order_item = new Order_Item();
@@ -242,22 +243,21 @@ class Cart extends CI_Controller {
 				load_error_view($this, 'cart', 'error',
 					"Unfortunately, there has been an error in the checkout process. Please retry.");
 			} else {
-    			$this->db->trans_commit();
+				$this->db->trans_commit();
 
-				$message = get_email_content($this, $order);
+				$content = get_email_content($this, $order);
+				$message = get_print_page($this, $content, $order->id);
 
 				$this->load->model('customer_model');
 				$customer = $this->customer_model->get($this->session->userdata('user_id'));
 				$status = send_email($this, $message, $customer->email);
 
-				// TODO: Print out the staus of the email in the reciept. If the
-				// email wasnt sent, tell them to print the receipt for sure?
 				$this->session->set_userdata('email_sent', $status);
 
 				$this->session->set_userdata('cart', array());
 				$this->session->set_userdata('total', 0);
 				redirect('cart/receipt/'.$new_order_id, 'refresh');
-    		}
+			}
 		}
 	}
 
@@ -281,8 +281,13 @@ class Cart extends CI_Controller {
 
 				$customer = $this->customer_model->get($user_id);
 				$data['customer'] = $customer;
-
-				load_view($this, 'cart/receipt.php', $data);
+				$content = get_email_content($this, $order);
+				$printable_content = get_print_page($this, $content, $order->id, true, true);
+				load_view($this, 'cart/receipt.php', 
+					array(
+						'content' => $content, 
+						'printable_content' => $printable_content
+					));
 			} else {
 				load_error_view($this, 'store', '403');
 			}

@@ -113,6 +113,18 @@ if ( ! function_exists('calculate_total()')){
 	}
 }
 
+if (! function_exists('get_print_page()')) {
+	function get_print_page($cont, $content, $order_id, $print=false, $trim=false){
+		$data = array (
+			'content' => $content,
+			'order_id' => $order_id,
+			'print' => $print
+		);
+		$html = $cont->load->view('templates/print_page.php', $data, true);
+		if ($trim) return trim(str_replace(PHP_EOL, '', $html));
+		return $html;
+	}
+}
 
 /*
  * Send an email to the current logged in customer with message as the email
@@ -121,13 +133,22 @@ if ( ! function_exists('calculate_total()')){
 if ( ! function_exists('send_email()')){
 	function send_email($cont, $message, $email){
 
+	// Define email config
+		$config = array (
+		'protocol' => 'mail',
+		'mailtype' => 'html',
+		'charset' => 'utf-8',
+		'priority' => '3', 
+		'wordwrap' => false
+	);
     	// Loads the email library
-    	$cont->load->library('email');
+	$cont->load->library('email');
+	$cont->email->initialize($config);
 
     	// Defines the email details
-    	$cont->email->from("estore309@gmail.com", 'eStore');
-    	$cont->email->to($email);
-    	$cont->email->subject('eStore Receipt');
+	$cont->email->from("estore309@gmail.com", 'eStore');
+	$cont->email->to($email);
+	$cont->email->subject('eStore Receipt');
     	$cont->email->message($message);
 
     	// If true, the email will be sent
@@ -147,8 +168,10 @@ if ( ! function_exists('get_email_content()')){
 
 		$content = "";
 		if (isset($order)){
+			$data = array();
 			$data['order_details'] = $order;
-
+			
+			$cont->load->model('order_item_model');
 			$items = $cont->order_item_model->get_order($order->id);
 			$data['items'] = $items;
 
@@ -157,9 +180,8 @@ if ( ! function_exists('get_email_content()')){
 			$customer = $cont->customer_model->get($order->customer_id);
 			$data['customer'] = $customer;
 
-			$content = $cont->load->view('templates/email.php', $data, TRUE);
+			$content = $cont->load->view('templates/email.php', $data, true);
 		}
-
 		return $content;
 	}
 }
