@@ -1,3 +1,17 @@
+/* responsive menu functions */
+$(function(){
+	$(window).resize(function() {
+		if ($(document).width() > 600){
+			$('#dropdown').hide();
+		}
+	});
+	$('#menu-button').click(function() {
+		$('#dropdown').toggle();
+	});
+});
+
+/* form validation functions */
+
 function validateDate(month, year){
 	var now = new Date();
 	if (now.getFullYear() == year && now.getMonth() > month) return false;
