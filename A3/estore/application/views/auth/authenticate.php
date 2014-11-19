@@ -10,7 +10,8 @@
 
 <?php
 
-    echo form_open("auth/login");
+echo form_open("auth/login", array('onSubmit' => 'return validateLogin()', 'id'=> 'login-form'));
+echo '<p class="error" id="login-form-error"></p>';
 
     echo form_label('Username');
     echo form_error('username');

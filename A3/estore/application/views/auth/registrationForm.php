@@ -3,7 +3,8 @@
 <?php
 echo "<p>" . anchor(site_url('auth'),'Back') . "</p>";
 
-echo form_open('auth/register', array('onSubmit' => 'return validateRegistration()'));
+echo form_open('auth/register', array('onSubmit' => 'return validateRegistration()', 'id'=> 'registration-form'));
+echo '<p class="error" id="registration-form-error"></p>';
 echo form_label('Username');
 echo form_error('username');
 echo form_input(array(

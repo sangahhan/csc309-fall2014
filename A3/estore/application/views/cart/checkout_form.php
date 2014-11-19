@@ -3,9 +3,10 @@
 <?php
 echo "<p>" . anchor(site_url('cart'),'Back to cart') . "</p>";
 
-echo form_open('cart/checkout_summary', array('onSubmit' => 'return validateCreditCard()'));
+echo form_open('cart/checkout_summary', array('onSubmit' => 'return validateCreditCard()', 'id' => 'checkout-form'));
 
-echo "<p class=\"error\" d=\"creditcard-number-error\"></p>";
+echo "<p class=\"error\" id=\"checkout-form-error\"></p>";
+echo "<p class=\"error\" id=\"creditcard-number-error\"></p>";
 
 echo form_label('Credit card number');
 echo form_error('creditcard_number');

@@ -3,8 +3,9 @@
 <?php 
 echo "<p>" . anchor(site_url('store'),'Back') . "</p>";
 
-echo form_open("store/update/$product->id", array('onSubmit' => 'return validateProduct()'));
+echo form_open("store/update/$product->id", array('onSubmit' => 'return validateProduct()', 'id' => 'product-form'));
 
+echo '<p class="error" id="product-form-error"></p>';
 echo form_label('Name'); 
 echo form_error('name');
 echo form_input(array(
@@ -29,9 +30,6 @@ echo form_input(array(
 	'id' => 'product-price',
 	'name' => 'price',
 	'value' => $product->price,
-	'type' => 'number',
-	'min' => '0',
-	'step' => 'any',
 	'required' => 'required'
 ));
 echo form_submit( array(

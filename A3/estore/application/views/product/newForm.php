@@ -3,7 +3,9 @@
 <?php 
 echo "<p>" . anchor(site_url('store'),'Back') . "</p>";
 
-echo form_open_multipart('store/create', array('onSubmit' => 'return validateProduct()'));
+echo form_open_multipart('store/create', array('onSubmit' => 'return validateProduct()', 'id' => 'product-form'));
+
+echo '<p class="error" id="product-form-error"></p>';
 
 echo form_label('Name'); 
 echo form_error('name');
@@ -25,20 +27,16 @@ echo '<p class="error" id="product-price-error"></p>';
 echo form_input(array(
 	'id' => 'product-price',
 	'name' => 'price',
-	'type' => 'number',
-	'min' => '0',
-	'step' => 'any',
 	'required' => 'required'
 ));
 
 echo form_label('Photo');
 
-echo '<p class="error" id="product-photo-error"></p>';
 if(isset($fileerror))
 	echo $fileerror;	
 ?>
 <label class="file-upload">
-	<input type="file" name="userfile" size="20" id="product-photo" />
+	<input type="file" name="userfile" size="20" required/>
 </label>
 
 <?php 	
