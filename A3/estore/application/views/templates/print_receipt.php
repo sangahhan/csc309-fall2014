@@ -1,4 +1,4 @@
-<html>
+<html style="color:black;">
 <head>
 <title>eStore: Receipt for Order #<?= $order_id ?></title> 
 <style>
