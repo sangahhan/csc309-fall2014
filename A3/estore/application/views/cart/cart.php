@@ -5,7 +5,8 @@ if (count($items)){
 	foreach (array_keys($items) as $item_key) {
 		echo "<div class=\"cart-cell\">";	
 		echo "<div class=\"info\">";
-		echo "<h2>" . $items[$item_key]['name'] . "</h2>";
+
+		echo "<h2>" . anchor(site_url('store/read') . "/$item_key", $items[$item_key]['name']) . "</h2>";
 		echo "<p><strong>Unit price: </strong>$" . number_format($items[$item_key]['price'], 2) . "</p>";
 		echo "<p><strong>Subtotal: </strong>$" . number_format($items[$item_key]['quantity'] * $items[$item_key]['price'], 2) . "</p>";
 		echo "</div>";

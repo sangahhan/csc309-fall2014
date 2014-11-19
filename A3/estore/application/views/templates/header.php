@@ -14,6 +14,7 @@
 		<span id="site-name"><a href="<?php echo base_url(); ?>">eStore</a></span>
 <?php 
 if (is_logged_in($this->session)){
+//	echo "<div id=\"menu-button\">" . anchor('#', 'Menu', 'id="menu-button-link"') . "</div>";
 	echo "<ul id=\"main-nav\">";	
 	if (is_admin($this->session)){
 		echo "<li>" . anchor(site_url('store'), 'Inventory') . "</li>";
@@ -25,6 +26,7 @@ if (is_logged_in($this->session)){
 	}
 	echo "<li>" . anchor("auth/logout",'Logout') . "</li>";
 	echo "</ul>";
+	
 }
 ?>
 </div>
