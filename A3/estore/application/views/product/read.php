@@ -5,11 +5,9 @@
 		echo $child;
 		echo "</div>";
 	}
-
-//	echo "<p>" . anchor(site_url('store'),'Back to store') . "</p>";
 	products_read_cell("<img class=\"product-photo\" src='" . base_url() . "images/product/" . $product->photo_url . "'/>");
 	$product_info = "<span class=\"id\"><strong>Product ID: </strong>" . $product->id . "</span>" . "<br />" . 
-		"<span class=\"price\"><strong>Price: </strong>$" . $product->price . "</span>" . "<br />" . 
+		"<span class=\"price\"><strong>Price: </strong>$" . number_format($product->price, 2) . "</span>" . "<br />" . 
 		"<p class=\"description\">" . $product->description . "</p>";
 	products_read_cell($product_info);
 	echo "<div class=\"actions\">";

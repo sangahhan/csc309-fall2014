@@ -75,8 +75,10 @@ class Auth extends CI_Controller {
 
         $this->form_validation->set_rules('username','Username',
                 'required|min_length[5]|max_length[16]|is_unique[customers.login]');
-        $this->form_validation->set_rules('password','Passowrd',
+        $this->form_validation->set_rules('password','Password',
                 'required|min_length[4]|max_length[16]');
+        $this->form_validation->set_rules('passconf','Password Confirmation',
+                'required|matches[password]');
         $this->form_validation->set_rules('first','First Name',
                 'required|max_length[24]');
         $this->form_validation->set_rules('last','Last Name',
@@ -89,7 +91,7 @@ class Auth extends CI_Controller {
 
             $customer = new Customer();
             $customer->login = $this->input->get_post('username');
-            $customer->password = $this->input->get_post('password');
+	    $customer->password = $this->input->get_post('password');
             $customer->first = $this->input->get_post('first');
             $customer->last = $this->input->get_post('last');
             $customer->email = $this->input->get_post('email');

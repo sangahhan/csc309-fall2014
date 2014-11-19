@@ -11,7 +11,7 @@ foreach ($products as $product) {
 	echo "<div class=\"info\">";
 	echo "<h2>" . $product->name . "</h2>";
 	echo "<img class=\"product-photo\" src=\"" . base_url() . "images/product/" . $product->photo_url . "\" /></td>";
-	echo "<span class=\"price\"><strong>Price: </strong>$" . $product->price . "</span>";
+	echo "<span class=\"price\"><strong>Price: </strong>$" . number_format($product->price, 2) . "</span>";
 	echo "<p class=\"description\">" . $product->description . "</p>";
 	echo "</div>";
 	echo "<ul class=\"actions\">";

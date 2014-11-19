@@ -15,12 +15,12 @@ if (count($items)){
 		echo "<table style=\"border: 0; width: 100%;\">";
 		echo "<tr><td><span><strong>Product ID: </strong>" . $item->product_id . "</span></td>" . 
 			"<td style=\"text-align: right;\"><span><strong>Quantity: </strong>" . $item->quantity . "</span></td></tr>";
-		echo "<tr><td><span><strong>Unit Price: </strong>$" . $item->price . "</span></td>" . 
-			"<td style=\"text-align:right;\"><span><strong>Subtotal: </strong>$" . $item->quantity * $item->price . "</span></td></tr>";
+		echo "<tr><td><span><strong>Unit Price: </strong>$" . number_format($item->price, 2) . "</span></td>" . 
+			"<td style=\"text-align:right;\"><span><strong>Subtotal: </strong>$" . number_format($item->quantity * $item->price , 2) . "</span></td></tr>";
 		echo "</table>";
 		echo "</div>";
 	}
-	echo "<div style=\"width:100%;text-align:right;\"><strong>Total: </strong>$" . $order_details->total . "</div>";
+	echo "<div style=\"width:100%;text-align:right;\"><strong>Total: </strong>$" . number_format($order_details->total, 2) . "</div>";
 }
 
 echo "<h2>Payment Information</h2>";

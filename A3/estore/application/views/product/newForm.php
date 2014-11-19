@@ -7,15 +7,27 @@ echo form_open_multipart('store/create');
 
 echo form_label('Name'); 
 echo form_error('name');
-echo form_input('name',set_value('name'),"required");
+echo form_input(array(
+	'name' => 'name',
+	'required' => 'required'
+));
 
 echo form_label('Description');
 echo form_error('description');
-echo form_textarea('description',set_value('description'),"required");
+echo form_textarea(array (
+	'name' => 'description',
+	'required' => 'required'
+));
 
 echo form_label('Price');
 echo form_error('price');
-echo form_input('price',set_value('price'),"required");
+echo form_input(array(
+	'name' => 'price',
+	'type' => 'number',
+	'min' => '0',
+	'step' => 'any',
+	'required' => 'required'
+));
 
 echo form_label('Photo');
 
@@ -28,7 +40,11 @@ if(isset($fileerror))
 
 <?php 	
 
-echo form_submit('submit', 'Create', 'class="button"');
+echo form_submit( array(
+	'name' => 'submit',
+	'value' => 'Create',
+	'class' => 'button'
+));
 echo form_close();
 ?>	
 

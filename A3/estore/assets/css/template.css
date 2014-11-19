@@ -127,6 +127,8 @@ input:hover.button
 	padding: 0.25em;
 	margin: 0 0 1em 0;
 	display: block;
+	background-color: #E0E0E0;
+	border: #BDBDBD 1px solid;
 }
 
 /* shared amongst select views */
@@ -184,12 +186,18 @@ div.actions {
 /* store/list */
 div.products-table-cell .description {
 	margin: 0;
+	width: 100%;
 }
 
 div.products-table-cell .product-photo {
 	float: left; 
 	margin: 0 0.5em 0 0;
-	max-height: 75px;
+	max-height: 100px;
+	max-width: 100px;
+}
+
+div.products-table-cell .info {
+	min-width: 50%;
 }
 
 /* store/read */
@@ -242,5 +250,6 @@ div#cart-total #checkout ,
 div#cart-total #summary-total {
 	float: right;
 }
-/* store/newForm*/
+
+/* forms */
 

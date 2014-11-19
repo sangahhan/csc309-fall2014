@@ -186,7 +186,7 @@ class Cart extends CI_Controller {
 
 		if (!($today < $exp_date)){
 			$this->form_validation->set_message('_validate_date',
-				'Expired credit card. Please a card with a future expiration date.');
+				'Expired credit card. Please provide a card with a future expiration date.');
 			return false;
 		}
 		return true;

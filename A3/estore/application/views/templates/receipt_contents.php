@@ -17,16 +17,16 @@ if (count($items)){
 		echo "<div class=\"info\">";
 		echo "<h3>" . $item->name . "</h3>";
 		echo "<p><strong>Product ID: </strong>" . $item->product_id . "</p>";
-		echo "<p><strong>Unit Price: </strong>$" . $item->price . "</p>";
+		echo "<p><strong>Unit Price: </strong>$" . number_format($item->price, 2) . "</p>";
 		echo "</div>";
 		echo "<div class=\"quantity-control\">";
 		echo "<p><strong>Quantity: </strong>" . $item->quantity . "</p>";
-		echo "<p><strong>Subtotal: </strong>$" . $item->quantity * $item->price . "</p>";
+		echo "<p><strong>Subtotal: </strong>$" . number_format($item->quantity * $item->price, 2) . "</p>";
 		echo "</div>";
 		echo "<div class=\"clearfix\"></div>";
 		echo "</div>";
 	}
-	echo "<div id=\"cart-total\"><div id=\"summary-total\"><strong>Total: </strong>$" . $order_details->total . "</div><div class=\"clearfix\"></div></div>";
+	echo "<div id=\"cart-total\"><div id=\"summary-total\"><strong>Total: </strong>$" . number_format($order_details->total, 2) . "</div><div class=\"clearfix\"></div></div>";
 }
 
 echo "<h2>Payment Information</h2>";

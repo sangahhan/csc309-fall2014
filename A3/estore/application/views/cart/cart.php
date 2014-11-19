@@ -6,8 +6,8 @@ if (count($items)){
 		echo "<div class=\"cart-cell\">";	
 		echo "<div class=\"info\">";
 		echo "<h2>" . $items[$item_key]['name'] . "</h2>";
-		echo "<p><strong>Unit price: </strong>$" . $items[$item_key]['price'] . "</p>";
-		echo "<p><strong>Subtotal: </strong>$" . $items[$item_key]['quantity'] * $items[$item_key]['price'] . "</p>";
+		echo "<p><strong>Unit price: </strong>$" . number_format($items[$item_key]['price'], 2) . "</p>";
+		echo "<p><strong>Subtotal: </strong>$" . number_format($items[$item_key]['quantity'] * $items[$item_key]['price'], 2) . "</p>";
 		echo "</div>";
 		echo "<div class=\"quantity-control\">";
 		echo "<span class=\"spinner\">" . anchor("cart/reduce_from_cart/$item_key",'-', array('class' => 'button')) . "</span>"; 
@@ -22,7 +22,7 @@ if (count($items)){
 		echo "</div>";
 	}
 	echo "<div id=\"cart-total\">";
-	echo "<div id=\"total\"><strong>Total: </strong>$" . $total  . "</div>";
+	echo "<div id=\"total\"><strong>Total: </strong>$" . number_format($total, 2)  . "</div>";
 	echo "<div id=\"checkout\">";
 	echo anchor(site_url('cart/checkout_form'), 'Checkout', array('class' => 'button'));
 	echo "</div>";

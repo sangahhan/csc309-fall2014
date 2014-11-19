@@ -9,16 +9,16 @@ if (count($items)){
 		echo "<div class=\"info\">";
 		echo "<h3>" . anchor(site_url('store/read') . "/$item_key", $items[$item_key]['name'], 'target="_blank"') . "</h3>";
 		echo "<p><strong>Product ID: </strong>" . $item_key . "</p>";
-		echo "<p><strong>Unit Price: </strong>$" . $items[$item_key]['price'] . "</p>";
+		echo "<p><strong>Unit Price: </strong>$" . number_format($items[$item_key]['price'],2) . "</p>";
 		echo "</div>";
 		echo "<div class=\"quantity-control\">";
 		echo "<p><strong>Quantity: </strong>" . $items[$item_key]['quantity'] . "</p>";
-		echo "<p><strong>Subtotal: </strong>$" . $items[$item_key]['quantity'] * $items[$item_key]['price'] . "</p>";
+		echo "<p><strong>Subtotal: </strong>$" . number_format($items[$item_key]['quantity'] * $items[$item_key]['price'], 2) . "</p>";
 		echo "</div>";
 		echo "<div class=\"clearfix\"></div>";
 		echo "</div>";
 	}
-	echo "<div id=\"cart-total\"><div id=\"summary-total\"><strong>Total: </strong>$" . $order_details->total . "</div><div class=\"clearfix\"></div></div>";
+	echo "<div id=\"cart-total\"><div id=\"summary-total\"><strong>Total: </strong>$" . number_format($order_details->total, 2) . "</div><div class=\"clearfix\"></div></div>";
 }
 echo "<h2>Payment information</h2>";
 echo "<div class=\"cart-cell\">";

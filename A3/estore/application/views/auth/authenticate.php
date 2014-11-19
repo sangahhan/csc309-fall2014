@@ -14,13 +14,23 @@
 
     echo form_label('Username');
     echo form_error('username');
-    echo form_input('username', set_value(''), "required");
+    echo form_input(array (
+	    'name' => 'username', 
+	    'required' => 'required'
+    ));
 
     echo form_label('Password');
     echo form_error('description');
-    echo form_password('password', set_value(''),"required");
+    echo form_password(array(
+	    'name' => 'password',
+	    'required' => 'required'
+    ));
 
-    echo form_submit('submit', 'Login', 'class="button"');
+    echo form_submit(array(
+	    'name' => 'submit', 
+	    'value' => 'Login',
+	    'class' => 'button'
+    ));
     echo form_close();
 
     echo "<p> Don't have an account? " . anchor('auth/registration_form','Register') . "</p>";
