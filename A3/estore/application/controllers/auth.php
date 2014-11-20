@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * The auth controller class is used to login, register and logout users.
+ * In order to register or login, the user must first be logged out.
+ */
 class Auth extends CI_Controller {
 
 	function __construct() {
@@ -38,6 +42,10 @@ class Auth extends CI_Controller {
 				'username' => $this->input->post('username'),
 				'password' => $this->input->post('password')
 			);
+
+			// If the details passed in through the form is valid, then the
+			// user will be redirected to the store. Otherwise, to the same
+			// page with an error indicating the failed attempt.
 			$userid = $this->customer_model->check_user_authentication($user);
 			if($userid != NULL){
 				$this->session->set_userdata('username', $user['username']);
@@ -61,7 +69,8 @@ class Auth extends CI_Controller {
 		load_view($this, 'auth/registrationForm.php');
 	}
 
-	/* If a user is not already logged in, get the posted information from
+	/*
+	 * If a user is not already logged in, get the posted information from
 	 * a registration form, validate the input and create a new customer
 	 * entry in the database. If the insertion is not successful,
 	 * load the registration form view
@@ -74,7 +83,7 @@ class Auth extends CI_Controller {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('username','Username',
-			'required|is_unique[customers.login]');
+			'required|max_length[16]|is_unique[customers.login]');
 		$this->form_validation->set_rules('password','Password',
 			'required|min_length[6]|max_length[16]');
 		$this->form_validation->set_rules('passconf','Password Confirmation',
@@ -86,6 +95,9 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('email',
 			'Email','required|is_unique[customers.email]|max_length[45]|callback__email_check');
 
+		// If all the user information provided is valid, then indicate
+		// that the registration is complete. Otherwise, load the same
+		// registration Form view where the validation errors will be displayed.
 		if ($this->form_validation->run() == true) {
 			$this->load->model('customer_model');
 
@@ -107,7 +119,8 @@ class Auth extends CI_Controller {
 		}
 	}
 
-	/* Return true if the given email has correct format.
+	/*
+	 *Return true if the given email has correct format.
 	 */
 	function _email_check($e){
 		if (!filter_var($e,FILTER_VALIDATE_EMAIL)){
@@ -118,14 +131,20 @@ class Auth extends CI_Controller {
 		return true;
 	}
 
-	/* Clear out the session details and redirect to the authentication url
-	 *
+	/*
+	 * Clear out the session details and redirect to the authentication url
 	 */
 	function logout(){
 
+		// We don't really care whether the user is logged in or not.
+		// The method simply clears all the session variables and destroys the
+		// session.
 		$current_user = array(
 			'username'  =>'',
 			'logged_in' => 0,
+			'cart' =>  array(),
+			'total' => 0,
+			'card_info' => array(),
 		);
 
 		$this->session->unset_userdata($current_user);

@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This controller contains the functionalities to read and delete orders.
+ * Only the admin user has the privilege to use these functionalities.
+ */
 class Orders extends CI_Controller {
 
 
@@ -9,7 +13,8 @@ class Orders extends CI_Controller {
 
     }
 
-    /* Returns a list of all the orders
+    /*
+     * Loads a list of all the orders
      */
     function index() {
         if (!authenticate_login($this) or !authenticate_admin($this)){
@@ -23,7 +28,7 @@ class Orders extends CI_Controller {
     }
 
     /*
-     * Given a order id, delete the order.
+     * Given a order id, delete the order. If the id is invalid, load error view
      */
     function delete($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
@@ -46,7 +51,8 @@ class Orders extends CI_Controller {
     }
 
     /*
-     * Given a order id, return the order with the given id.
+     * Given a order id, return the order with the given id. If the id is invalid
+     * load the error view.
      */
     function read($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){

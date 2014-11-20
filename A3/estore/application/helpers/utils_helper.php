@@ -9,7 +9,8 @@ if ( ! function_exists('asset_url()')){
 }
 
 if ( ! function_exists('load_view()')){
-	/* Takes a controller, view name and data (optional), returning HTML
+	/*
+	 * Takes a controller, view name and data (optional), returning HTML
 	 * with header & footer sandwiched around view with its data
 	 */
 	function load_view($cont, $view_name, $data=false){
@@ -21,6 +22,9 @@ if ( ! function_exists('load_view()')){
 }
 
 if ( ! function_exists('load_product_list()')){
+	/*
+	 * Given a controller, load the product list for the store.
+	 */
 	function load_product_list($cont){
 		$cont->load->model('product_model');
 		$products = $cont->product_model->getAll();
@@ -29,17 +33,25 @@ if ( ! function_exists('load_product_list()')){
 	}
 }
 if ( ! function_exists('is_logged_in()')){
+	/*
+	 * Return if the current session is logged in to by a user.
+	 */
 	function is_logged_in($session){
 		return $session->userdata('logged_in');
 	}
 }
 if ( ! function_exists('is_admin()')){
+	/*
+	 * Return true of the current user is the admin. Otherwise, return false.
+	 */
 	function is_admin($session){
 		return $session->userdata('username') == 'admin';
 	}
 }
 if ( ! function_exists('authenticate_login()')){
-	/* Given a controller, if a user is not logged in, redirect to login. Else return true.
+	/*
+	 * Given a controller, if a user is not logged in, redirect to login. Else
+	 * return true.
 	 */
 	function authenticate_login($cont){
 		if(! is_logged_in($cont->session)){
@@ -51,7 +63,8 @@ if ( ! function_exists('authenticate_login()')){
 }
 
 if ( ! function_exists('check_logged_out()')){
-	/* Given a controller, if a user is already logged in display the view to
+	/*
+	 * Given a controller, if a user is already logged in display the view to
 	 * indicate it and return false, Otherwise, return true.
 	 */
 	function check_logged_out($cont){
@@ -65,7 +78,8 @@ if ( ! function_exists('check_logged_out()')){
 
 
 if ( ! function_exists('authenticate_admin()')){
-	/* Given a controller, if the user is not an admin user, indicate that
+	/*
+	 * Given a controller, if the user is not an admin user, indicate that
 	 * The user needs admin permissions and return false. Else, return true.
 	*/
 	function authenticate_admin($cont){
@@ -78,7 +92,8 @@ if ( ! function_exists('authenticate_admin()')){
 }
 
 if ( ! function_exists('authenticate_non_admin()')){
-	/* Given a controller, if the is an admin user, indicate that
+	/*
+	 *Given a controller, if the logged in user is an admin user, indicate that
 	* The user cannot checkout items from the store.
 	*/
 	function authenticate_non_admin($cont){
@@ -91,6 +106,9 @@ if ( ! function_exists('authenticate_non_admin()')){
 }
 
 if ( ! function_exists('load_cart_view()')){
+	/*
+	* Given a controller, load the cart items.
+	*/
 	function load_cart_view($cont){
 
 		$items = $cont->session->userdata('cart');
@@ -101,6 +119,9 @@ if ( ! function_exists('load_cart_view()')){
 }
 
 if ( ! function_exists('calculate_total()')){
+	/*
+	* Given a controller, return the total price of all the items in the cart.
+	*/
 	function calculate_total($cont, $items){
 		$cont->load->model('product_model');
 		$total = 0;
@@ -114,6 +135,10 @@ if ( ! function_exists('calculate_total()')){
 }
 
 if (! function_exists('get_print_page()')) {
+	/*
+	* Given a controller, return the html content of the reciept to be
+	* printed
+	*/
 	function get_print_page($cont, $content, $order_id, $print=false, $trim=false){
 		$data = array (
 			'content' => $content,
@@ -126,20 +151,17 @@ if (! function_exists('get_print_page()')) {
 	}
 }
 
-/*
- * Send an email to the current logged in customer with message as the email
- * content. If the email is successfully sent, return TRUE. Else, return False.
- */
+
 if ( ! function_exists('send_email()')){
+	/*
+	* Send an email to the current logged in customer with message as the email
+	* content. If the email is successfully sent, return TRUE. Else, return False.
+	*/
 	function send_email($cont, $message, $email){
 
-	// Define email config
-		$config = array (
-		'mailtype' => 'html',
-	);
-    	// Loads the email library
+
+    // Loads the email library
 	$cont->load->library('email');
-	$cont->email->initialize($config);
 
     	// Defines the email details
 	$cont->email->from("estore309@gmail.com", 'eStore');
@@ -156,10 +178,12 @@ if ( ! function_exists('send_email()')){
 	}
 }
 
-/*
- * Given an order, create the content of an email reciept to be sent to the customer.
- */
+
 if ( ! function_exists('get_email_content()')){
+	/*
+	* Given a controller and an order, create the content of an email reciept
+	* to be sent to the customer.
+	*/
 	function get_email_content($cont, $order){
 
 		$content = "";
@@ -182,10 +206,12 @@ if ( ! function_exists('get_email_content()')){
 	}
 }
 
-/*
-* Given an order, create the content of an email reciept to be sent to the customer.
-*/
+
 if ( ! function_exists('load_error_view()')){
+	/*
+	 * Given a controller, a return location and an error title, load an error
+	 * view.
+	 */
 	function load_error_view($cont, $return, $title, $msg=false){
 
 		if ($return == 'auth'){

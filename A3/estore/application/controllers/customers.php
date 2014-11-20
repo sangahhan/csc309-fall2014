@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * This controller contains the functionalities to read and delete customers.
+ * Only the admin user has the privilege to use these functionalities.
+ */
 class Customers extends CI_Controller {
 
 
@@ -9,7 +13,8 @@ class Customers extends CI_Controller {
 
     }
 
-    /* Returns a list of all the customers
+    /*
+     * Load a list of all the customers
      */
     function index() {
         if (!authenticate_login($this) or !authenticate_admin($this)){
@@ -23,7 +28,9 @@ class Customers extends CI_Controller {
     }
 
     /*
-     * Given a customer id, delete the customer.
+     * Given a customer id, delete the customer and redirect to list of customers.
+     * If the id belongs to admin user, load a forbidden error view
+     * If the id is invalid, load a non existent error view
      */
     function delete($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
@@ -39,6 +46,7 @@ class Customers extends CI_Controller {
 
         if ($customer->login == "admin"){
             load_error_view($this, 'customers', '403', 'Admin user cannot be deleted.');
+            return;
         }
 
         if (isset($id)){
@@ -51,6 +59,7 @@ class Customers extends CI_Controller {
 
     /*
      * Given a customer id, return the customer with the given id.
+     * If the id is invalid, load a non existent error view.
      */
     function read($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){

@@ -15,6 +15,9 @@ class Store extends CI_Controller {
 
     }
 
+    /*
+     * Load a list of products
+     */
     function index() {
 
         if (!authenticate_login($this)){
@@ -24,6 +27,9 @@ class Store extends CI_Controller {
         load_product_list($this);
     }
 
+    /*
+     * Load a form for the admin user to enter in info for a new product
+     */
     function newForm() {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
@@ -32,13 +38,18 @@ class Store extends CI_Controller {
         load_view($this, 'product/newForm.php');
     }
 
+    /*
+     * Get the information from the form. If the information is valid, then
+     * create the database entry and redirect to the set of products.
+     * Othwerise, reload the form view.
+    */
     function create() {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
         };
 
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('name','Name','required|is_unique[products.name]');
+        $this->form_validation->set_rules('name','Name','required|max_length[45]|is_unique[products.name]');
         $this->form_validation->set_rules('description','Description','required');
         $this->form_validation->set_rules('price','Price','required');
 
@@ -68,7 +79,10 @@ class Store extends CI_Controller {
         }
     }
 
-
+    /*
+     * Given a product id, load the details of the product. If the id is
+     * invalid, load an error view.
+     */
     function read($id) {
         if (!authenticate_login($this)){
             return;
@@ -84,6 +98,10 @@ class Store extends CI_Controller {
         }
     }
 
+    /*
+     * Given a product id, load a form with the information of the given product.
+     * If the id is invalid, load an error view isntead.
+     */
     function editForm($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
@@ -99,6 +117,10 @@ class Store extends CI_Controller {
         }
     }
 
+    /*
+     * Take information from a form, validate and update the product
+     * corresponding to the given id. If the id is invalid, load error.
+     */
     function update($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
@@ -112,7 +134,7 @@ class Store extends CI_Controller {
         }
 
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('name','Name','required');
+        $this->form_validation->set_rules('name','Name','required|max_length[45]|callback__is_unique_edit['.$id.']');
         $this->form_validation->set_rules('description','Description','required');
         $this->form_validation->set_rules('price','Price','required');
 
@@ -138,6 +160,30 @@ class Store extends CI_Controller {
         }
     }
 
+    /*
+     * Return false if the given name doesn't belong to the given product
+     * but belongs to another product. Else, return true
+     */
+    function _is_unique_edit($name, $product_id){
+
+        $this->load->model('product_model');
+        $product = $this->product_model->get($product_id);
+
+        if ($product->name != $name){
+            $query = $this->db->get_where('products',array('name' => $name));
+            if ($query->num_rows() > 0){
+                $this->form_validation->set_message('_is_unique_edit',
+                "The product name '".$name."' already exists. Pick another name.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /* Given a valid product id, delete the item from the db and redirect to the
+     * store. Otherwise if the id is invalid, load an error view
+     */
     function delete($id) {
         if (!authenticate_login($this) or !authenticate_admin($this)){
             return;
