@@ -244,7 +244,6 @@ class Cart extends CI_Controller {
 					"Unfortunately, there has been an error in the checkout process. Please retry.");
 			} else {
 				$this->db->trans_commit();
-
 				$content = get_email_content($this, $order);
 				$message = get_print_page($this, $content, $order->id);
 
@@ -271,6 +270,7 @@ class Cart extends CI_Controller {
 		$this->load->model('customer_model');
 		// get order
 		$order = $this->order_model->get($order_id);
+		$order->creditcard_number = '**** **** **** ' . substr($order->creditcard_number, 12);
 		$user_id = $this->session->userdata('user_id');
 		if (isset($order)){
 			if ($order->customer_id == $user_id){
