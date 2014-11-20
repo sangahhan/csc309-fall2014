@@ -343,9 +343,9 @@ class Cart extends CI_Controller {
 
 		// get order
 		$order = $this->order_model->get($order_id);
-		$order->creditcard_number = '**** **** **** ' . substr($order->creditcard_number, 12);
 		$user_id = $this->session->userdata('user_id');
-		if (isset($order)){
+		if ($order){
+			$order->creditcard_number = '**** **** **** ' . substr($order->creditcard_number, 12);
 			// Only the admin and the owner of the order can see the receipt
 			if ($order->customer_id == $user_id or is_admin($this->session)){
 				$data['order_details'] = $order;
