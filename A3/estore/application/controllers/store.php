@@ -51,7 +51,7 @@ class Store extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name','Name','required|max_length[45]|is_unique[products.name]');
         $this->form_validation->set_rules('description','Description','required');
-        $this->form_validation->set_rules('price','Price','required');
+        $this->form_validation->set_rules('price','Price','required|is_numeric');
 
         $fileUploadSuccess = $this->upload->do_upload();
 
@@ -136,7 +136,7 @@ class Store extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('name','Name','required|max_length[45]|callback__is_unique_edit['.$id.']');
         $this->form_validation->set_rules('description','Description','required');
-        $this->form_validation->set_rules('price','Price','required');
+        $this->form_validation->set_rules('price','Price','required|is_numeric');
 
         if ($this->form_validation->run() == true) {
             $product = new Product();
