@@ -147,7 +147,7 @@ input:hover.button
 
 #header #dropdown ul li a{
 	display: block;
-	padding: 0.25em 0 0;
+	padding: 0.25em;
 }
 
 #header #dropdown ul li a:hover, 
