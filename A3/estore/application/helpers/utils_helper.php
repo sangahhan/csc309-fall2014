@@ -145,7 +145,7 @@ if (! function_exists('get_print_page()')) {
 			'order_id' => $order_id,
 			'print' => $print
 		);
-		$html = $cont->load->view('templates/print_receipt.php', $data, true);
+		$html = $cont->load->view('cart/print_receipt.php', $data, true);
 		if ($trim) return trim(str_replace(PHP_EOL, '', $html));
 		return $html;
 	}
@@ -200,7 +200,7 @@ if ( ! function_exists('get_email_content()')){
 			$customer = $cont->customer_model->get($order->customer_id);
 			$data['customer'] = $customer;
 
-			$content = $cont->load->view('templates/email.php', $data, true);
+			$content = $cont->load->view('cart/email.php', $data, true);
 		}
 		return $content;
 	}

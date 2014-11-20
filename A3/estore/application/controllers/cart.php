@@ -357,7 +357,7 @@ class Cart extends CI_Controller {
 				$data['customer'] = $customer;
 
 				// The content for the reciept for the printer friendly version
-				$content = $this->load->view('templates/receipt_contents.php', $data, true);
+				$content = $this->load->view('cart/receipt_contents.php', $data, true);
 
 				// printable content is used when the user clicks on the print option.
 				$printable_content = get_print_page($this, $content, $order->id, true, true);
