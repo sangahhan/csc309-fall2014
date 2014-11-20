@@ -1,10 +1,13 @@
 <h1>Payment</h1>
 
 <?php
+// view for checkout payment form
+
 echo "<p>" . anchor(site_url('cart'),'Back to cart') . "</p>";
 
 echo form_open('cart/checkout_summary', array('onSubmit' => 'return validateCreditCard()', 'id' => 'checkout-form'));
 
+// area for form validation error to show
 echo "<p class=\"error\" id=\"checkout-form-error\"></p>";
 echo "<p class=\"error\" id=\"creditcard-number-error\"></p>";
 
@@ -20,7 +23,7 @@ echo form_input( array(
 ));
 
 echo "<p class=\"error\" id=\"creditcard-expiry-error\"></p>";
-
+// construct months dropdown
 $months = array(
 	'01' => 'January',
 	'02' => 'February',
@@ -35,7 +38,7 @@ $months = array(
 	'11' => 'November',
 	'12' => 'December',
 );
-
+// construct years dropdown
 $now = new DateTime("now");
 $current_year = $now->format('Y');
 echo form_label('Expiration month');

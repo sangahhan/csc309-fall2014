@@ -1,10 +1,14 @@
 <h1>Registration</h1>
 
 <?php
+// View for registration page
+
 echo "<p>" . anchor(site_url('auth'),'Back') . "</p>";
 
 echo form_open('auth/register', array('onSubmit' => 'return validateRegistration()', 'id'=> 'registration-form'));
+// area for error messages to show form JS form validation
 echo '<p class="error" id="registration-form-error"></p>';
+
 echo form_label('Username');
 echo form_error('username');
 echo form_input(array(

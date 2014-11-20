@@ -1,10 +1,12 @@
 <h1>New Product</h1>
 
 <?php 
+// View for creating new product form
+
 echo "<p>" . anchor(site_url('store'),'Back') . "</p>";
 
 echo form_open_multipart('store/create', array('onSubmit' => 'return validateProduct()', 'id' => 'product-form'));
-
+// Area for form validation error to show
 echo '<p class="error" id="product-form-error"></p>';
 
 echo form_label('Name'); 

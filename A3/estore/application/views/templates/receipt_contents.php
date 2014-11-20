@@ -1,4 +1,5 @@
 <?php
+// View for body of displayed + print version of receipt
 echo "<h1>Receipt for Order #" . $order_details->id . "</h1>";
 echo "<h2>Customer Information</h2>";
 echo "<div class=\"cart-cell\">";
@@ -9,7 +10,7 @@ echo "<p><strong>Username: </strong>" . $customer->login . "</p>";
 echo "</div>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
-
+// if the purchase has items, grab and display items in tables
 if (count($items)){
 	echo "<h2>Items</h2>";
 	foreach ($items as $item) {

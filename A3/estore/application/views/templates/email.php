@@ -1,4 +1,5 @@
 <?php
+// View for body of emails
 echo "<h1>Receipt for Order #" . $order_details->id . "</h1>";
 echo "<h2>Customer Information</h2>";
 echo "<div style=\"border: 1px solid black; margin: 0 0 1em 0; padding: 0.5em;\">";
@@ -6,7 +7,7 @@ echo "<p><strong>Name: </strong>" . $customer->first . " " . $customer->last . "
 echo "<p><strong>E-Mail Address: </strong>" . $customer->email . "</p>";
 echo "<p><strong>Username: </strong>" . $customer->login . "</p>";
 echo "</div>";
-
+// if the purchase has items, grab and display items in tables
 if (count($items)){
 	echo "<h2>Items</h2>";
 	foreach ($items as $item) {

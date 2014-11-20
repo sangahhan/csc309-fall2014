@@ -1,10 +1,13 @@
 <h1>Edit Product</h1>
 
 <?php 
+// View for editing product form
+
 echo "<p>" . anchor(site_url('store'),'Back') . "</p>";
 
 echo form_open("store/update/$product->id", array('onSubmit' => 'return validateProduct()', 'id' => 'product-form'));
 
+// Area for form validation error to show
 echo '<p class="error" id="product-form-error"></p>';
 echo form_label('Name'); 
 echo form_error('name');

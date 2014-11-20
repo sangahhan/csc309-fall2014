@@ -1,5 +1,6 @@
 <h1><?php echo $product->name;?></h1>
 <?php 
+// view to read a single product
 	function products_read_cell($child) {
 		echo "<div class=\"products-read-cell\">";
 		echo $child;
@@ -11,6 +12,7 @@
 		"<p class=\"description\">" . $product->description . "</p>";
 	products_read_cell($product_info);
 	echo "<div class=\"actions\">";
+	// actions differ if user is admin
 	if (is_admin($this->session)){
 		echo
 			anchor("store/delete/$product->id",'Delete',

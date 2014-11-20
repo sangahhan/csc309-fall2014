@@ -1,5 +1,7 @@
 <h1>Shopping Cart</h1>
 <?php
+// View for shopping cart
+
 if (count($items)){
 	echo "<p>" . anchor(site_url('store'),'Back to store') . "</p>";
 	foreach (array_keys($items) as $item_key) {
@@ -30,6 +32,7 @@ if (count($items)){
 	echo "</div>";
 
 } else {
+	// user hasn't added to cart yet
 	echo "<p>You don't have anything in your cart! Go to " . anchor(site_url('store'), 'the store') . " to add to your cart!</p>";
 }
 ?>

@@ -1,6 +1,6 @@
 <h1>Checkout Summary</h1>
 <?php
-
+// view to show checkout summary
 echo "<p>" . anchor('cart/checkout_form','Back to payment') .  "</p>";
 if (count($items)){
 	echo "<h2>Items</h2>";

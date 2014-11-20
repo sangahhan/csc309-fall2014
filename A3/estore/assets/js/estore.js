@@ -10,6 +10,11 @@ $(function(){
 	});
 });
 
+/* deletion confirmation */
+function confirmDelete() {
+	return confirm("Do you really want to delete this record?");
+}
+
 /* form validation functions */
 
 function validateDate(month, year){

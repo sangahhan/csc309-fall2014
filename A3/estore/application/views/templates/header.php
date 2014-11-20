@@ -14,11 +14,14 @@
 		<span id="site-name"><a href="<?php echo base_url(); ?>">eStore</a></span>
 <?php 
 if (is_logged_in($this->session)){
-
+	// construct a menu area if the user is logged in
 	echo "<div id=\"main-nav\">";
+
+	// dropdown menu button for document width < 600
 	echo "<div id=\"menu-button\">";
-	echo str_repeat("<div class=\"menu-button-bar\"></div>", 3);
+	echo str_repeat("<div class=\"menu-button-bar\"></div>", 3); 
 	echo "</div>";
+
 	echo "<ul id=\"links\">";	
 	if (is_admin($this->session)){
 		echo "<li>" . anchor(site_url('store'), 'Inventory') . "</li>";
@@ -31,6 +34,8 @@ if (is_logged_in($this->session)){
 	echo "<li>" . anchor("auth/logout",'Logout') . "</li>";
 	echo "</ul>";
 	echo "</div>";	
+
+	// dropdown area for document width < 600
 	echo "<div id=\"dropdown\">";
 	echo "<ul>";	
 	if (is_admin($this->session)){
@@ -46,7 +51,8 @@ if (is_logged_in($this->session)){
 	echo "</div>";
 }
 ?>
-</div>
-		</div>
+		</div> <!-- end header-wrapper -->
+		</div> <!-- end header -->
 		<div id="main-wrapper">
 		<div id="main">
+<!-- begin content -->

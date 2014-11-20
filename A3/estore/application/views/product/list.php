@@ -1,5 +1,8 @@
 <h1>Products</h1>
 <?php
+
+// View to list products
+
 if (is_admin($this->session)){
 	echo "<p>" . anchor('store/newForm','Add New', 'class="button"') . "</p>";
 }
@@ -16,6 +19,7 @@ foreach ($products as $product) {
 	echo "</div>";
 	echo "<ul class=\"actions\">";
 	echo "<li>" . anchor("store/read/$product->id",'View') . "</li>";
+	// actions differ when user is admin
 	if (is_admin($this->session)){
 		echo "<li>" . anchor("store/delete/$product->id",'Delete',"onClick='return confirm(\"Do you really want to delete this record?\");'") . "</li>";
 		echo "<li>" . anchor("store/editForm/$product->id",'Edit') . "</li>"; 

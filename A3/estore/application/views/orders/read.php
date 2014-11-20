@@ -1,6 +1,7 @@
 <h1>Order #<?= $order->id ?></h1>
 
 <?php
+// View for reading orders in the system. ADMIN ONLY
 echo "<p>" . anchor(site_url('orders'),'Back to orders') . "</p>";
 echo "<h2>Customer Information</h2>";
 echo "<div class=\"admin-table-cell\">";
@@ -11,9 +12,10 @@ echo "<p><strong>E-Mail Address: </strong>" . $customer->email . "</p>";
 echo "<p><strong>Username: </strong>" . $customer->login . "</p>";
 echo "</div>";
 
-		echo "<ul class=\"actions\">";
-		echo "<li>" . anchor("customers/read/$customer->id",'View') . "</li>";
-		echo "</ul>";
+// Actions to be taken on the customer who created this order
+echo "<ul class=\"actions\">";
+echo "<li>" . anchor("customers/read/$customer->id",'View') . "</li>";
+echo "</ul>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
 
@@ -43,11 +45,12 @@ echo "<p><strong>Expiry date: </strong>" . $order->creditcard_month . "/" . $ord
 echo "</div>";
 echo "<div class=\"clearfix\"></div>";
 echo "</div>";
+// Actions to be taken on each order
 echo "<div class=\"actions\">";
 echo anchor("store/delete/$order->id",'Delete',
-				array (
-					'onclick' => "return confirm('Do you really want to delete this record?');",
-					'class' => 'button'
-				)) ; 
+	array (
+		'onclick' => "return confirmDelete();",
+		'class' => 'button'
+	)) ; 
 echo "</div>";
 ?>
