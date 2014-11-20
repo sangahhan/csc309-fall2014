@@ -1,4 +1,3 @@
-<!-- HTML for printed & emailed version of receipt -->
 <html style="color:black;">
 <head>
 <title>eStore: Receipt for Order #<?= $order_id ?></title> 
