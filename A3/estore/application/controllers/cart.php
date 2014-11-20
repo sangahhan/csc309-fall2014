@@ -307,6 +307,8 @@ class Cart extends CI_Controller {
 					"Unfortunately, there has been an error in the checkout process. Please retry.");
 			} else {
 				$this->db->trans_commit();
+				// now hide 12 digits of card number from output
+				$order->creditcard_number = '**** **** **** ' . substr($order->creditcard_number, 12);
 				$content = get_email_content($this, $order);
 				$message = get_print_page($this, $content, $order->id);
 
