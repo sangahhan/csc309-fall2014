@@ -2,15 +2,15 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-if (!function_exists('asset_url()')){
+if (!function_exists('assets_url()')){
 	/*
 	 * Return the url with static assets, e.g. css & js
 	 */
 	function assets_url($type="", $path="") {
 		$assets_url = base_url().'assets/';
 		if ($path && $type) return $assets_url.$type.'/'.$path;
-		else if ($path) return $assets_url.'/'.$path;
-		else if ($type) return $assets_url.'/'.$type.'/';
+		else if ($path) return $assets_url.$path;
+		else if ($type) return $assets_url.$type.'/';
 		return base_url().'assets/';
 	}
 
