@@ -146,7 +146,7 @@ if (! function_exists('get_print_page()')) {
 			'print' => $print
 		);
 		$html = $cont->load->view('cart/print_receipt.php', $data, true);
-		if ($trim) return trim(str_replace(PHP_EOL, '', $html));
+		if ($trim) return trim(str_replace("\r\n", '', $html));
 		return $html;
 	}
 }
@@ -190,7 +190,7 @@ if ( ! function_exists('get_email_content()')){
 		if (isset($order)){
 			$data = array();
 			$data['order_details'] = $order;
-			
+
 			$cont->load->model('order_item_model');
 			$items = $cont->order_item_model->get_order($order->id);
 			$data['items'] = $items;
