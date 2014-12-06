@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/New_York');
 $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_port'] = '465';
