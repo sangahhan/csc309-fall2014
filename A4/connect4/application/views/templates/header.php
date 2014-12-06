@@ -29,7 +29,7 @@
 			"<li>" . anchor(site_url('board'), 'Link2') . "</li>" . 
 			"<li>" . anchor(site_url('account'), 'Link3') . "</li>";
 
-	$link_logout = "<li>" . anchor("auth/logout",'Logout') . "</li>";
+	$link_logout = "<li>" . anchor("account/logout",'Logout') . "</li>";
 
 	echo "<ul id=\"links\">";	
 	echo $links.$link_logout;
