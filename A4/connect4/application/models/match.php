@@ -55,9 +55,9 @@ class Match  {
 		if ($this->match_status_id == self::ACTIVE){
 			$board = unserialize($this->board_state);
 
-			if (!is_player_turn($player, $board){ return; }
+			if (!is_player_turn($player, $board)){ return; }
 
-			if ($column_num < 7{
+			if ($column_num < 7){
 				if(count($board->board[$column_num]) < 6){
 					$board->board[$column_num][] = $player;
 				}
