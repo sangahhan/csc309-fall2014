@@ -40,11 +40,19 @@ h3{
 	font-weight:normal;
 }
 
-a{
+a:link,
+a:visited {
 	text-decoration: none;
+	color: #009688;
+
 }
 
-/* general layout css */
+a:hover,
+a:active {
+	text-decoration: underline;	
+}
+
+/* header section */
 
 #header {
 	background-color: #FFA726;
@@ -66,6 +74,7 @@ a{
 #header a:active {
 	color: #FFCC80;
 	background: none;
+	text-decoration: none;
 }
 
 #header #main-nav {
@@ -105,7 +114,7 @@ a{
 #header #dropdown ul {
 	list-style-type: none;
 	padding: 0;
-	margin: 0; 
+	margin: 1em 0 0 0; 
 }
 
 #header #dropdown ul li{
@@ -121,11 +130,14 @@ a{
 
 #header #dropdown ul li a:hover, 
 #header #dropdown ul li a:active{
-	background-color: #283596;
+	background-color: #F57C00;
+	color: #FAFAFA;
+	text-decoration: none;
 }
 
+/* main content section */
+
 #main-wrapper, #header-wrapper{
-	width: 80%;
 	margin: 0 auto;
 }
 
@@ -146,6 +158,23 @@ a{
 	background-color: #E0E0E0;
 	border: #BDBDBD 0px solid;
 }
+
+#main input[type=submit],
+#main button,
+#main .button {
+	background: #4DB6AC;
+	color: #FAFAFA;
+	display: block;
+	padding: .5em;
+}
+
+#main input[type=submit]:hover,
+#main button:hover,
+#main .button:hover{
+	background: #00897B;
+	cursor: pointer;
+}
+
 
 #main p.error {
 	margin: 0;
@@ -216,6 +245,11 @@ a{
 /* desktop */
 
 @media screen and (min-width: 601px) {
+	#main-wrapper,
+	#header-wrapper {
+		width: 70%;
+	}
+
 	#main form,
 	#main input, 
 	#main textarea{

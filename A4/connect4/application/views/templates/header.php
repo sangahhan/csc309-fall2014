@@ -16,7 +16,7 @@
 		<div id="header-wrapper">
 		<span id="site-name"><a href="<?php echo base_url(); ?>">Connect&#32;4</a></span>
 <?php 
-
+	if (isset($_SESSION['user']) && $_SESSION['user']) {
 	// construct a menu area if the user is logged in
 	echo "<div id=\"main-nav\">";
 
@@ -25,9 +25,8 @@
 	echo str_repeat("<div class=\"menu-button-bar\"></div>", 3); 
 	echo "</div>";
 
-	$links = "<li>" . anchor(site_url('arcade'), 'Link1') . "</li>" . 
-			"<li>" . anchor(site_url('board'), 'Link2') . "</li>" . 
-			"<li>" . anchor(site_url('account'), 'Link3') . "</li>";
+
+	$links ="<li>" . anchor(site_url('account/updatePasswordForm'),'Change Password') . "</li>";
 
 	$link_logout = "<li>" . anchor("account/logout",'Logout') . "</li>";
 
@@ -42,6 +41,7 @@
 	echo $links.$link_logout;
 	echo "</ul>";
 	echo "</div>";
+}
 
 ?>
 		</div> <!-- end header-wrapper -->

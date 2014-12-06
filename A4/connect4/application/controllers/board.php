@@ -148,11 +148,14 @@ class Board extends CI_Controller {
     function getBoard(){
         $this->load->model('invite_model');
         $this->load->model('match_model');
+        $this->load->model('user_model');
 
         $user = $_SESSION['user'];
 
         $user = $this->user_model->get($user->login);
 
+
+        $errormsg = "";
         if ($user->user_status_id != User::PLAYING) {
             $errormsg="Not in PLAYING state";
             goto error;
@@ -174,9 +177,9 @@ class Board extends CI_Controller {
         echo json_encode(array("status" =>"success",
                             'win_status'=>$win_status,
                                 'board' => $board));
+        return;
 
         error:
-        // Should it be an error or should it be an empty game board
         echo json_encode(array('status'=>'failure','message'=>$errormsg));
     }
 

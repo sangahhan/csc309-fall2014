@@ -11,5 +11,5 @@
 		echo "<p>" . $errorMsg . "</p>";
 	}
 
-	echo "<p>" . anchor('account/index','Login') . "</p>";
+	echo "<p>" . anchor(site_url('account'),'Login') . "</p>";
 ?>	

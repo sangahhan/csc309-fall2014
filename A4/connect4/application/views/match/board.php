@@ -116,7 +116,7 @@ echo form_close();
                             
                     });
                 }
-                var url = "<?= site_url('board/getMsg');?>";
+                /*var url = "<?= site_url('board/getMsg');?>";
                 $.getJSON(url, function (data,text,jqXHR){
                     if (data && data.status=='success') {
                         var conversation = $('[name=conversation]').val();
@@ -124,12 +124,26 @@ echo form_close();
                         if (msg && msg.length > 0)
                             $('[name=conversation]').val(conversation + "\n" + otherUser + ": " + msg);
                     }
+                });*/
+            var url = "<?= site_url('board/getBoard');?>";
+                $.getJSON(url, function (data,text,jqXHR){
+                    if (data) {
+                        if (data.status=='success') {
+                            console.log(data);
+                            // parse board into html table
+                        } else {
+                            // you are not in this game
+                        }
+                    } else {
+                        // error in server
+                        return;
+                    }
                 });
         });
 
         $('form').submit(function(){
             var arguments = $(this).serialize();
-            var url = "<?= site_url('board/postMsg');?>";
+            var url = "<?= site_url('board/postMove');?>";
             $.post(url,arguments, function (data,textStatus,jqXHR){
                     var conversation = $('[name=conversation]').val();
                     var msg = $('[name=msg]').val();
