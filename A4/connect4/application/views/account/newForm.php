@@ -1,31 +1,4 @@
-
-<!DOCTYPE html>
-
-<html>
-	<head>
-		<style>
-			input {
-				display: block;
-			}
-		</style>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script>
-			function checkPassword() {
-				var p1 = $("#pass1"); 
-				var p2 = $("#pass2");
-				
-				if (p1.val() == p2.val()) {
-					p1.get(0).setCustomValidity("");  // All is well, clear error message
-					return true;
-				}	
-				else	 {
-					p1.get(0).setCustomValidity("Passwords do not match");
-					return false;
-				}
-			}
-		</script>
-	</head> 
-<body>  
+ 
 	<h1>New Account</h1>
 <?php 
 	echo form_open('account/createNew');
@@ -50,7 +23,19 @@
 	echo form_submit('submit', 'Register');
 	echo form_close();
 ?>	
-</body>
 
-</html>
-
+		<script>
+			function checkPassword() {
+				var p1 = $("#pass1"); 
+				var p2 = $("#pass2");
+				
+				if (p1.val() == p2.val()) {
+					p1.get(0).setCustomValidity("");  // All is well, clear error message
+					return true;
+				}	
+				else	 {
+					p1.get(0).setCustomValidity("Passwords do not match");
+					return false;
+				}
+			}
+		</script>

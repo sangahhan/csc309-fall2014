@@ -1,16 +1,4 @@
 
-<!DOCTYPE html>
-
-<html>
-	<head>
-		<style>
-			input {
-				display: block;
-			}
-		</style>
-
-	</head> 
-<body>  
 	<h1>Recover Password</h1>
 <?php 
 	if (isset($errorMsg)) {
@@ -24,7 +12,5 @@
 	echo form_submit('submit', 'Recover Password');
 	echo form_close();
 ?>	
-</body>
 
-</html>
 

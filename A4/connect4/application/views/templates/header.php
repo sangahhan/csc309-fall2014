@@ -4,8 +4,11 @@
 		<title>Assignment 4: Connect 4</title>
 		<meta charset="utf-8">
 		<meta name="description" content="Connect 4 for g2sangah & g3tdirty's submission of A4, CSC309 Fall 2014">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
 		<link href="<?= css_url('template.css');?>" type="text/css" rel="stylesheet">
 <script src="<?= js_url('jquery.min.js') ?>"></script>
+<script src="<?= js_url('jquery.timers.js') ?>"></script>
 <script src="<?= js_url('connect4.js') ?>"></script>
 	</head>
 	<body>
