@@ -5,8 +5,8 @@ class Account extends CI_Controller {
     function __construct() {
     		// Call the Controller constructor
 	    	parent::__construct();
+	    	date_default_timezone_set('America/New_York');
 	    	session_start();
-
     }
         
     public function _remap($method, $params = array()) {
@@ -161,7 +161,7 @@ class Account extends CI_Controller {
 	    			$this->user_model->updatePassword($user);
 	    			
 	    			$this->load->library('email');
-	    		
+	    		/*
 	    			$config['protocol']    = 'smtp';
 	    			$config['smtp_host']    = 'ssl://smtp.gmail.com';
 	    			$config['smtp_port']    = '465';
@@ -171,11 +171,11 @@ class Account extends CI_Controller {
 	    			$config['charset']    = 'utf-8';
 	    			$config['newline']    = "\r\n";
 	    			$config['mailtype'] = 'text'; // or html
-	    			$config['validation'] = TRUE; // bool whether to validate email or not
+	    			$config['validation'] = TRUE; // bool whether to validate email or not*/
 	    			
-		    	  	$this->email->initialize($config);
+		    	  	//$this->email->initialize($config);
 	    			
-	    			$this->email->from('csc309Login@cs.toronto.edu', 'Login App');
+	    			$this->email->from('connectfour309@gmail.com', 'Login App');
 	    			$this->email->to($user->email);
 	    			
 	    			$this->email->subject('Password recovery');

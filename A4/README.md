@@ -43,7 +43,9 @@ i.e. gameplay
 - login
 - logout
 - registration
+	- salt + hash
 	- use Securimage library-- has been added to application/libraries
 - update password
 - recover password
+	- involves sending them a new randomized password 
 
