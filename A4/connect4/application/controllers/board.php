@@ -173,7 +173,8 @@ class Board extends CI_Controller {
 
         echo json_encode(array("status" =>"success",
                             'win_status'=>$win_status,
-                                'board' => $board));
+                                'board' => $board->board,
+                          "player_turn" => $board->turn));
 
         error:
         // Should it be an error or should it be an empty game board
