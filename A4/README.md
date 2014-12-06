@@ -1,6 +1,6 @@
-# ARCADE #
+# ARCADE 
 
-## Functions ##
+## Functions 
 - get all available users
 - get invitations
 	- accept/ reject incoming invites- send invite 
@@ -13,14 +13,14 @@
 		- When a user invites another user to battle, it create an entry in the __invite__ table with a status of pending. If the invitee accepts the invitation, the status changes to accepted and to rejected, otherwise. 
 		- If an invitation to play is accepted, a new entry in the __match__ table is created with a status of active. The status changes to u1won or u2won when one of the users wins the game.
 
-## Assumptions ##
+## Assumptions 
 
 - An invitation will be answered eventually, i.e., no need to timeout invites
 
-# BOARD # 
+# BOARD 
 i.e. gameplay
 
-## Functions ## 
+## Functions 
 - get board state of a match
 	- 2D Array 
 	- deserialize from blob, return as JSON
@@ -32,11 +32,13 @@ i.e. gameplay
 		- a disk can only be added in a column that is not already full
 		- a disk can only be added to the first free open spot on a column
 
-## Assumptions ##
+## Assumptions 
 - A user can only be involved in 1 match at a time
 - Once a match starts, it will continue until it finishes, i.e., users do not disappear or logout midway through
 
-# ACCOUNT #
+# ACCOUNT 
+
+## Functions 
 
 - login
 - logout
