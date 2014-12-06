@@ -4,7 +4,7 @@
 - get all available users
 - get invitations
 	- accept/ reject incoming invites- send invite 
-- send invite 
+- send invite -- create new "invite"
 	- if invite is accepted, proceed to board
 	- inviter is u1; invitee is u2
 	- change state of user depending on invite
@@ -31,6 +31,13 @@ i.e. gameplay
 		- only 1 disk can be added at per turn
 		- a disk can only be added in a column that is not already full
 		- a disk can only be added to the first free open spot on a column
+	- serialize into blob
+	- check if someone has won
+		- if so, then we update the state of the match, and send back a json with the appropriate status
+	- attributes in json: 
+		- status
+		- board - that 2D array
+		- current turn id OR turn counts for each player? 
 
 ## Assumptions 
 - A user can only be involved in 1 match at a time
