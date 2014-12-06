@@ -56,7 +56,7 @@
 <h1>Game Area</h1>
 
 <div>
-Hello <?= $user->fullName() ?>  <?= anchor("<?= site_url('account/logout');?>",'(Logout)') ?>  
+Hello <?= $user->fullName() ?>  <?= anchor(site_url('account/logout'),'(Logout)') ?>  
 </div>
 
 <div id='status'> 
@@ -125,8 +125,8 @@ Hello <?= $user->fullName() ?>  <?= anchor("<?= site_url('account/logout');?>",'
                     <td data-index="5-7"></td>
                 </tr>
                 <tr id="row-6" data-index="6">
-                    <td data-index="6-1"></td>
-                    <td data-index="6-2"></td>
+                    <td data-index="6-1" style="background:#FFF176"></td>
+                    <td data-index="6-2" style="background:#EF5350"></td>
                     <td data-index="6-3"></td>
                     <td data-index="6-4"></td>
                     <td data-index="6-5"></td>
@@ -139,11 +139,13 @@ Hello <?= $user->fullName() ?>  <?= anchor("<?= site_url('account/logout');?>",'
 
 
 <?php 
+/*
 echo form_textarea('conversation');
 echo form_open();
 echo form_input('msg');
 echo form_submit('Send','Send');
 echo form_close();
+*/
 ?>
 
 
