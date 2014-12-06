@@ -1,11 +1,6 @@
 
 
-	<h1>Connect 4</h1>
-
-	<div>
-	Hello <?= $user->fullName() ?>  <?= anchor(site_url('account/logout'),'(Logout)') ?>  <?= anchor(site_url('account/updatePasswordForm'),'(Change Password)') ?>
-	</div>
-	
+	<h1>Hello,	 <?= $user->fullName() ?> 	</h1>
 <?php 
 	if (isset($errmsg)) 
 		echo "<p>$errmsg</p>";
