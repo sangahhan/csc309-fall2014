@@ -137,7 +137,45 @@ class Board extends CI_Controller {
 		
 		error:
 		echo json_encode(array('status'=>'failure','message'=>$errormsg));
- 	}
- 	
- }
+    }
 
+
+    /*
+     * If the current user is in a playing state, return a the game board,
+     * if the player is player 1 or player 2, the status of the game and
+     * the status of the request.
+     */
+    function getBoard(){
+        $this->load->model('invite_model');
+        $this->load->model('match_model');
+
+        $user = $_SESSION['user'];
+
+        $user = $this->user_model->get($user->login);
+
+        if ($user->user_status_id != User::PLAYING) {
+            $errormsg="Not in PLAYING state";
+            goto error;
+        }
+
+        $match = $this->match_model->getExclusive($user->match_id);
+        if ($match->user1_id == $user->id) {
+                $player_id = 1;
+        } else {
+                $player_id = 2;
+        }
+
+        $win_status = $match->match_status_id;
+        $board = unserialize($match->board_state);
+
+        unserialize(base64_decode("status"->"success",
+                                "player_id"->$player_id,
+                                'win_status'->$win_status,
+                                    'board'-> $board));
+
+        error:
+        // Should it be an error or should it be an empty game board
+        echo json_encode(array('status'=>'failure','message'=>$errormsg));
+    }
+
+ }
