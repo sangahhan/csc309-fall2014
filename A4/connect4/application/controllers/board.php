@@ -53,7 +53,7 @@ class Board extends CI_Controller {
 	    			break;
 	    	}
 	    	
-		$this->load->view('match/board',$data);
+		load_view($this, 'match/board',$data);
     }
 
  	function postMsg() {

@@ -22,7 +22,7 @@ class Account extends CI_Controller {
           
     
     function loginForm() {
-    		$this->load->view('account/loginForm');
+    		load_view($this, 'account/loginForm');
     }
     
     function login() {
@@ -32,7 +32,7 @@ class Account extends CI_Controller {
 
     		if ($this->form_validation->run() == FALSE)
     		{
-    			$this->load->view('account/loginForm');
+    			load_view($this,'account/loginForm');
     		}
     		else
     		{
@@ -53,7 +53,7 @@ class Account extends CI_Controller {
     			}
  			else {   			
 				$data['errorMsg']='Incorrect username or password!';
- 				$this->load->view('account/loginForm',$data);
+ 				load_view($this, 'account/loginForm',$data);
  			}
     		}
     }
@@ -67,7 +67,7 @@ class Account extends CI_Controller {
     }
 
     function newForm() {
-	    	$this->load->view('account/newForm');
+	    	load_view($this,'account/newForm');
     }
     
     function createNew() {
@@ -81,7 +81,7 @@ class Account extends CI_Controller {
 	    
 	    	if ($this->form_validation->run() == FALSE)
 	    	{
-	    		$this->load->view('account/newForm');
+	    		load_view($this,'account/newForm');
 	    	}
 	    	else  
 	    	{
@@ -99,13 +99,13 @@ class Account extends CI_Controller {
 	    		
 	    		$error = $this->user_model->insert($user);
 	    		
-	    		$this->load->view('account/loginForm');
+	    		load_view($this,'account/loginForm');
 	    	}
     }
 
     
     function updatePasswordForm() {
-	    	$this->load->view('account/updatePasswordForm');
+	    	load_view($this,'account/updatePasswordForm');
     }
     
     function updatePassword() {
@@ -116,7 +116,7 @@ class Account extends CI_Controller {
 	    	 
 	    	if ($this->form_validation->run() == FALSE)
 	    	{
-	    		$this->load->view('account/updatePasswordForm');
+	    		load_view($this,'account/updatePasswordForm');
 	    	}
 	    	else
 	    	{
@@ -133,13 +133,13 @@ class Account extends CI_Controller {
 	    		}
 	    		else {
 	    			$data['errorMsg']="Incorrect password!";
-	    			$this->load->view('account/updatePasswordForm',$data);
+	    			load_view($this,'account/updatePasswordForm',$data);
 	    		}
 	    	}
     }
     
     function recoverPasswordForm() {
-    		$this->load->view('account/recoverPasswordForm');
+    		load_view($this,'account/recoverPasswordForm');
     }
     
     function recoverPassword() {
@@ -148,7 +148,7 @@ class Account extends CI_Controller {
 	    	
 	    	if ($this->form_validation->run() == FALSE)
 	    	{
-	    		$this->load->view('account/recoverPasswordForm');
+	    		load_view($this,'account/recoverPasswordForm');
 	    	}
 	    	else
 	    	{ 
@@ -186,12 +186,12 @@ class Account extends CI_Controller {
 	    			//$data['errorMsg'] = $this->email->print_debugger();	
 	    			
 	    			//$this->load->view('emailPage',$data);
-	    			$this->load->view('account/emailPage');
+	    			load_view($this,'account/emailPage');
 	    			
 	    		}
 	    		else {
 	    			$data['errorMsg']="No record exists for this email!";
-	    			$this->load->view('account/recoverPasswordForm',$data);
+	    			load_view($this,'account/recoverPasswordForm',$data);
 	    		}
 	    	}
     }    

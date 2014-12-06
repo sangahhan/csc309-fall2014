@@ -1,16 +1,4 @@
 
-<!DOCTYPE html>
-
-<html>
-	<head>
-		<style>
-			input {
-				display: block;
-			}
-		</style>
-
-	</head> 
-<body>  
 	<h1>Login</h1>
 <?php 
 	if (isset($errorMsg)) {
@@ -35,7 +23,4 @@
 	
 	echo form_close();
 ?>	
-</body>
-
-</html>
 

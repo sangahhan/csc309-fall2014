@@ -1,13 +1,21 @@
 
-<!DOCTYPE html>
 
-<html>
+	<h1>Connect 4</h1>
+
+	<div>
+	Hello <?= $user->fullName() ?>  <?= anchor(site_url('account/logout'),'(Logout)') ?>  <?= anchor(site_url('account/updatePasswordForm'),'(Change Password)') ?>
+	</div>
 	
-	<head>
-
-	<script src="<?= js_url('jquery.min.js') ?>"></script>
-	<script src="<?= js_url('jquery.timers.js') ?>"></script>
-	<script>
+<?php 
+	if (isset($errmsg)) 
+		echo "<p>$errmsg</p>";
+?>
+	<h2>Available Users</h2>
+	<div id="availableUsers">
+	</div>
+	
+	
+<script>
 		$(function(){
 			$('#availableUsers').everyTime(500,function(){
 					$('#availableUsers').load('<?= site_url('arcade/getAvailableUsers') ?>');
@@ -28,25 +36,3 @@
 			});
 	
 	</script>
-	</head> 
-<body>  
-	<h1>Connect 4</h1>
-
-	<div>
-	Hello <?= $user->fullName() ?>  <?= anchor(site_url('account/logout'),'(Logout)') ?>  <?= anchor(site_url('account/updatePasswordForm'),'(Change Password)') ?>
-	</div>
-	
-<?php 
-	if (isset($errmsg)) 
-		echo "<p>$errmsg</p>";
-?>
-	<h2>Available Users</h2>
-	<div id="availableUsers">
-	</div>
-	
-	
-	
-</body>
-
-</html>
-

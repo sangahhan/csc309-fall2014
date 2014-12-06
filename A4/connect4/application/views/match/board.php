@@ -1,62 +1,8 @@
 
-<!DOCTYPE html>
-
-<html>
-<head>
-<link href="<?= css_url('template.css');?>" type="text/css" rel="stylesheet">
-<script src="<?= js_url('jquery.min.js'); ?>"></script>
-<script src="<?= js_url('jquery.timers.js'); ?>"></script>
-<script>
-
-	var otherUser = "<?= $otherUser->login ?>";
-	var user = "<?= $user->login ?>";
-	var status = "<?= $status ?>";
-	
-	$(function(){
-		$('body').everyTime(2000,function(){
-				if (status == 'waiting') {
-					$.getJSON('<?= site_url('arcade/checkInvitation') ?>',function(data, text, jqZHR){
-							if (data && data.status=='rejected') {
-								alert("Sorry, your invitation to play was declined!");
-								window.location.href = "<?= site_url('arcade/index');?>";
-							}
-							if (data && data.status=='accepted') {
-								status = 'playing';
-								$('#status').html('Playing ' + otherUser);
-							}
-							
-					});
-				}
-				var url = "<?= site_url('board/getMsg');?>";
-				$.getJSON(url, function (data,text,jqXHR){
-					if (data && data.status=='success') {
-						var conversation = $('[name=conversation]').val();
-						var msg = data.message;
-						if (msg.length > 0)
-							$('[name=conversation]').val(conversation + "\n" + otherUser + ": " + msg);
-					}
-				});
-		});
-
-		$('form').submit(function(){
-			var arguments = $(this).serialize();
-			var url = "<?= site_url('board/postMsg');?>";
-			$.post(url,arguments, function (data,textStatus,jqXHR){
-					var conversation = $('[name=conversation]').val();
-					var msg = $('[name=msg]').val();
-					$('[name=conversation]').val(conversation + "\n" + user + ": " + msg);
-					});
-			return false;
-			});	
-	});
-
-</script>
-</head> 
-<body>  
 <h1>Game Area</h1>
 
 <div>
-Hello <?= $user->fullName() ?>  <?= anchor("<?= site_url('account/logout');?>",'(Logout)') ?>  
+Hello <?= $user->fullName() ?>  <?= anchor(site_url('account/logout'),'(Logout)') ?>  
 </div>
 
 <div id='status'> 
@@ -125,8 +71,8 @@ Hello <?= $user->fullName() ?>  <?= anchor("<?= site_url('account/logout');?>",'
                     <td data-index="5-7"></td>
                 </tr>
                 <tr id="row-6" data-index="6">
-                    <td data-index="6-1"></td>
-                    <td data-index="6-2"></td>
+                    <td data-index="6-1" style="background:#FFF176"></td>
+                    <td data-index="6-2" style="background:#EF5350"></td>
                     <td data-index="6-3"></td>
                     <td data-index="6-4"></td>
                     <td data-index="6-5"></td>
@@ -139,17 +85,59 @@ Hello <?= $user->fullName() ?>  <?= anchor("<?= site_url('account/logout');?>",'
 
 
 <?php 
+/*
 echo form_textarea('conversation');
 echo form_open();
 echo form_input('msg');
 echo form_submit('Send','Send');
 echo form_close();
+*/
 ?>
 
 
+<script>
 
+    var otherUser = "<?= $otherUser->login ?>";
+    var user = "<?= $user->login ?>";
+    var status = "<?= $status ?>";
+    
+    $(function(){
+        $('body').everyTime(2000,function(){
+                if (status == 'waiting') {
+                    $.getJSON('<?= site_url('arcade/checkInvitation') ?>',function(data, text, jqZHR){
+                            if (data && data.status=='rejected') {
+                                alert("Sorry, your invitation to play was declined!");
+                                window.location.href = "<?= site_url('arcade/index');?>";
+                            }
+                            if (data && data.status=='accepted') {
+                                status = 'playing';
+                                $('#status').html('Playing ' + otherUser);
+                            }
+                            
+                    });
+                }
+                var url = "<?= site_url('board/getMsg');?>";
+                $.getJSON(url, function (data,text,jqXHR){
+                    if (data && data.status=='success') {
+                        var conversation = $('[name=conversation]').val();
+                        var msg = data.message;
+                        if (msg && msg.length > 0)
+                            $('[name=conversation]').val(conversation + "\n" + otherUser + ": " + msg);
+                    }
+                });
+        });
 
-</body>
+        $('form').submit(function(){
+            var arguments = $(this).serialize();
+            var url = "<?= site_url('board/postMsg');?>";
+            $.post(url,arguments, function (data,textStatus,jqXHR){
+                    var conversation = $('[name=conversation]').val();
+                    var msg = $('[name=msg]').val();
+                    $('[name=conversation]').val(conversation + "\n" + user + ": " + msg);
+                    });
+            return false;
+            }); 
+    });
 
-</html>
+</script>
 
