@@ -6,6 +6,7 @@ class Account extends CI_Controller {
     		// Call the Controller constructor
 	    	parent::__construct();
 	    	session_start();
+
     }
         
     public function _remap($method, $params = array()) {
