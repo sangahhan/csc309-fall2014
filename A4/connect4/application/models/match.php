@@ -81,7 +81,7 @@ class Match  {
 		for ($i = 0; $i < 4; $i ++){
 			$count = 0;
 
-			$count = count_in_direction($direction[$i], $row, $column, $board);
+			$count = count_in_disc_direction($direction[$i], $row, $column, $board);
 
 			$direction[$i]['row'] = $direction[$i]['row'] * -1;
 			$direction[$i]['col'] = $direction[$i]['col'] * -1;
