@@ -154,7 +154,7 @@ echo form_close();
 
         $(function(){
         // begin timer
-        $('body').everyTime(150,function(){
+        $('body').everyTime(200,function(){
             if (status == 'waiting') {
                 $.getJSON('<?= site_url('arcade/checkInvitation') ?>',
                     function(data, text, jqZHR){
@@ -170,7 +170,7 @@ echo form_close();
                     }
                 );
 
-            } else { 
+            }
 
             $.getJSON("<?= site_url('board/getBoard');?>", 
                 function (data,text,jqXHR){
@@ -206,23 +206,32 @@ echo form_close();
                                     alert("You lost!");
                                 }
                                 var url = "<?= site_url('board/end_game') ?>";
-                                 $.post(url, {}, 
-                                    function (data,textStatus,jqXHR){
-                                        if (data.status != "success"){
-                                            // somehow show them an error     
-                                        }
-                                    }
-                                );
+                                 $.post(url);
                                 window.location.href = 
                                     "<?= site_url('arcade/index');?>";
                             }
 
                         } else {
-                            alert(data.message);
+                           $.getJSON('<?= site_url('arcade/checkInvitation') ?>',
+                                function(data, text, jqZHR){
+                                    if (data && data.status=='rejected') {
+                                        alert("Sorry, your invitation was declined!");
+                                        window.location.href =
+                                             "<?= site_url('arcade/index');?>";
+                                    }
+                                    else if (data && data.status=='accepted') {
+                                        status = 'playing';
+                                    
+                                    } else {
+                                        alert(data.message);
+                                    }
+
+                                }
+                            );
                         }    
                     }
                 }
-            );}
+            );
         });
 
         $('tr.detect-hover td').click(function(){
