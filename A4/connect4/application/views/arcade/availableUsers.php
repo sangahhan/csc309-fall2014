@@ -3,7 +3,7 @@
 		echo "<ul>";
 		foreach ($users as $user) {
 			if ($user->id != $currentUser->id) {	
-				echo "<li>".anchor(site_url("arcade/invite?login=" . $user->login,$user->fullName()))."</li>";
+				echo "<li>".anchor(site_url("arcade/invite?login=" . $user->login),$user->fullName())."</li>";
 			}
 		}
 		echo "</ul>";

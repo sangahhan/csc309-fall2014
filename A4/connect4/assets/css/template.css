@@ -198,7 +198,7 @@ a:active {
 }
 
 #gameboard td{
-    height:40px;
+    height:30px;
     border:2px solid #1976D2; 
     padding: 0;
     border-radius:50px;
@@ -211,10 +211,21 @@ a:active {
 
 #gameboard tr.detect-hover > td{
     border:0 none;
-    height:25px;
+    height: 20px;
     background:none;
+
 }
 
+#gameboard tr.detect-hover > td:hover{
+    background: #1565C0;    
+}
+
+#gameboard .yellow-piece {
+	background: #FFF176;
+}
+#gameboard .red-piece {
+	background:#EF5350;
+}
 
 
 /* mobile */

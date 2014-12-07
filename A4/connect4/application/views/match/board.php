@@ -71,8 +71,8 @@ Hello <?= $user->fullName() ?>  <?= anchor(site_url('account/logout'),'(Logout)'
                     <td data-index="5-7"></td>
                 </tr>
                 <tr id="row-6" data-index="6">
-                    <td data-index="6-1" style="background:#FFF176"></td>
-                    <td data-index="6-2" style="background:#EF5350"></td>
+                    <td data-index="6-1"></td>
+                    <td data-index="6-2"></td>
                     <td data-index="6-3"></td>
                     <td data-index="6-4"></td>
                     <td data-index="6-5"></td>
@@ -93,65 +93,87 @@ echo form_submit('Send','Send');
 echo form_close();
 */
 ?>
-
-
+<script src="<?= js_url('connect4.gameplay.js') ?>"></script>
 <script>
 
-    var otherUser = "<?= $otherUser->login ?>";
-    var user = "<?= $user->login ?>";
-    var status = "<?= $status ?>";
-    
-    $(function(){
-        $('body').everyTime(2000,function(){
-                if (status == 'waiting') {
-                    $.getJSON('<?= site_url('arcade/checkInvitation') ?>',function(data, text, jqZHR){
-                            if (data && data.status=='rejected') {
-                                alert("Sorry, your invitation to play was declined!");
-                                window.location.href = "<?= site_url('arcade/index');?>";
-                            }
-                            if (data && data.status=='accepted') {
-                                status = 'playing';
-                                $('#status').html('Playing ' + otherUser);
-                            }
-                            
-                    });
-                }
-                /*var url = "<?= site_url('board/getMsg');?>";
-                $.getJSON(url, function (data,text,jqXHR){
-                    if (data && data.status=='success') {
-                        var conversation = $('[name=conversation]').val();
-                        var msg = data.message;
-                        if (msg && msg.length > 0)
-                            $('[name=conversation]').val(conversation + "\n" + otherUser + ": " + msg);
-                    }
-                });*/
-            var url = "<?= site_url('board/getBoard');?>";
-                $.getJSON(url, function (data,text,jqXHR){
-                    if (data) {
-                        if (data.status=='success') {
-                            console.log(data);
-                            // parse board into html table
-                        } else {
-                            // you are not in this game
-                        }
-                    } else {
-                        // error in server
-                        return;
-                    }
-                });
-        });
+var otherUser = "<?= $otherUser->login ?>";
+var user = "<?= $user->login ?>";
+var status = "<?= $status ?>";
 
-        $('form').submit(function(){
-            var arguments = $(this).serialize();
-            var url = "<?= site_url('board/postMove');?>";
-            $.post(url,arguments, function (data,textStatus,jqXHR){
+var testBoard = [
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+    [0,0,0,0,0,0],
+]; 
+
+$(function(){
+    $('body').everyTime(2000,function(){
+            if (status == 'waiting') {
+                $.getJSON('<?= site_url('arcade/checkInvitation') ?>',function(data, text, jqZHR){
+                        if (data && data.status=='rejected') {
+                            alert("Sorry, your invitation to play was declined!");
+                            window.location.href = "<?= site_url('arcade/index');?>";
+                        }
+                        if (data && data.status=='accepted') {
+                            status = 'playing';
+                            $('#status').html('Playing ' + otherUser);
+                        }
+                        
+                });
+            }
+            /*var url = "<?= site_url('board/getMsg');?>";
+            $.getJSON(url, function (data,text,jqXHR){
+                if (data && data.status=='success') {
                     var conversation = $('[name=conversation]').val();
-                    var msg = $('[name=msg]').val();
-                    $('[name=conversation]').val(conversation + "\n" + user + ": " + msg);
-                    });
-            return false;
-            }); 
+                    var msg = data.message;
+                    if (msg && msg.length > 0)
+                        $('[name=conversation]').val(conversation + "\n" + otherUser + ": " + msg);
+                }
+            });*/
+        var url = "<?= site_url('board/getBoard');?>";
+            $.getJSON(url, function (data,text,jqXHR){
+                if (data) {
+                    if (data.status=='success') {
+                        console.log(data);
+                        // parse board into html table
+                    } else {
+                        // you are not in this game
+                    }
+                } else {
+                    // error in server
+                    return;
+                }
+            });
     });
 
-</script>
+    $('tr.detect-hover td').click(function(){
+        updateBoard($(this));
+        
+       /* var arguments = $(this).serialize();
+        var url = "<?= site_url('board/postMove');?>";
+        $.post(url,arguments, function (data,textStatus,jqXHR){
+                var conversation = $('[name=conversation]').val();
+                var msg = $('[name=msg]').val();
+                $('[name=conversation]').val(conversation + "\n" + user + ": " + msg);
+                });
+        return false;
+        }); 
 
+*/
+    });
+
+    $('tr.detect-hover td').hover(function(){
+        $(this).addClass("hoveredA").animate({opacity:1.0});
+    },function(){
+        $(this).removeClass("hoveredA");
+    });
+});
+
+
+
+
+</script>
