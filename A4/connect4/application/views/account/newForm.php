@@ -59,6 +59,12 @@
 		'id' => 'registration-email',
 	));
 
+        $this->load->helper('html');
+
+	echo img("account/showCaptchaImage", TRUE);
+	echo form_input("verifycode", "", "id='verifycode' required");
+	echo form_error('verifycode');
+
 	echo form_submit('submit', 'Register');
 	echo form_close();
 ?>	
