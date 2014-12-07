@@ -200,6 +200,14 @@ echo form_close();
                                 } else {
                                     alert("You lost!");
                                 }
+                                var url = "<?= site_url('board/end_game') ?>";
+                                 $.post(url, {}, 
+                                    function (data,textStatus,jqXHR){
+                                        if (data.status != "success"){
+                                            // somehow show them an error     
+                                        }
+                                    }
+                                );
                                 window.location.href = 
                                     "<?= site_url('arcade/index');?>";
                             }
