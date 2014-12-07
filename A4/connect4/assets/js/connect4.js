@@ -79,6 +79,7 @@ function validateRegistration(){
 		return false;
 	}
 	var passconf = $('#registration-passconf').val().trim();
+	var password = $('#registration-password').val().trim();
 	if (password != passconf) {
 		$('#registration-passconf-error').html(ERR_PASSWORD_MISMATCH);
 		return false;
