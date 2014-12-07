@@ -1,4 +1,5 @@
 function updateBoard(row) {
+    //  TODO: change this to drop the piece in the board based on calls to backend
         var rowIndex = row.attr('data-index');
         // grab cells st col == data index as the recently clicked cell
         var col = $('td[data-index$="-'+rowIndex+'"]');    
@@ -29,5 +30,18 @@ function addPiece(col){
                 return false;                    
         }        
     });
-    
+
+}
+
+function renderBoard(div_selector, board) {
+
+    for (var i = 0; i < board.length; i++) {
+        var col = $(div_selector + ' td[data-index$="-'+ (i + 1) +'"]').reverse(); 
+        col.each(function(index, cell){
+            if (currentBoard[i][index] == 1) {
+                $(this).addClass('red-piece');
+            } else if (currentBoard[i][index] == 2)
+            $(this).addClass('yellow-piece'); 
+        });
+    } 
 }
