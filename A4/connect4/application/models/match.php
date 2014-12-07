@@ -72,15 +72,73 @@ class Match  {
 		return;
 	}
 
+	/*
+	 * Return TRUE if the given move resulted in a consecutive count of four
+	 * or more discs.
+	 */
 	public function get_game_status($last_move){
-		$board_obj = unserialze($this->board_state);
+		$board_obj = unserialize($this->board_state);
 		$board = $board_obj->board;
 
 		$row = count($board[$last_move]);
-		$player = $board[$last_move][$row];
 
-		//TODO: The win logic.
-		//return determine_win($row, $column, $player, $board);
+		// The way we have it set up, we go in opposite directions the shown
+		// direction.
+		$directions = array( array('row' => 0, 'col' => 1), // Horizontal
+							array('row' => 1, 'col' => 0),	// Vertical
+							array('row' => 1, 'col' => 1),	// Right diagonal
+							array('row' => 1, 'col' => -1));// Left diagonal
+
+
+		for ($i = 0; $i < 4; $i++){
+			$count = 0;
+
+			$count = count_in_direction($direction[$i], $row, $column, $board);
+
+			$direction[$i]['row'] = $direction[$i]['row'] * -1;
+			$direction[$i]['col'] = $direction[$i]['col'] * -1;
+
+			$count = $count
+					+ count_in_direction($direction[$i], $row, $column, $board)
+					+ 1;
+
+			if ($count >= 4){
+				return TRUE;
+			}
+		}
+
 		return FALSE;
+	}
+
+	/*
+	 * Given a direction, a row an a column position of a disc as well as
+	 * a board, return how many consecutive discs of type $board[$column][$num]
+	 * are placed in the given direction.
+	 *
+	 */
+	public function count_in_direction($direction, $row, $column, $board){
+
+		$playing = $board[$column][$row];
+
+		$steps = 0;
+		$count = 0;
+		for ($steps = 0; $steps < 3; $steps ++){
+			$next_row = $row + $direction['row'];
+			$next_column = $coulmn + $direction['col'];
+
+			if (($next_column < 7 && $next_column >= 0) &&
+				($next_row < count($board[$next_column]) && $next_row >= 0)){
+
+				if($board[$next_column][$next_row] == $player){
+					$count = $count + 1;
+				} else {
+					break;
+				}
+			} else {
+				break;
+			}
+		}
+
+		return $count;
 	}
 }
