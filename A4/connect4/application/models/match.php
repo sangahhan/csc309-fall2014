@@ -3,6 +3,7 @@ class Match  {
 	const ACTIVE = 1;
 	const U1WON = 2;
 	const U2WON = 3;
+	const TIE = 4;
 
 	public $id;
 
@@ -62,9 +63,22 @@ class Match  {
 		return 0;
 	}
 
+	public function count_all_pieces(){
+		$board_obj = unserialize($this->board_state);
+		$board = $board_obj->board;
+
+		$total_count = 0;
+		for ($col = 0; $col < 7; $col ++){
+			$total_count = $total_count + count($board[$col]);
+		}
+
+		return $total_count;
+
+	}
+
 	/*
-	 * Return TRUE if the given move resulted in a consecutive count of four
-	 * or more discs.
+	 * Given the last move made, return 1 if it created no win or tie.
+	 * Return 4 if it created a tie or a 2 if created a win.
 	 */
 	public function get_match_status($last_move){
 		$board_obj = unserialize($this->board_state);
@@ -72,13 +86,16 @@ class Match  {
 
 		$row = count($board[$last_move]) - 1;
 
+		if (($this->count_all_pieces() + 1) >= 42){
+			return 4;
+		}
+
 		// The way we have it set up, we go in opposite directions the shown
 		// direction.
 		$directions = array( array('row' => 0, 'col' => 1), // Horizontal
 				array('row' => 1, 'col' => 0),	// Vertical
 				array('row' => 1, 'col' => 1),	// Right diagonal
 				array('row' => 1, 'col' => -1));// Left diagonal
-
 
 		for ($i = 0; $i < 4; $i ++){
 			$count = 0;
@@ -93,11 +110,11 @@ class Match  {
 				+ 1;
 
 			if ($count >= 4){
-				return TRUE;
+				return 2;
 			}
 		}
 
-		return FALSE;
+		return 1;
 	}
 
 	/*

@@ -244,8 +244,11 @@ class Board extends CI_Controller {
 		$this->match_model->updateBoard($match->id, $match->board_state);
 
 
-		if ($match->get_match_status($column_num)){
+		$win_state = $match->get_match_status($column_num);
+		if ($win_state == 2){
 			$win_state = is_player_1($match, $user)? Match::U1WON : Match::U2WON;
+			$this->match_model->updateStatus($match->id, $win_state);
+		} else if ($win_state == 4){
 			$this->match_model->updateStatus($match->id, $win_state);
 		}
 
