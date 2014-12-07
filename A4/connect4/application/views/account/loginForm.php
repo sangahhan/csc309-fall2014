@@ -1,11 +1,6 @@
 
 	<h1>Login</h1>
 <?php 
-	if (isset($errorMsg)) {
-		echo "<p>" . $errorMsg . "</p>";
-	}
-
-
 	echo form_open('account/login', array('onSubmit' => 'return validateLogin()', 'id'=> 'login-form'));
 	// area for error messages to show from JS form validation
 	echo '<p class="error" id="login-form-error">';
