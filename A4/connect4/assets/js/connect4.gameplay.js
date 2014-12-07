@@ -17,33 +17,15 @@ function isWinner(state, player_id) {
 
 
 /* 
- * Given an array of jQuery objects that represent a column, update its 
- * class to be pieceClass.
- */
-function addPiece(col, pieceClass){    
-    var colReversed = col.reverse();
-    
-    colReversed.each(function(){
-        if(!$(this).hasClass('red-piece') && !$(this).hasClass('yellow-piece')){        
-            $(this).addClass(pieceClass);               
-            return false;                    
-        }        
-    });
-
-}
-
-/* 
  * Given a div with the properly structured table, display it as a board using
  * the contents of the given board.
  */
 function renderBoard(divSelector, board) {
 
-    for (var i = 0; i < board.length; i++) {
+    for (var i = 0; i < 7; i++) {
         var col = $(divSelector + ' td[data-index$="-'+ i +'"]').reverse(); 
         col.each(function(index, cell){
-            console.log(board[i][index]);
             if (board[i][index] == 1) {
-                
                 $(this).addClass('red-piece');
             } else if (board[i][index] == 2) {
                 $(this).addClass('yellow-piece'); 
@@ -62,6 +44,7 @@ function getBoard(getBoardURL, arcadeURL, gameboardSelector, currentState) {
                             // from the one we have
                             if (data.player_turn != currentState.player_turn)
                                 renderBoard(gameboardSelector, currentState.board);
+                            
                             currentState = data;
                            
                             // if the game is not active
