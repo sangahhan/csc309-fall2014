@@ -21,21 +21,9 @@ class Match  {
 	}
 
 	/*
-	 * Given a board and a player, return TRUE iff the player has the current
-	 * turn in the board.
-	 */
-	private function is_player_turn($player, $board){
-		if ($board->player_turn != $player){
-			return FALSE;
-		}
-
-		return TRUE;
-	}
-
-	/*
-	 * Given a current player, switch the player_turn field of the board to
-	 * the other player.
-	 */
+	* Given a current player, switch the player_turn field of the board to
+	* the other player.
+	*/
 	private function toggle_user_in_board($player, $board){
 
 		if ($board->player_turn == 1){
@@ -47,36 +35,36 @@ class Match  {
 	}
 
 	/*
-	 * Given a player id and a
-	 *
+	 * Given a player id and a column number, add a piece belonging to the given player
+	 * in the column.
+	 * If it is not current player's turn in the board, return -1.
+	 * If the column is full or out of bounds, return -2.
+	 * If the piece was successfully placed, return 0.
 	 */
 	public function drop_disc_in_column($player, $column_num){
 
 		if ($this->match_status_id == self::ACTIVE){
 			$board = unserialize($this->board_state);
 
-			if (!is_player_turn($player, $board)){ return; }
+			if (!is_player_turn($player, $board)){ return -1; }
 
-			if ($column_num < 7){
-				if(count($board->board[$column_num]) < 6){
-					$board->board[$column_num][] = $player;
-				}
+			if (($column_num < 7) && (count($board->board[$column_num]) < 6)){
+				$board->board[$column_num][] = $player;
 			} else {
-				return;
+				return -2;
 			}
 
 			$this->board_state = serialize($board);
-
 		}
 
-		return;
+		return 0;
 	}
 
 	/*
 	 * Return TRUE if the given move resulted in a consecutive count of four
 	 * or more discs.
 	 */
-	public function get_game_status($last_move){
+	public function get_match_status($last_move){
 		$board_obj = unserialize($this->board_state);
 		$board = $board_obj->board;
 
@@ -90,7 +78,7 @@ class Match  {
 							array('row' => 1, 'col' => -1));// Left diagonal
 
 
-		for ($i = 0; $i < 4; $i++){
+		for ($i = 0; $i < 4; $i ++){
 			$count = 0;
 
 			$count = count_in_direction($direction[$i], $row, $column, $board);
@@ -99,8 +87,8 @@ class Match  {
 			$direction[$i]['col'] = $direction[$i]['col'] * -1;
 
 			$count = $count
-					+ count_in_direction($direction[$i], $row, $column, $board)
-					+ 1;
+				+ count_discs_in_direction($direction[$i], $row, $column, $board)
+				+ 1;
 
 			if ($count >= 4){
 				return TRUE;
@@ -116,7 +104,7 @@ class Match  {
 	 * are placed in the given direction.
 	 *
 	 */
-	public function count_in_direction($direction, $row, $column, $board){
+	public function count_discs_in_direction($direction, $row, $column, $board){
 
 		$playing = $board[$column][$row];
 

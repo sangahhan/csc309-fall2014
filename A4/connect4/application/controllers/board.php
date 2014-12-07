@@ -146,7 +146,7 @@ class Board extends CI_Controller {
      * the status of the request.
      */
     function getBoard(){
-        $this->load->model('invite_model');
+
         $this->load->model('match_model');
         $this->load->model('user_model');
 
@@ -162,11 +162,8 @@ class Board extends CI_Controller {
         }
 
         $match = $this->match_model->getExclusive($user->match_id);
-        if ($match->user1_id == $user->id) {
-                $player_id = 1;
-        } else {
-                $player_id = 2;
-        }
+
+        $player_id = is_player_1($match, $user)? 1 : 2;
 
         $win_status = $match->match_status_id;
 
@@ -174,14 +171,91 @@ class Board extends CI_Controller {
         // only includes the array.
         $board = unserialize($match->board_state);
 
-        echo json_encode(array("status" =>"success",
-                            'win_status'=>$win_status,
+        echo json_encode(array('status' => 'success',
+                            'win_status'=> $win_status,
                                 'board' => $board->board,
-                          "player_turn" => $board->turn));
+                            'player_id' => $player_id,
+                          'player_turn' => $board->player_turn));
         return;
 
         error:
         echo json_encode(array('status'=>'failure','message'=>$errormsg));
     }
 
- }
+
+    /*
+     * Given a column number to which the user input a disc, return a the
+     * game board, the win state, the player id and the player turn of the
+     * match.
+     * The player has to be in the playing state and the match has to be active.
+     * The $column_num has to be confirmed as a valid move and only made in the
+     * user's turn. If any of the above conditions are not satisfied, return
+     * an error code with an appropriate error message.
+     */
+    function drop_disc_in_column($column_num){
+        $this->load->model('user_model');
+        $this->load->model('match_model');
+
+        $user = $_SESSION['user'];
+
+        $user = $this->user_model->get($user->login);
+        if ($user->user_status_id != User::PLAYING) {
+            $code = 401;
+            $errormsg="Not in PLAYING state";
+            goto error;
+        }
+
+        $this->db->trans_begin();
+
+        // Confirm that the match is still active.
+        $match = $this->match_model->getExclusive($user->match_id);
+        if ($match->match_status_id != Match::ACTIVE) {
+            $errormsg = "The match has finished.";
+            $code = 401;
+            goto error;
+        }
+
+        $player_id = is_player_1($match, $user)? 1 : 2;
+
+        // Confirm that the player made a valid move.
+        $move_state = $match->drop_disc_in_column($player_id, $column_num);
+        if ($move_state < 0){
+            $errormsg = ($move_state == -1)? "Not player turn.":"Invalid mmove";
+            $code = 400;
+            goto error;
+        }
+
+        // The player made a valid move. First we update the board to the
+        // state after the player made the move. Then
+        // we check if the move resulted in the player winning the match.
+        // If it did, then we update the match state as well
+
+        $this->match_model->updateBoard($match->id, $match->board_state);
+
+        if ($match->get_match_status($column_num)){
+            $win_state = is_player_1($match, $user)? Match::U1WON:Match::U2WON;
+            $this->match_model->updateStatus($match->id, $win_state);
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $errormsg = "Transaction error";
+            $code = 400;
+            goto error;
+        }
+
+        $this->db->trans_commit();
+
+        $board = unserialize($match->board_state);
+        echo json_encode(array('status' => 'success',
+                            'win_status'=> $win_status,
+                                'board' => $board->board,
+                            'player_id' => $player_id,
+                          'player_turn' => $board->player_turn));
+
+        error:
+        $this->db->trans_rollback();
+        echo json_encode(array('status' => 'failure',
+                              'message' => $errormsg,
+                                'code'  => $code));
+    }
+}
