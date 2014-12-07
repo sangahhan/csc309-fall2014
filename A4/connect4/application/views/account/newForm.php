@@ -3,7 +3,7 @@
 	echo form_open('account/createNew', array('onSubmit' => 'return validateRegistration()', 'id'=> 'registration-form'));
 	
 	// area for error messages to show form JS form validation
-	echo '<p class="error" id="registration-form-error">'
+	echo '<p class="error" id="registration-form-error">';
 	if (isset($errormsg)) echo $errormsg;
 	echo '</p>';
 
@@ -57,7 +57,6 @@
 		'type' => 'email',
 		'required' => 'required',
 		'id' => 'registration-email',
-		'oninput' => 'checkRegistrationEmail();'
 	));
 
 	echo form_submit('submit', 'Register');

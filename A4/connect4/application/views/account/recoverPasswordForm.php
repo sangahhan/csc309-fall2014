@@ -16,7 +16,6 @@
 		'type' => 'email',
 		'required' => 'required',
 		'id' => 'recovery-email',
-		'oninput' => 'checkRecoveryEmail();'
 	));
 	echo form_submit('submit', 'Recover Password');
 	echo form_close();

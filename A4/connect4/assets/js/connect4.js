@@ -37,7 +37,7 @@ function checkPassword(password, passconf) {
 	var password = $(password);
 	var passconf = $(passconf);
 	if (password.val().trim() == passconf.val().trim()) {
-		password.get(0).setCustomValidity("");  // All is well, clear error message
+		passconf.get(0).setCustomValidity("");  // All is well, clear error message
 		return true;
 	} else {
 		passconf.get(0).setCustomValidity(ERR_PASSWORD_MISMATCH);
@@ -51,25 +51,6 @@ function checkRegistrationPassword() {
 
 function checkUpdatePassword() {
 	return checkPassword("#passwordUpdate-password", "#passwordUpdate-passconf");
-}
-
-function checkEmail(tag) {
-	var email = $(tag);
-	if (!validateEmail(email.val().trim())) {
-		email.get(0).setCustomValidity("");  // All is well, clear error message
-		return true;
-	} else {
-		email.get(0).setCustomValidity(ERR_INVALID_EMAIL);
-		return false;
-	}
-}
-
-function checkRegistrationEmail() {
-	return checkEmail('#registration-email');
-}
-
-function checkRecoveryEmail() {
-	return checkEmail('#recovery-email');
 }
 
 
