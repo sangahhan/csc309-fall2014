@@ -53,7 +53,7 @@
             <td data-index="2-3"></td>
             <td data-index="2-4"></td>
             <td data-index="2-5"></td>
-            <td data-index="3-6"></td>
+            <td data-index="2-6"></td>
         </tr>
         <tr id="row-3" data-index="3">
             <td data-index="3-0"></td>
@@ -122,9 +122,9 @@ echo form_close();
 
 
 
-    function updateBoard(row) {
+    function updateBoard(rowNum) {
 
-        var rowIndex = row.attr('data-index');
+        var rowIndex = rowNum;
             // grab cells st col == data index as the recently clicked cell
             var col = $('td[data-index$="-'+rowIndex+'"]');    
             var pieceClass = 
@@ -138,13 +138,13 @@ echo form_close();
             } else { 
                 var url = "<?= site_url('board/drop_disc_in_column') ?>";
                 console.log(rowIndex);
-                $.post(url, {'column_num':rowIndex}, 
+                $.post(url, {'column_num':rowIndex }, 
                     function (data,textStatus,jqXHR){
                         if (!bottomPiece.hasClass('yellow-piece') && 
                             !bottomPiece.hasClass('red-piece')){           
                             bottomPiece.addClass(pieceClass);                
                         } else {
-                            addPiece(col, pieceClass);        
+                            renderBoard("#gameboard", currentState.board); 
                         }
                     }, 
                     function(data) {
@@ -160,7 +160,7 @@ echo form_close();
         $(function(){
         // begin timer
         //renderBoard('#gameboard', currentBoard);
-        $('body').everyTime(2000,function(){
+        $('body').everyTime(150,function(){
             if (status == 'waiting') {
                 $.getJSON('<?= site_url('arcade/checkInvitation') ?>',
                     function(data, text, jqZHR){
@@ -176,7 +176,7 @@ echo form_close();
 
                     }
                 );
-            }
+            } else {
 
             $.getJSON("<?= site_url('board/getBoard');?>", 
                 function (data,text,jqXHR){
@@ -185,11 +185,12 @@ echo form_close();
                             
                             // update the board if the one we get is different 
                             // from the one we have
-                             currentState = data;
-                            if (data.player_turn != currentState.player_turn){
-                               
+                       
+                            //if (data.player_turn != currentState.player_turn){
+
                                 renderBoard('#gameboard', currentState.board);
-                            }
+                            //}
+                                  currentState = data;
                             // if the game is active
                             if (currentState.win_status != STATE_ACTIVE){
                                 if (currentState.win_status == STATE_TIE) {
@@ -217,13 +218,13 @@ echo form_close();
                         }    
                     }
                 }
-            );
+            );}
         });
 
         $('tr.detect-hover td').click(function(){
             if (currentState.player_turn == currentState.player_id ) {
-                updateBoard($(this), currentState.player_id);
-
+                updateBoard($(this).attr('data-index'), currentState.player_id);
+                renderBoard('#gameboard', currentState.board);
             } else {
                 alert(ERR_OUT_OF_TURN);
             }
