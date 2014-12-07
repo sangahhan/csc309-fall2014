@@ -6,12 +6,7 @@
 </div>
 
 <div id='status'> 
-<?php 
-    if ($status == "playing")
-      echo "Playing " . $otherUser->login;
-  else
-      echo "Waiting on " . $otherUser->login;
-  ?>
+
 </div>
 
 <div id="gameboard">
@@ -159,7 +154,6 @@ echo form_close();
 
         $(function(){
         // begin timer
-        //renderBoard('#gameboard', currentBoard);
         $('body').everyTime(150,function(){
             if (status == 'waiting') {
                 $.getJSON('<?= site_url('arcade/checkInvitation') ?>',
@@ -171,17 +165,19 @@ echo form_close();
                         }
                         if (data && data.status=='accepted') {
                             status = 'playing';
-                            $('#status').html('Playing ' + otherUser);
                         }
 
                     }
                 );
-            } else {
+
+            } else { 
 
             $.getJSON("<?= site_url('board/getBoard');?>", 
                 function (data,text,jqXHR){
                     if (data) {
                         if (data.status=='success'){
+
+
                             
                             // update the board if the one we get is different 
                             // from the one we have
@@ -191,6 +187,14 @@ echo form_close();
                                 renderBoard('#gameboard', currentState.board);
                             //}
                                   currentState = data;
+                                  var currentPlayerString = "your";
+                                  if (currentState.player_turn != currentState.player_id ) {
+                                    currentPlayerString = otherUser + "'s";
+                                  }
+                                  $('#status').html(
+                                'You are Player ' + currentState.player_id + 
+                                '. You are playing ' + otherUser + 
+                                '. <br/>It is '+ currentPlayerString + ' turn.');
                             // if the game is active
                             if (currentState.win_status != STATE_ACTIVE){
                                 if (currentState.win_status == STATE_TIE) {

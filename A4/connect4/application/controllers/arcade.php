@@ -178,6 +178,7 @@ class Arcade extends CI_Controller {
 			case Invite::REJECTED:
 				$this->user_model->updateStatus($user->id,User::AVAILABLE);
 				echo json_encode(array('status'=>'rejected'));
+				break;
 		} 
 	}
 	
