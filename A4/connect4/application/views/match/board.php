@@ -99,9 +99,12 @@ echo form_close();
     var user = "<?= $user->login ?>";
     var status = "<?= $status ?>";
 
+    // a 2-dimensional array for the board
+    // each element represents a row
+    // where the leftmost item is at the bottom
     var currentBoard = [
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
+    [1,0,0,0,0,0],
+    [2,0,0,0,0,0],
     [0,0,0,0,0,0],
     [0,0,0,0,0,0],
     [0,0,0,0,0,0],
@@ -110,8 +113,8 @@ echo form_close();
     ]; 
 
     $(function(){
-
         // begin timer
+        renderBoard('#gameboard', currentBoard);
         $('body').everyTime(2000,function(){
             if (status == 'waiting') {
                 $.getJSON('<?= site_url('arcade/checkInvitation') ?>',function(data, text, jqZHR){
@@ -132,24 +135,16 @@ echo form_close();
                 function (data,text,jqXHR){
                     if (data) {
                         if (data.status=='success'){
-                            // parse
+                            renderBoard('#gameboard', currentBoard);
                         } else {
-                            // illegal
+                            alert(data.message);
                         }    
                     }
                 });
         });
-        // end timer
-
 
         $('tr.detect-hover td').click(function(){
             updateBoard($(this));
-        });
-
-        $('tr.detect-hover td').hover(function(){
-            $(this).addClass("hoveredA").animate({opacity:1.0});
-        },function(){
-            $(this).removeClass("hoveredA");
         });
     });
 
