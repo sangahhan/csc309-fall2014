@@ -192,11 +192,12 @@ class Board extends CI_Controller {
      * user's turn. If any of the above conditions are not satisfied, return
      * an error code with an appropriate error message.
      */
-    function drop_disc_in_column($column_num){
+    function drop_disc_in_column(){
         $this->load->model('user_model');
         $this->load->model('match_model');
 
         $user = $_SESSION['user'];
+        $column_num = $this->input->post('column_num');
 
         $user = $this->user_model->get($user->login);
         if ($user->user_status_id != User::PLAYING) {
@@ -251,6 +252,8 @@ class Board extends CI_Controller {
                                 'board' => $board->board,
                             'player_id' => $player_id,
                           'player_turn' => $board->player_turn));
+
+        return;
 
         error:
         $this->db->trans_rollback();

@@ -128,7 +128,7 @@ echo form_close();
                 alert("This column is full!");
             } else { 
                 var url = "<?= site_url('board/drop_disc_in_column') ?>";
-                $.post(url, rowIndex, function (data,textStatus,jqXHR){
+                $.post(url, {'column_num':rowIndex}, function (data,textStatus,jqXHR){
                     if (!bottomPiece.hasClass('yellow-piece') && !bottomPiece.hasClass('red-piece')){           
                         bottomPiece.addClass(pieceClass);                
                     } else {
