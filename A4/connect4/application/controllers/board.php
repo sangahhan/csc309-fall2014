@@ -14,13 +14,19 @@ class Board extends CI_Controller {
 		if (!isset($_SESSION['user']))
 			redirect('account/loginForm', 'refresh'); //Then we redirect to the index page again
 
+                $this->load->model('user_model');
+                $user = $_SESSION['user'];
+                $user = $this->user_model->get($user->login);
+
+                if (!($user->user_status_id == User::WAITING) &&
+                                !($user->user_status_id == User::PLAYING))
+                        redirect('arcade/index', 'refresh');
+
 		return call_user_func_array(array($this, $method), $params);
 	}
 
 
 	function index() {
-		//TODO: HANDLE CASE WHERE THE USER IS LOGGED OUT AND
-		// STILL GOES IN TO INDEX PAGE.
 		$user = $_SESSION['user'];
 
 		$this->load->model('user_model');

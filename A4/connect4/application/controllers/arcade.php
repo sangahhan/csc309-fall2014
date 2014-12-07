@@ -13,7 +13,18 @@ class Arcade extends CI_Controller {
     		
     		if (!isset($_SESSION['user']))
    			redirect('account/loginForm', 'refresh'); //Then we redirect to the index page again
- 	    	
+
+                // The user can be using the arcade functionalities only if
+                // they are in the playing state or waiting for another player
+                // to accept an invite.
+                $this->load->model('user_model');
+                $user = $_SESSION['user'];
+                $user = $this->user_model->get($user->login);
+
+                if (($user->user_status_id == User::WAITING) ||
+                                ($user->user_status_id == User::PLAYING))
+                        redirect('board/index', 'refresh');
+
 	    	return call_user_func_array(array($this, $method), $params);
     }
        
