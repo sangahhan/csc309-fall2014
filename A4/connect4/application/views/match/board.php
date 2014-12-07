@@ -98,6 +98,7 @@ echo form_close();
     var otherUser = "<?= $otherUser->login ?>";
     var user = "<?= $user->login ?>";
     var status = "<?= $status ?>";
+    var playerId;
 
     // a 2-dimensional array for the board
     // each element represents a row
@@ -111,6 +112,36 @@ echo form_close();
     [0,0,0,0,0,0],
     [0,0,0,0,0,0],
     ]; 
+
+
+
+    function updateBoard(row) {
+        //  TODO: change this to drop the piece in the board based on calls to backend
+            var rowIndex = row.attr('data-index');
+            // grab cells st col == data index as the recently clicked cell
+            var col = $('td[data-index$="-'+rowIndex+'"]');    
+            var pieceClass = playerId == 1 ? 'red-piece' : 'yellow-piece';
+            var topPiece = col.first();
+            var bottomPiece = col.last();
+
+            if(topPiece.hasClass('yellow-piece') || topPiece.hasClass('red-piece')){
+                alert("This column is full!");
+            } else { 
+                var url = "<?= site_url('board/drop_disc_in_column') ?>";
+                $.post(url, rowIndex, function (data,textStatus,jqXHR){
+                    if (!bottomPiece.hasClass('yellow-piece') && !bottomPiece.hasClass('red-piece')){           
+                        bottomPiece.addClass(pieceClass);                
+                    } else {
+                        addPiece(col, pieceClass);        
+                    }
+                }, function(data) {
+                    alert("This move is invalid");
+                });
+
+                
+            }
+
+    }
 
     $(function(){
         // begin timer
@@ -136,6 +167,7 @@ echo form_close();
                     if (data) {
                         if (data.status=='success'){
                             renderBoard('#gameboard', currentBoard);
+                            playerId = data.player_id;
                         } else {
                             alert(data.message);
                         }    
@@ -144,7 +176,7 @@ echo form_close();
         });
 
         $('tr.detect-hover td').click(function(){
-            updateBoard($(this));
+            updateBoard($(this), playerId);
         });
     });
 
