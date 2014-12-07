@@ -19,6 +19,8 @@ class Board extends CI_Controller {
 
 
     function index() {
+            //TODO: HANDLE CASE WHERE THE USER IS LOGGED OUT AND
+            // STILL GOES IN TO INDEX PAGE.
 		$user = $_SESSION['user'];
 
 	    	$this->load->model('user_model');
@@ -230,9 +232,9 @@ class Board extends CI_Controller {
         // state after the player made the move. Then
         // we check if the move resulted in the player winning the match.
         // If it did, then we update the match state as well
-
         $this->match_model->updateBoard($match->id, $match->board_state);
 
+        $win_state = 1;
         if ($match->get_match_status($column_num)){
             $win_state = is_player_1($match, $user)? Match::U1WON:Match::U2WON;
             $this->match_model->updateStatus($match->id, $win_state);
@@ -247,8 +249,9 @@ class Board extends CI_Controller {
         $this->db->trans_commit();
 
         $board = unserialize($match->board_state);
+
         echo json_encode(array('status' => 'success',
-                            'win_status'=> $win_status,
+                            'win_status'=> $win_state,
                                 'board' => $board->board,
                             'player_id' => $player_id,
                           'player_turn' => $board->player_turn));
@@ -261,4 +264,49 @@ class Board extends CI_Controller {
                               'message' => $errormsg,
                                 'code'  => $code));
     }
+
+        function end_game(){
+                // If the user is in playing state.
+                $user = $_SESSION['user'];
+
+                $this->load->model('user_model');
+                $this->load->model('match_model');
+
+                $user = $this->user_model->getExclusive($user->login);
+                if ($user->user_status_id != User::PLAYING) {
+                    return True;
+                }
+
+                $this->db->trans_begin();
+
+                // Confirm that the match is still active.
+                $match = $this->match_model->getExclusive($user->match_id);
+
+                $errormsg = "";
+                if ($match->match_status_id == Match::ACTIVE) {
+                    $errormsg = "Cannot quit an existing game.";
+                    $code = 401;
+                    goto error;
+                }
+
+                // change status of invitation to REJECTED
+                $this->user_model->updateStatus($user->id, User::AVAILABLE);
+
+                if ($this->db->trans_status() === FALSE)
+                        goto error;
+
+                // if all went well commit changes
+                $this->db->trans_commit();
+
+                echo json_encode(array('status'=>'success'));
+
+                return;
+
+                error:
+                $this->db->trans_rollback();
+
+                echo json_encode(array('status'=>'failure',
+                                        'message' => $errormsg));
+        }
+
 }

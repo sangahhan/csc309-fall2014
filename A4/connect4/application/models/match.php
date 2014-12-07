@@ -14,7 +14,8 @@ class Match  {
 	public $board_state;
 
 	public function new_game(){
-		$board = new Board();
+
+		$board = new GameBoard();
 		$board->initialize_board();
 
 		$this->board_state = serialize($board);
@@ -54,6 +55,7 @@ class Match  {
 				return -2;
 			}
 
+			$this->toggle_user_in_board($player, $board);
 			$this->board_state = serialize($board);
 		}
 
@@ -68,26 +70,26 @@ class Match  {
 		$board_obj = unserialize($this->board_state);
 		$board = $board_obj->board;
 
-		$row = count($board[$last_move]);
+		$row = count($board[$last_move]) - 1;
 
 		// The way we have it set up, we go in opposite directions the shown
 		// direction.
 		$directions = array( array('row' => 0, 'col' => 1), // Horizontal
-							array('row' => 1, 'col' => 0),	// Vertical
-							array('row' => 1, 'col' => 1),	// Right diagonal
-							array('row' => 1, 'col' => -1));// Left diagonal
+				array('row' => 1, 'col' => 0),	// Vertical
+				array('row' => 1, 'col' => 1),	// Right diagonal
+				array('row' => 1, 'col' => -1));// Left diagonal
 
 
 		for ($i = 0; $i < 4; $i ++){
 			$count = 0;
 
-			$count = count_in_disc_direction($direction[$i], $row, $column, $board);
+			$count = $this->count_discs_in_direction($directions[$i], $row, $last_move, $board);
 
-			$direction[$i]['row'] = $direction[$i]['row'] * -1;
-			$direction[$i]['col'] = $direction[$i]['col'] * -1;
+			$directions[$i]['row'] = $directions[$i]['row'] * -1;
+			$directions[$i]['col'] = $directions[$i]['col'] * -1;
 
 			$count = $count
-				+ count_discs_in_direction($direction[$i], $row, $column, $board)
+				+ $this->count_discs_in_direction($directions[$i], $row, $last_move, $board)
 				+ 1;
 
 			if ($count >= 4){
@@ -106,13 +108,13 @@ class Match  {
 	 */
 	public function count_discs_in_direction($direction, $row, $column, $board){
 
-		$playing = $board[$column][$row];
+		$player = $board[$column][$row];
 
 		$steps = 0;
 		$count = 0;
 		for ($steps = 0; $steps < 3; $steps ++){
 			$next_row = $row + $direction['row'];
-			$next_column = $coulmn + $direction['col'];
+			$next_column = $column + $direction['col'];
 
 			if (($next_column < 7 && $next_column >= 0) &&
 				($next_row < count($board[$next_column]) && $next_row >= 0)){
@@ -125,6 +127,9 @@ class Match  {
 			} else {
 				break;
 			}
+
+			$row = $next_row;
+			$column = $next_column;
 		}
 
 		return $count;
