@@ -100,18 +100,20 @@ echo form_close();
     var status = "<?= $status ?>";
     var playerId;
 
-    // a 2-dimensional array for the board
-    // each element represents a row
-    // where the leftmost item is at the bottom
-    var currentBoard = [
-    [1,0,0,0,0,0],
-    [2,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    ]; 
+    // board: a 2-dimensional array for the board
+    //  each element represents a row
+    //  where the leftmost item is at the bottom
+    var currentState = {
+        board: [
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0]
+        ]
+    };
 
 
 
@@ -120,7 +122,7 @@ echo form_close();
             var rowIndex = row.attr('data-index');
             // grab cells st col == data index as the recently clicked cell
             var col = $('td[data-index$="-'+rowIndex+'"]');    
-            var pieceClass = playerId == 1 ? 'red-piece' : 'yellow-piece';
+            var pieceClass = currentState.player_id == 1 ? 'red-piece' : 'yellow-piece';
             var topPiece = col.first();
             var bottomPiece = col.last();
 
@@ -128,6 +130,7 @@ echo form_close();
                 alert("This column is full!");
             } else { 
                 var url = "<?= site_url('board/drop_disc_in_column') ?>";
+
                 $.post(url, {'column_num':rowIndex}, function (data,textStatus,jqXHR){
                     if (!bottomPiece.hasClass('yellow-piece') && !bottomPiece.hasClass('red-piece')){           
                         bottomPiece.addClass(pieceClass);                
@@ -135,7 +138,7 @@ echo form_close();
                         addPiece(col, pieceClass);        
                     }
                 }, function(data) {
-                    alert("This move is invalid");
+                    alert(ERR_INVALID_MOVE);
                 });
 
                 
@@ -161,13 +164,12 @@ echo form_close();
                 });
             }
 
-            var url = "<?= site_url('board/getBoard');?>";
-            $.getJSON(url, 
+            $.getJSON("<?= site_url('board/getBoard');?>", 
                 function (data,text,jqXHR){
                     if (data) {
                         if (data.status=='success'){
-                            renderBoard('#gameboard', currentBoard);
-                            playerId = data.player_id;
+                            currentState = data;
+                            renderBoard('#gameboard', currentState.board);
                         } else {
                             alert(data.message);
                         }    
@@ -176,7 +178,11 @@ echo form_close();
         });
 
         $('tr.detect-hover td').click(function(){
-            updateBoard($(this), playerId);
+            if (currentState.player_turn == <?= $user->id ?>) {
+               updateBoard($(this), currentState.player_id);
+            } else {
+                alert(ERR_OUT_OF_TURN);
+            }
         });
     });
 

@@ -1,5 +1,9 @@
 $.fn.reverse = [].reverse;
 
+var ERR_INVALID_MOVE = "This move is invalid.";
+var ERR_OUT_OF_TURN = "It's not your turn.";
+
+
     function addPiece(col, pieceClass){    
         var colReversed = col.reverse();
         
