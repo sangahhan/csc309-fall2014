@@ -1,6 +1,5 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class Board {
+<?php
+class GameBoard {
 
     // initially it wil be player 1's turn. This will change as the
     // game progresses.
