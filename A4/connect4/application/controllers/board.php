@@ -272,6 +272,7 @@ class Board extends CI_Controller {
 
 		error:
 			$this->db->trans_rollback();
+			
 		echo json_encode(array('status' => 'failure',
 			'message' => $errormsg,
 			'code'  => $code));

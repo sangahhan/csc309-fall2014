@@ -66,19 +66,32 @@ class Account extends CI_Controller {
     		redirect('account/index', 'refresh'); //Then we redirect to the index page again
     }
 
+     function showCaptchaImage() {
+             $this->load->library("securimage");
+             $this->securimage->show();
+    }
+
+
     function newForm() {
 	    	load_view($this,'account/newForm');
     }
-    
+
+    function _verifySecurimage($input) {
+            $this->load->library("securimage");
+            return $this->securimage->check($input);
+    }
+
     function createNew() {
     		$this->load->library('form_validation');
-    	    $this->form_validation->set_rules('username', 'Username', 'required|is_unique[user.login]');
+    	        $this->form_validation->set_rules('username', 'Username', 'required|is_unique[user.login]');
 	    	$this->form_validation->set_rules('password', 'Password', 'required');
 	    	$this->form_validation->set_rules('first', 'First', "required");
 	    	$this->form_validation->set_rules('last', 'last', "required");
 	    	$this->form_validation->set_rules('email', 'Email', "required|is_unique[user.email]");
-	    	
-	    
+                $this->form_validation->set_rules("verifycode", "Captcha", "required|callback__verifySecurimage");
+                $this->form_validation->set_message('_verifySecurimage', 'Incorrect value. Please Try Again.');
+
+
 	    	if ($this->form_validation->run() == FALSE)
 	    	{
 	    		load_view($this,'account/newForm');
