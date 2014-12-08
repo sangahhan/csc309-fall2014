@@ -180,6 +180,8 @@ a:active {
 	margin: 0;
 }
 
+form img { display: block; }
+
 /* game board css */
 
 #gameboard{

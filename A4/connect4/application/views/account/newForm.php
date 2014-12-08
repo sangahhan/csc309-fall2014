@@ -61,6 +61,7 @@
 
         $this->load->helper('html');
 
+        echo form_label('Verification');
 	echo img("account/showCaptchaImage", TRUE);
 	echo form_input("verifycode", "", "id='verifycode' required");
 	echo form_error('verifycode');
