@@ -1,3 +1,4 @@
 - *A1: HTML5 and CSS3* is in csc309/A1
 - *A2: Breakout* is in csc309/A2
 - *A3: eStore* is in csc309/A3
+- *A4: Arcade* is in csc309/A4
